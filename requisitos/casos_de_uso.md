@@ -1,39 +1,134 @@
-# Casos de uso
+# Casos de Uso
 
-## Actores y casos de uso
+## Actores
+- **Alumno**: Persona que realiza cursos, consulta estadísticas y continúa su aprendizaje.
+- **Creador de cursos**: Persona que crea, importa y comparte cursos.
 
-| Actor   | Caso de Uso                      |
-|---------|----------------------------------|
-| Usuario | Realizar un curso               |
-|         | Elegir estrategia de aprendizaje |
-|         | Guardar y reanudar progreso     |
-|         | Ver estadísticas de uso         |
-|         | Crear y compartir cursos        |
+## Tabla de casos de uso
 
-### Realizar un curso
+| Actor             | Caso de Uso                  |
+|-------------------|------------------------------|
+| Alumno            | Realizar curso               |
+|                   | Continuar curso              |
+|                   | Ver estadísticas de uso      |
+| Creador de cursos | Crear curso                  |
+|                   | Compartir curso              |
+|                   | Importar curso               |
 
-**Flujo Básico:**
-- El usuario escoge un curso dependiendo del tema que quiera aprender.
-- El usuario comienza una serie de flashcards para aprender teoría.
-- Una vez terminada la teoría el usuario comienza a hacer una serie de ejercicios.
-- Al terminar los ejercicios el usuario realiza un examen.
-- Al aprobar el examen el usuario termina el curso.
+---
 
-**Flujo Alternativo:**
-- **Curso no disponible:** Si el curso seleccionado no está disponible, el sistema muestra un mensaje de error y sugiere otro curso similar.
-- **El usuario abandona el curso:** Si el usuario decide salir del curso, el sistema guarda su progreso y permite retomarlo más tarde.
-- **Respuestas incorrectas en ejercicios:** Si el usuario responde mal varias veces, se le ofrecen pistas o material de apoyo.
-- **No aprueba el examen final:** Si el usuario no pasa el examen, se le permite revisar el material y volver a intentarlo.
+### Caso de uso: Realizar curso
+**Descripción:** Permite al alumno seleccionar y realizar un curso completo desde la teoría hasta el examen final.
 
-### Elegir estrategia aprendizaje
+**Actor principal:** Alumno
 
-**Flujo Básico:**
-- El usuario elige la estrategia de aprendizaje que crea que más le convenga de las que puede elegir.
-- El usuario comienza el curso con la estrategia seleccionada.
-- En cualquier momento, el usuario puede cambiar la estrategia desde la configuración.
+**Precondiciones:** El alumno debe estar registrado e identificado en el sistema.
 
-**Flujo Alternativo:**
-- **El usuario no elige una estrategia:** Si el usuario no selecciona ninguna estrategia, se mantiene la estrategia por defecto (secuencial).
-- **Cambio de estrategia durante el curso:** Si el usuario decide cambiar la estrategia en mitad del curso, el sistema ajusta el contenido y notifica sobre posibles cambios en el orden.
-- **Fallo en la configuración:** Si hay un error al guardar la estrategia elegida, se muestra un mensaje de error y se mantiene la estrategia anterior.
+**Flujo principal:**
+1. El alumno selecciona un curso.
+2. El sistema presenta la teoría mediante flashcards.
+3. El alumno completa ejercicios.
+4. El alumno realiza el examen final.
+5. Al aprobar, el curso se marca como completado.
+
+**Flujos alternativos:**
+- **1a. Curso no disponible:** Si en el paso 1 el curso seleccionado no está disponible, el sistema muestra un mensaje de error y sugiere otro curso similar.
+- **1b. Alumno abandona:** Si en el paso 1 el alumno decide salir del curso, el sistema guarda su progreso y permite retomarlo más tarde.
+- **3a. Respuestas incorrectas:** Si en el paso 3 el alumno responde mal varias veces, se le ofrecen pistas o material de apoyo.
+- **4a. No aprueba examen:** Si en el paso 4 el alumno no pasa el examen, se le permite revisar el material y volver a intentarlo.
+
+**Postcondiciones:** El curso queda finalizado o guardado en estado "en progreso".
+
+---
+
+### Caso de uso: Continuar curso
+**Descripción:** Permite al alumno retomar un curso previamente iniciado.
+
+**Actor principal:** Alumno
+
+**Precondiciones:** El alumno debe haber iniciado un curso anteriormente.
+
+**Flujo principal:**
+1. El alumno accede a la lista de cursos en progreso.
+2. Selecciona el curso que desea continuar.
+3. El sistema lo lleva al punto donde lo dejó.
+
+**Flujos alternativos:**
+- **2a. Curso no existe:** Si en el paso 2 el curso seleccionado no existe, se muestra un mensaje de error.
+
+**Postcondiciones:** El alumno puede seguir avanzando en el curso.
+
+---
+
+### Caso de uso: Ver estadísticas de uso
+**Descripción:** El alumno consulta sus estadísticas de uso, progreso y resultados.
+
+**Actor principal:** Alumno
+
+**Precondiciones:** El alumno debe haber realizado al menos un curso.
+
+**Flujo principal:**
+1. El alumno accede a su panel de estadísticas.
+2. Visualiza datos de progreso, cursos completados y resultados de exámenes.
+
+**Postcondiciones:** No aplica (consulta informativa).
+
+---
+
+### Caso de uso: Crear curso
+**Descripción:** El creador de cursos diseña y crea un curso nuevo.
+
+**Actor principal:** Creador de cursos
+
+**Precondiciones:** El creador debe estar autenticado y tener permisos de creación.
+
+**Flujo principal:**
+1. El creador accede al apartado de creación de cursos.
+2. Ingresa título, descripción y contenido (teoría, ejercicios y examen).
+3. Guarda el curso en el sistema.
+
+**Flujos alternativos:**
+- **3a. Error al guardar:** Si en el paso 3 hay un error al guardar, se muestra un mensaje de error y se solicita reintentar.
+
+**Postcondiciones:** El curso queda disponible para ser compartido o editado.
+
+---
+
+### Caso de uso: Compartir curso
+**Descripción:** El creador de cursos comparte un curso previamente creado.
+
+**Actor principal:** Creador de cursos
+
+**Precondiciones:** El curso debe estar finalizado y guardado.
+
+**Flujo principal:**
+1. El creador accede a la lista de cursos.
+2. Selecciona un curso para compartir.
+3. Elige el canal de publicación (público o privado).
+4. El sistema confirma la publicación.
+
+**Flujos alternativos:**
+- **4a. Error al compartir:** Si en el paso 4 ocurre un error al compartir, se muestra un mensaje de error.
+
+**Postcondiciones:** El curso queda accesible para los alumnos.
+
+---
+
+### Caso de uso: Importar curso
+**Descripción:** Permite al creador de cursos importar un curso desde un archivo externo o repositorio.
+
+**Actor principal:** Creador de cursos
+
+**Precondiciones:** El creador debe estar autenticado y contar con un archivo válido.
+
+**Flujo principal:**
+1. El creador selecciona la opción de importar.
+2. Sube el archivo o conecta con el repositorio.
+3. El sistema valida el contenido.
+4. El curso es importado y aparece en la lista de cursos creados.
+
+**Flujos alternativos:**
+- **3a. Archivo no válido:** Si en el paso 3 el archivo no es válido, se muestra error y se solicita un nuevo archivo.
+
+**Postcondiciones:** El curso queda disponible para su edición y publicación.
 
