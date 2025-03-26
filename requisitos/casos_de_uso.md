@@ -51,7 +51,7 @@
 **Flujo principal:**
 1. El alumno accede a la lista de cursos en progreso.
 2. Selecciona el curso que desea continuar.
-3. El sistema lo lleva al punto donde lo dejó.
+3. El sistema lo rentoma en justo donde lo dejó.
 
 **Flujos alternativos:**
 - **2a. Curso no existe:** Si en el paso 2 el curso seleccionado no existe, se muestra un mensaje de error.
