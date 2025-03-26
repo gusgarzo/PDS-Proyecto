@@ -22,7 +22,7 @@
 
 **Actor principal:** Alumno
 
-**Precondiciones:** El alumno debe estar registrado e identificado en el sistema.
+**Precondiciones:** El alumno debe estar registrado y logueado en el sistema.
 
 **Flujo principal:**
 1. El alumno selecciona un curso.
@@ -71,7 +71,7 @@
 1. El alumno accede a su panel de estadísticas.
 2. Visualiza datos de progreso, cursos completados y resultados de exámenes.
 
-**Postcondiciones:** No aplica (consulta informativa).
+**Postcondiciones:** No aplica 
 
 ---
 
@@ -80,7 +80,7 @@
 
 **Actor principal:** Creador de cursos
 
-**Precondiciones:** El creador debe estar autenticado y tener permisos de creación.
+**Precondiciones:** El creador debe estar logueado y tener permisos de creación.
 
 **Flujo principal:**
 1. El creador accede al apartado de creación de cursos.
