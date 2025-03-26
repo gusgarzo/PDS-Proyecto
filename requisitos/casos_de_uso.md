@@ -8,11 +8,11 @@
 
 | Actor             | Caso de Uso                  |
 |-------------------|------------------------------|
-| Alumno            | Realizar curso               |
-|                   | Continuar curso              |
-|                   | Ver estadísticas de uso      |
-| Creador de cursos | Crear curso                  |
-|                   | Compartir curso              |
+| Alumno            | [Realizar curso](#caso-de-uso-realizar-curso)               |
+|                   | [Continuar curso](#caso-de-uso-continuar-curso)              |
+|                   | [Ver estadísticas de uso](#caso-de-uso-ver-estadísticas-de-uso)      |
+| Creador de cursos | [Crear curso](#caso-de-uso-crear-curso)                  |
+|                   | [Compartir curso](#caso-de-uso-compartir-curso)              |
 
 ---
 
@@ -110,3 +110,4 @@
 - **4a. Error al compartir:** Si en el paso 4 ocurre un error al compartir, se muestra un mensaje de error.
 
 **Postcondiciones:** El curso queda accesible para los alumnos.
+
