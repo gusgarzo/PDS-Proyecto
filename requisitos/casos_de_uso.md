@@ -2,7 +2,7 @@
 
 ## Actores
 - **Alumno**: Persona que realiza cursos, consulta estadísticas y continúa su aprendizaje.
-- **Creador de cursos**: Persona que crea, importa y comparte cursos.
+- **Creador de cursos**: Persona que crea y comparte cursos.
 
 ## Tabla de casos de uso
 
@@ -13,7 +13,6 @@
 |                   | Ver estadísticas de uso      |
 | Creador de cursos | Crear curso                  |
 |                   | Compartir curso              |
-|                   | Importar curso               |
 
 ---
 
@@ -71,7 +70,7 @@
 1. El alumno accede a su panel de estadísticas.
 2. Visualiza datos de progreso, cursos completados y resultados de exámenes.
 
-**Postcondiciones:** No aplica 
+**Postcondiciones:** No aplica.
 
 ---
 
@@ -111,24 +110,3 @@
 - **4a. Error al compartir:** Si en el paso 4 ocurre un error al compartir, se muestra un mensaje de error.
 
 **Postcondiciones:** El curso queda accesible para los alumnos.
-
----
-
-### Caso de uso: Importar curso
-**Descripción:** Permite al creador de cursos importar un curso desde un archivo externo o repositorio.
-
-**Actor principal:** Creador de cursos
-
-**Precondiciones:** El creador debe estar autenticado y contar con un archivo válido.
-
-**Flujo principal:**
-1. El creador selecciona la opción de importar.
-2. Sube el archivo o conecta con el repositorio.
-3. El sistema valida el contenido.
-4. El curso es importado y aparece en la lista de cursos creados.
-
-**Flujos alternativos:**
-- **3a. Archivo no válido:** Si en el paso 3 el archivo no es válido, se muestra error y se solicita un nuevo archivo.
-
-**Postcondiciones:** El curso queda disponible para su edición y publicación.
-
