@@ -9,12 +9,48 @@
 
 | Actor             | Caso de Uso                                                     |
 | ----------------- | --------------------------------------------------------------- |
-| Alumno            | [Importar curso](#caso-de-uso-importar-curso)                   |
-|                   |  [Realizar curso](#caso-de-uso-realizar-curso)                   |
+| Alumno            | [Iniciar la aplicación (Login/Registro)](#caso-de-uso-iniciar-la-aplicación-loginregistro) |
+|                   | [Importar curso](#caso-de-uso-importar-curso)                   |
+|                   | [Realizar curso](#caso-de-uso-realizar-curso)                   |
 |                   | [Continuar curso](#caso-de-uso-continuar-curso)                 |
 |                   | [Ver estadísticas de uso](#caso-de-uso-ver-estadísticas-de-uso) |
 | Creador de cursos | [Crear curso](#caso-de-uso-crear-curso)                         |
 |                   | [Compartir curso](#caso-de-uso-compartir-curso)                 |
+
+---
+## Caso de uso: Iniciar la aplicación (Login/Registro)
+
+**Descripción:**  
+Al iniciar la aplicación DuolingoPDS, se muestra una pantalla de login. El usuario puede:
+- **Iniciar sesión**, introduciendo sus credenciales (telefono/usuario y contraseña) , **o**
+- **Registrarse**. En este paso,se crea la cuenta introduciendo los datos (nombre, apellidos, teléfono,email, tipo de usuario(Alumno o Creador de cursos) y contraseña)
+
+De esta forma, una vez logueado, el usuario asume el rol de **Alumno** o **Creador de cursos** según corresponda.
+
+**Actor principal:**  
+- Alumno (futuro, si elige registrarse como Alumno o ya tiene cuenta de Alumno)
+- Creador de cursos (futuro, si elige registrarse como Creador o ya tiene cuenta de Creador)
+
+**Precondiciones:**
+- No hay. El usuario simplemente inicia la aplicación por primera vez o sin una sesión activa.
+
+**Flujo principal:**
+1. El usuario inicia la aplicación DuolingoPDS.
+2. Se muestra la pantalla de login con las opciones de **Iniciar sesión** o **Registrarse**.
+3. Si el usuario tiene cuenta, elige **Iniciar sesión** y proporciona sus credenciales.
+4. Si el usuario no tiene cuenta, elige **Registrarse** e indica:
+   - Datos personales (nombre, apellidos, teléfono,email).
+   - Tipo de cuenta: **Alumno** o **Creador de cursos**.
+5. El sistema valida las credenciales si es un inicio de sesión, o crea la cuenta si es un registro.
+6. El usuario ingresa a la aplicación con los permisos de su rol (Alumno o Creador de cursos).
+
+**Flujos alternativos:**
+- **4a. Datos inválidos**: Si al registrarse se detectan datos inválidos, se muestra un mensaje de error y se solicita la corrección.
+- **3a. Credenciales incorrectas**: Si al iniciar sesión las credenciales no coinciden, se notifica al usuario y se pide reintentar.
+- **Recuperar contraseña**: Si el usuario la olvidó, selecciona la opción "Recuperar contraseña" y sigue el proceso de recuperación.
+
+**Postcondiciones:**  
+- El usuario queda logueado en la aplicación, con un rol **Alumno** o **Creador de cursos**, listo para usar las demás funciones.
 
 ---
 
