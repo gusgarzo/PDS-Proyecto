@@ -7,15 +7,20 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import pds.controlador.Controlador;
+import pds.dominio.Usuario;
 
 public class DuolingoLogin extends JFrame {
     private JPanel contentPane;
@@ -41,11 +46,11 @@ public class DuolingoLogin extends JFrame {
         
         JButton registrar = new JButton("Registrar");
         panel1.add(registrar);
-        /*
+        
         registrar.addActionListener(ev -> {
-            ChatRegisterWindow reg = new ChatRegisterWindow();
+            RegisterWindow reg = new RegisterWindow();
             reg.setVisible(true);
-        });*/
+        });
         panel1.add(Box.createHorizontalGlue());
         
         JButton aceptar = new JButton("Aceptar");
@@ -97,9 +102,33 @@ public class DuolingoLogin extends JFrame {
         addManejadorBotonLogin(registrar);
     }
 
-	private void addManejadorBotonLogin(JButton aceptar) {
-		// TODO Auto-generated method stub
-		
-	}
+    private void addManejadorBotonLogin(JButton aceptar) {
+        aceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usuario = textUsuario.getText().trim();
+                String contrasena = new String(textPassword.getPassword());
+
+                if (usuario.isEmpty() || contrasena.isEmpty()) {
+                    JOptionPane.showMessageDialog(frmLogin, "Por favor complete todos los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                boolean loginExitoso = Controlador.getInstancia().loginUsuario(usuario, contrasena);
+
+                if (loginExitoso) {
+                    Usuario u = Controlador.getInstancia().getUsuarioActual();
+                    JOptionPane.showMessageDialog(frmLogin, "¡Bienvenido, " + u.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
+                    MainWindow main = new MainWindow();
+                    main.setVisible(true);
+                    frmLogin.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frmLogin, "Usuario o contraseña incorrectos", "Login fallido", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+
 	
 }
