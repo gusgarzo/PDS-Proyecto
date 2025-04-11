@@ -3,6 +3,8 @@ package pds.vista;
 import javax.swing.*;
 import java.awt.*;
 
+import pds.controlador.Controlador;
+
 public class RegisterWindow extends JFrame {
     private JTextField nameField, lastNameField, phoneField, emailField;
     private JPasswordField passwordField, confirmPasswordField;
@@ -88,8 +90,22 @@ public class RegisterWindow extends JFrame {
 
         aceptarButton.addActionListener(e -> {
             if (validateFields()) {
-                JOptionPane.showMessageDialog(this, "Registro exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                String nombre = nameField.getText();
+                String apellidos = lastNameField.getText();
+                String telefono = phoneField.getText();
+                String correo = emailField.getText();
+                String contrasena = new String(passwordField.getPassword());
+                String tipoUsuario = (String) accountTypeComboBox.getSelectedItem();
+
+                Controlador controlador = Controlador.getInstancia();
+                boolean registrado = controlador.registrarUsuario(nombre, apellidos, telefono, correo, contrasena, tipoUsuario);
+
+                if (registrado) {
+                    JOptionPane.showMessageDialog(this, "Registro exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "El correo ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
