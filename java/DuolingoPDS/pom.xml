@@ -40,8 +40,14 @@
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-community-dialects</artifactId>
             <version>6.2.7.Final</version>
-    </dependency>
-
+    	</dependency>
+    	
+    	<!-- Para convertir JSON a objetos Java para importar cursos -->
+    	<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.17.0</version>
+		</dependency>
   </dependencies>
   
   

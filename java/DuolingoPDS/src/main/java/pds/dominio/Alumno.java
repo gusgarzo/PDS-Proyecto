@@ -1,6 +1,8 @@
 package pds.dominio;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,6 +11,9 @@ public class Alumno extends Usuario {
 
     @ManyToMany
     private List<Curso> cursosEnProgreso;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Curso> cursosImportados;
 
     @Column(nullable = false)
     private int cursosCompletados = 0;
@@ -20,11 +25,21 @@ public class Alumno extends Usuario {
     private int tiempoTotalMinutos = 0;
 
     public Alumno() {
-        // Estos valores ya se inicializan arriba, pero podés hacerlo aquí también si preferís
         this.cursosCompletados = 0;
         this.rachaDias = 0;
         this.tiempoTotalMinutos = 0;
+        //Para evitar problemas con JPA inicializamos las listas de cursos
+        this.cursosEnProgreso = new ArrayList<>();
+        this.cursosImportados = new ArrayList<>();
     }
 
-    // Getters y setters si los necesitás
+    public List<Curso> getCursosImportados() {
+        return cursosImportados;
+    }
+
+    public void agregarCursoImportado(Curso curso) {
+        cursosImportados.add(curso);
+    }
+
+    // Getters/setters de otros campos si los necesitÃ¡s
 }

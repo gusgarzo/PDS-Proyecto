@@ -1,6 +1,7 @@
 package pds.dao;
 
 import jakarta.persistence.*;
+import pds.dominio.Alumno;
 import pds.dominio.Usuario;
 
 import java.util.List;
@@ -66,5 +67,16 @@ public class RepositorioUsuariosJPA {
         List<Usuario> usuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
         em.close();
         return usuarios;
+    }
+
+    public void actualizarUsuario(Usuario usuario) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(usuario);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }

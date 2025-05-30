@@ -1,8 +1,10 @@
 package pds.controlador;
 
-
 import pds.dominio.*;
+import java.io.File;
 import pds.dao.RepositorioUsuariosJPA;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class Controlador {
 
@@ -23,7 +25,7 @@ public class Controlador {
         return instancia;
     }
 
-    // --- Gestión de usuarios ---
+    // --- Gestiï¿½n de usuarios ---
 
     public boolean registrarUsuario(String nombre, String apellidos, String telefono, String correo, String contrasena, String tipoUsuario) {
         if (repositorioUsuarios.existeUsuario(correo)) return false;
@@ -78,8 +80,34 @@ public class Controlador {
         return usuarioActual instanceof CreadorCurso;
     }
 
-    // --- Lógica para otros objetos persistentes en el futuro ---
+    // --- Lï¿½gica para otros objetos persistentes en el futuro ---
     // public void crearCurso(...)
     // public List<Curso> getCursosDelCreador()
-    // public void importarCurso(...)
+    
+    public boolean importarCurso(File archivo) {
+        if (!estaLogueado() || !(usuarioActual instanceof Alumno)) return false;
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Curso curso = mapper.readValue(archivo, Curso.class);
+
+            if (curso.getNombre() == null || curso.getNombre().isEmpty()) {
+                System.err.println("Nombre de curso invÃ¡lido");
+                return false;
+            }
+
+            Alumno alumno = (Alumno) usuarioActual;
+            alumno.agregarCursoImportado(curso);
+
+            repositorioUsuarios.actualizarUsuario(alumno); // guarda alumno y curso
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
