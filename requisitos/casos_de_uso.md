@@ -7,52 +7,77 @@
 
 ## Tabla de casos de uso
 
-| Actor             | Caso de Uso                                                     |
-| ----------------- | --------------------------------------------------------------- |
-| Alumno            | [Iniciar la aplicación (Login/Registro)](#caso-de-uso-iniciar-la-aplicación-loginregistro) |
+| Actor             | Caso de Uso                              |
+| ----------------- | ---------------------------------------- |
+| Alumno            | [Login](#caso-de-uso-login)              |
+|                   | [Registro](#caso-de-uso-registro)        |
 |                   | [Importar curso](#caso-de-uso-importar-curso)                   |
 |                   | [Realizar curso](#caso-de-uso-realizar-curso)                   |
 |                   | [Continuar curso](#caso-de-uso-continuar-curso)                 |
 |                   | [Ver estadísticas de uso](#caso-de-uso-ver-estadísticas-de-uso) |
-| Creador de cursos | [Crear curso](#caso-de-uso-crear-curso)                         |
+| Creador de cursos | [Login](#caso-de-uso-login)              |
+|                   | [Registro](#caso-de-uso-registro)        |
+|                   | [Crear curso](#caso-de-uso-crear-curso)  |
 |                   | [Compartir curso](#caso-de-uso-compartir-curso)                 |
 
 ---
-## Caso de uso: Iniciar la aplicación (Login/Registro)
+
+## Caso de uso: Login
 
 **Descripción:**  
-Al iniciar la aplicación DuolingoPDS, se muestra una pantalla de login. El usuario puede:
-- **Iniciar sesión**, introduciendo sus credenciales (telefono/usuario y contraseña) , **o**
-- **Registrarse**. En este paso,se crea la cuenta introduciendo los datos (nombre, apellidos, teléfono,email, tipo de usuario(Alumno o Creador de cursos) y contraseña)
-
-De esta forma, una vez logueado, el usuario asume el rol de **Alumno** o **Creador de cursos** según corresponda.
+Permite al usuario acceder a la aplicación DuolingoPDS introduciendo sus credenciales (teléfono/usuario y contraseña). Según el tipo de cuenta, el usuario asume el rol de **Alumno** o **Creador de cursos**.
 
 **Actor principal:**  
-- Alumno (futuro, si elige registrarse como Alumno o ya tiene cuenta de Alumno)
-- Creador de cursos (futuro, si elige registrarse como Creador o ya tiene cuenta de Creador)
+- Alumno  
+- Creador de cursos
 
-**Precondiciones:**
-- No hay. El usuario simplemente inicia la aplicación por primera vez o sin una sesión activa.
+**Precondiciones:**  
+- El usuario debe estar previamente registrado.
 
 **Flujo principal:**
 1. El usuario inicia la aplicación DuolingoPDS.
-2. Se muestra la pantalla de login con las opciones de **Iniciar sesión** o **Registrarse**.
-3. Si el usuario tiene cuenta, elige **Iniciar sesión** y proporciona sus credenciales.
-4. Si el usuario no tiene cuenta, elige **Registrarse** e indica:
-   - Datos personales (nombre, apellidos, teléfono,email).
-   - Tipo de cuenta: **Alumno** o **Creador de cursos**.
-5. El sistema valida las credenciales si es un inicio de sesión, o crea la cuenta si es un registro.
-6. El usuario ingresa a la aplicación con los permisos de su rol (Alumno o Creador de cursos).
+2. Se muestra la pantalla de login.
+3. El usuario introduce su teléfono/usuario y contraseña.
+4. El sistema valida las credenciales.
+5. Si son correctas, el usuario accede a la aplicación con su rol correspondiente.
 
 **Flujos alternativos:**
-- **4a. Datos inválidos**: Si al registrarse se detectan datos inválidos, se muestra un mensaje de error y se solicita la corrección.
-- **3a. Credenciales incorrectas**: Si al iniciar sesión las credenciales no coinciden, se notifica al usuario y se pide reintentar.
-- **Recuperar contraseña**: Si el usuario la olvidó, selecciona la opción "Recuperar contraseña" y sigue el proceso de recuperación.
+- **3a. Credenciales incorrectas:** Si las credenciales no coinciden, se notifica al usuario y se permite reintentar.
+- **Recuperar contraseña:** Si el usuario la olvidó, selecciona "Recuperar contraseña" y sigue el proceso de recuperación.
 
 **Postcondiciones:**  
-- El usuario queda logueado en la aplicación, con un rol **Alumno** o **Creador de cursos**, listo para usar las demás funciones.
+- El usuario queda logueado en la aplicación, con su rol asignado.
 
 ---
+
+## Caso de uso: Registro
+
+**Descripción:**  
+Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de usuario (**Alumno** o **Creador de cursos**) y proporcionando sus datos personales.
+
+**Actor principal:**  
+- Usuario (nuevo Alumno o nuevo Creador de cursos)
+
+**Precondiciones:**  
+- El usuario no debe tener una cuenta registrada previamente con los mismos datos.
+
+**Flujo principal:**
+1. El usuario inicia la aplicación DuolingoPDS.
+2. Se muestra la opción de registro.
+3. El usuario introduce sus datos personales (nombre, apellidos, teléfono, email).
+4. Selecciona el tipo de cuenta: **Alumno** o **Creador de cursos**.
+5. Elige una contraseña.
+6. El sistema valida los datos y crea la cuenta.
+7. El usuario puede iniciar sesión con su nueva cuenta.
+
+**Flujos alternativos:**
+- **4a. Datos inválidos:** Si se detectan datos inválidos (formato incorrecto, teléfono o email ya registrado), se muestra un mensaje de error y se solicita corrección.
+
+**Postcondiciones:**  
+- El usuario queda registrado y puede acceder a la aplicación.
+
+---
+
 
 ### Caso de uso: Importar curso
 
