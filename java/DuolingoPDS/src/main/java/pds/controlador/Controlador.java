@@ -69,6 +69,9 @@ public enum Controlador {
         return false;
     }
 
+    
+    
+    
     public void cerrarSesion() {
         this.usuarioActual = null;
     }
@@ -91,5 +94,19 @@ public enum Controlador {
     public void setUsuario(Usuario usu) {
     	usuarioActual = usu;    }
 
+    
+    
+    /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {
+        if (!(usuarioActual instanceof CreadorCurso creador)) {
+            throw new IllegalStateException("Solo los creadores pueden crear cursos");
+        }
+
+        Curso nuevoCurso = new Curso();
+
+        creador.agregarCurso(nuevoCurso);  // Este método debería existir en CreadorCurso
+        adaptadorCursos.registrarCurso(nuevoCurso);  // DAO
+    }
+
+    */
   
 }
