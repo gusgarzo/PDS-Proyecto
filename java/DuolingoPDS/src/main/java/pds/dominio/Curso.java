@@ -3,19 +3,18 @@ package pds.dominio;
 import jakarta.persistence.*;
 import java.util.List;
 
-@Entity
+
 public class Curso {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+ 
     private Long id;
 
     private String nombre;
 
-    @ManyToOne
+
     private CreadorCurso creador;
 
-    // Otros atributos y métodos necesarios
+    // Otros atributos y mï¿½todos necesarios
 
     public Curso() {}
 

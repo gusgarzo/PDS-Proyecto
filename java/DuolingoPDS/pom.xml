@@ -9,7 +9,7 @@
   	<properties>
 		<jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 		<hibernate.version>6.2.0.Final</hibernate.version>
-		<sqlite.version>3.39.2</sqlite.version>
+		 <sqlite.version>3.49.1.0</sqlite.version> 
 	</properties>
 
   <dependencies>
@@ -44,11 +44,16 @@
 
 		<!-- FlatLaf Look and Feel -->
 		<dependency>
-		    <groupId>com.formdev</groupId>
+		 	<groupId>com.formdev</groupId>
 		    <artifactId>flatlaf</artifactId>
 		    <version>3.6</version>
 		</dependency>
-
-  </dependencies>  
+		<dependency>
+		    <groupId>com.toedter</groupId>
+		    <artifactId>jcalendar</artifactId>
+		    <version>1.4</version>
+		</dependency>
+  	</dependencies>  
   
-</project>
+
+</project>		   

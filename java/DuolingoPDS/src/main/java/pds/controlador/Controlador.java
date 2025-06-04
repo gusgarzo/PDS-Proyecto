@@ -1,31 +1,43 @@
 package pds.controlador;
 
 
+import pds.dao.FactoriaDAO;
+import pds.dao.IAdaptadorAlumnoDAO;
+import pds.dao.IAdaptadorCreadorCursosDAO;
+import pds.dao.IAdaptadorCursoDAO;
+import pds.dao.IAdaptadorEstadisticasDAO;
+import pds.dao.IAdaptadorUsuarioDAO;
 import pds.dominio.*;
 
-public class Controlador {
-
-    private static Controlador instancia = null;
-
-    private final RepositorioUsuariosJPA repositorioUsuarios;
+public enum Controlador {
+	INSTANCE;
+ 
     private Usuario usuarioActual;
 
+    private FactoriaDAO factoria;
+    private IAdaptadorUsuarioDAO adaptadorUsuario;
+    private IAdaptadorEstadisticasDAO adaptadorEstadisticas;
+    private IAdaptadorAlumnoDAO adaptadorAlumno;
+    private IAdaptadorCreadorCursosDAO adaptadorCreadorCursos;
+    private IAdaptadorCursoDAO adaptadorCursos;
     private Controlador() {
-        this.repositorioUsuarios = new RepositorioUsuariosJPA();
-        this.usuarioActual = null;
+    	 usuarioActual = null;
+         try {
+             factoria = FactoriaDAO.getInstancia();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+        adaptadorAlumno = factoria.getAdaptadorAlumnoDAO();
+        adaptadorCreadorCursos = factoria.getAdaptadorCreadorCursosDAO();
+        adaptadorCursos = factoria.getAdaptadorCursoDAO();
+        adaptadorUsuario = factoria.getAdaptadorUsuarioDAO();
+        adaptadorEstadisticas = factoria.getAdaptadorEstadisticasDAO();
+
     }
 
-    public static Controlador getInstancia() {
-        if (instancia == null) {
-            instancia = new Controlador();
-        }
-        return instancia;
-    }
-
-    // --- Gesti�n de usuarios ---
-
+   
     public boolean registrarUsuario(String nombre, String apellidos, String telefono, String correo, String contrasena, String tipoUsuario) {
-        if (repositorioUsuarios.existeUsuario(correo)) return false;
+       // if (adaptadorUsuario.existeUsuario(correo)) return false;
 
         Usuario nuevoUsuario;
         if (tipoUsuario.equalsIgnoreCase("Alumno")) {
@@ -42,14 +54,14 @@ public class Controlador {
         nuevoUsuario.setCorreo(correo);
         nuevoUsuario.setContrasena(contrasena);
 
-        repositorioUsuarios.registrarUsuario(nuevoUsuario);
+        //repositorioUsuarios.registrarUsuario(nuevoUsuario);
         this.usuarioActual = nuevoUsuario;
 
         return true;
     }
 
     public boolean loginUsuario(String correo, String contrasena) {
-        Usuario usuario = repositorioUsuarios.buscarUsuarioPorCorreoYContrasena(correo, contrasena);
+        Usuario usuario = null;//repositorioUsuarios.buscarUsuarioPorCorreoYContrasena(correo, contrasena);
         if (usuario != null) {
             this.usuarioActual = usuario;
             return true;
@@ -77,8 +89,5 @@ public class Controlador {
         return usuarioActual instanceof CreadorCurso;
     }
 
-    // --- L�gica para otros objetos persistentes en el futuro ---
-    // public void crearCurso(...)
-    // public List<Curso> getCursosDelCreador()
-    // public void importarCurso(...)
+  
 }

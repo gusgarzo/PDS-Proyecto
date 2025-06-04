@@ -2,22 +2,16 @@ package pds.dominio;
 
 import jakarta.persistence.*;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
-public abstract class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+ public abstract class Usuario{ 
+	private Long id;	
     private String nombre;
     private String apellidos;
     private String telefono;
     private String correo;
     private String contrasena;
-
     public Usuario() {}
+	  
 
     // Getters y Setters
     public Long getId() {
