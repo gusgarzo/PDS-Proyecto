@@ -16,5 +16,5 @@ public class CreadorCurso extends Usuario {
         this.cursosCreados = new ArrayList<>();
     }
 
-    // Getters y setters
+
 }

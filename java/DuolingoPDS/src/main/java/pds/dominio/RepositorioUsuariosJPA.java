@@ -1,7 +1,6 @@
-package pds.dao;
+package pds.dominio;
 
 import jakarta.persistence.*;
-import pds.dominio.Usuario;
 
 import java.util.List;
 

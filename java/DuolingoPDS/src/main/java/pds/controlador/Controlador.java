@@ -2,7 +2,6 @@ package pds.controlador;
 
 
 import pds.dominio.*;
-import pds.dao.RepositorioUsuariosJPA;
 
 public class Controlador {
 
@@ -23,7 +22,7 @@ public class Controlador {
         return instancia;
     }
 
-    // --- Gestión de usuarios ---
+    // --- Gestiï¿½n de usuarios ---
 
     public boolean registrarUsuario(String nombre, String apellidos, String telefono, String correo, String contrasena, String tipoUsuario) {
         if (repositorioUsuarios.existeUsuario(correo)) return false;
@@ -78,7 +77,7 @@ public class Controlador {
         return usuarioActual instanceof CreadorCurso;
     }
 
-    // --- Lógica para otros objetos persistentes en el futuro ---
+    // --- Lï¿½gica para otros objetos persistentes en el futuro ---
     // public void crearCurso(...)
     // public List<Curso> getCursosDelCreador()
     // public void importarCurso(...)
