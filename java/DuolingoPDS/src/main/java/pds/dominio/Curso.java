@@ -10,15 +10,26 @@ public class Curso {
     private Long id;
 
     private String nombre;
-
-
+    
     private CreadorCurso creador;
+    
+    
+    private Dificultad dificultad;
+    
+    private List <BloqueContenido> bloques;
 
-    // Otros atributos y m�todos necesarios
+   
 
-    public Curso() {}
+    public Curso(Long id, String nombre, CreadorCurso creador,
+			List<BloqueContenido> bloques, Dificultad dificultad) {
+		this.id = id;
+		this.nombre = nombre;
+		this.creador = creador;
+		this.bloques = bloques;
+		this.dificultad = dificultad;
+	}
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -37,4 +48,25 @@ public class Curso {
     public void setCreador(CreadorCurso creador) {
         this.creador = creador;
     }
+
+	public List<BloqueContenido> getBloques() {
+		return bloques;
+	}
+
+	public void setBloques(List<BloqueContenido> bloques) {
+		this.bloques = bloques;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Dificultad getDificultad() {
+		return dificultad;
+	}
+
+	public void setDificultad(Dificultad dificultad) {
+		this.dificultad = dificultad;
+	}
+    
 }
