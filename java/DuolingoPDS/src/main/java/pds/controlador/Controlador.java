@@ -39,9 +39,9 @@ public enum Controlador {
     public boolean registrarUsuario(String nombre, String apellidos, String telefono, String correo, String contrasena, String tipoUsuario) {
        // if (adaptadorUsuario.existeUsuario(correo)) return false;
 
-        Usuario nuevoUsuario;
+        Usuario nuevoUsuario = null;
         if (tipoUsuario.equalsIgnoreCase("Alumno")) {
-            nuevoUsuario = new Alumno();
+
         } else if (tipoUsuario.equalsIgnoreCase("Creador de cursos")) {
             nuevoUsuario = new CreadorCurso();
         } else {
@@ -88,6 +88,8 @@ public enum Controlador {
     public boolean esCreador() {
         return usuarioActual instanceof CreadorCurso;
     }
+    public void setUsuario(Usuario usu) {
+    	usuarioActual = usu;    }
 
   
 }

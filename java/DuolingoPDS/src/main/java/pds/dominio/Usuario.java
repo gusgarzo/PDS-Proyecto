@@ -11,9 +11,19 @@ import jakarta.persistence.*;
     private String correo;
     private String contrasena;
     public Usuario() {}
-	  
+    
 
-    // Getters y Setters
+    public Usuario( String nombre, String apellidos, String telefono, String correo, String contrasena) {
+		
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.telefono = telefono;
+		this.correo = correo;
+		this.contrasena = contrasena;
+	}
+
+
+	// Getters y Setters
     public Long getId() {
         return id;
     }

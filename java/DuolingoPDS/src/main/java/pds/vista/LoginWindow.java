@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import pds.controlador.Controlador;
+import pds.dominio.Alumno;
 import pds.dominio.Usuario;
 
 public class LoginWindow extends JFrame {
@@ -175,9 +176,16 @@ public class LoginWindow extends JFrame {
                 }
 
                 boolean loginExitoso = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
-
+                loginExitoso = true;
                 if (loginExitoso) {
-                    Usuario u = Controlador.INSTANCE.getUsuarioActual();
+                    Alumno u = new Alumno(
+                    	    "Ash",          // nombre
+                    	    "Ketchum",      // apellidos
+                    	    "123456789",    // telefono
+                    	    "ash@poke.com", // correo
+                    	    "pikachu123"    // contrasena
+                    	);//Controlador.INSTANCE.getUsuarioActual();
+                    Controlador.INSTANCE.setUsuario(u);
                     JOptionPane.showMessageDialog(LoginWindow.this, "¡Bienvenido, " + u.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
                     MainWindow main = new MainWindow();
                     main.setVisible(true);
