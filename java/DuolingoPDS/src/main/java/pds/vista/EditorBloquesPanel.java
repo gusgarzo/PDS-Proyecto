@@ -55,6 +55,25 @@ public class EditorBloquesPanel extends JPanel {
 
         panelCentral.add(panelFormulario, BorderLayout.NORTH);
         panelCentral.add(scroll, BorderLayout.CENTER);
+   
+     
+
+        guardar = new JButton("Guardar curso");
+        guardar.setBackground(new Color(0xFFCB05)); 
+        guardar.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+        guardar.setFocusPainted(false);
+        guardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        guardar.setPreferredSize(new Dimension(160, 40));
+        guardar.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+        guardar.setForeground(Color.BLACK); 
+        
+        JPanel panelGuardar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        panelGuardar.setOpaque(false);
+        panelGuardar.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 30)); 
+        panelGuardar.add(guardar);
+
+        add(panelGuardar, BorderLayout.SOUTH);
+        add(panelGuardar, BorderLayout.SOUTH);
 
         add(panelCentral, BorderLayout.CENTER);
     }
@@ -76,7 +95,7 @@ public class EditorBloquesPanel extends JPanel {
 
             JPanel subPanel = crearPanelPreguntasBloque();
             subPanel.setVisible(false);
-
+            
             lbl.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     if (evt.getClickCount() == 2) {
