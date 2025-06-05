@@ -102,32 +102,33 @@ Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de
 
 ---
 
-### Caso de uso: Realizar curso
-
-**Descripción:** Permite al alumno seleccionar y realizar un curso completo desde la teoría hasta el examen final.
-
-**Actor principal:** Alumno
-
-**Precondiciones:** El alumno debe estar registrado y logueado en el sistema.
-
-**Flujo principal:**
-
-1. El alumno selecciona un curso.
-2. El sistema presenta la teoría mediante flashcards.
-3. El alumno completa ejercicios.
-4. El alumno realiza el examen final.
-5. Al aprobar, el curso se marca como completado.
-
-**Flujos alternativos:**
-
-- **1a. Curso no disponible:** Si en el paso 1 el curso seleccionado no está disponible, el sistema muestra un mensaje de error y sugiere otro curso similar.
-- **1b. Alumno abandona:** Si en el paso 1 el alumno decide salir del curso, el sistema guarda su progreso y permite retomarlo más tarde.
-- **3a. Respuestas incorrectas:** Si en el paso 3 el alumno responde mal varias veces, se le ofrecen pistas o material de apoyo.
-- **4a. No aprueba examen:** Si en el paso 4 el alumno no pasa el examen, se le permite revisar el material y volver a intentarlo.
-
-**Postcondiciones:** El curso queda finalizado o guardado en estado "en progreso".
+## Caso de uso: Realizar curso
 
 ---
+
+## Descripción
+Permite al alumno seleccionar y realizar un curso completo desde la teoría hasta el examen final.
+
+## Actor principal
+- Alumno
+
+## Precondiciones
+- El alumno debe estar registrado y logueado en el sistema.
+
+## Flujo principal
+1. El alumno selecciona un curso de los disponibles en la base de datos o previamente a importado uno.
+2. El alumno selecciona la estrategia de aprendizaje.
+3. El alumno completa los bloques de contenido.
+4. El alumno al terminar todos los bloques, completa el curso.
+5. Se le presentan estadísticas en relación a cómo a completado el curso. (opcional)
+
+## Flujos alternativos
+- **1a. Curso no disponible**: Si en el paso 1 el curso seleccionado no está disponible, el sistema muestra un mensaje de error y sugiere otro curso similar.
+- **3b. Alumno abandona**: Si en el paso 1 el alumno decide salir del curso, el sistema guarda su progreso y permite retomarlo más tarde.
+
+## Postcondiciones
+- El curso queda finalizado o guardado en estado "en progreso".
+
 
 ### Caso de uso: Continuar curso
 
