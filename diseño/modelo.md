@@ -34,9 +34,9 @@ classDiagram
     Dificultad <|-- Dificil
 
     class EstrategiaAprendizaje
-    EstrategiaAprendizaje <|-- EstrategiaSecuencial
-    EstrategiaAprendizaje <|-- EstrategiaRepeticionEspaciada
-    EstrategiaAprendizaje <|-- EstrategiaAleatoria
+    EstrategiaAprendizaje <|-- Secuencial
+    EstrategiaAprendizaje <|-- RepeticionEspaciada
+    EstrategiaAprendizaje <|-- Aleatoria
 
     %% --- Realización y Estadísticas ---
     class RealizacionCurso {
