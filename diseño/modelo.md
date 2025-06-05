@@ -25,20 +25,20 @@ classDiagram
     }
     Pregunta <|-- TipoTest
     Pregunta <|-- Huecos
-    Pregunta <|-- RespuestaCorta
-    Pregunta <|-- Unir
+  
+ 
     Pregunta <|-- FlashCard
 
     %% --- Dificultad y Estrategia ---
     class Dificultad
-    Dificultad <|-- DificultadFacil
-    Dificultad <|-- DificultadMedia
-    Dificultad <|-- DificultadDificil
+    Dificultad <|-- Facil
+    Dificultad <|-- Media
+    Dificultad <|-- Dificil
 
     class EstrategiaAprendizaje
-    EstrategiaAprendizaje <|-- EstrategiaSecuencial
-    EstrategiaAprendizaje <|-- EstrategiaRepeticionEspaciada
-    EstrategiaAprendizaje <|-- EstrategiaAleatoria
+    EstrategiaAprendizaje <|-- Secuencial
+    EstrategiaAprendizaje <|-- RepeticionEspaciada
+    EstrategiaAprendizaje <|-- Aleatoria
 
     %% --- Realización y Estadísticas ---
     class RealizacionCurso {
@@ -69,9 +69,7 @@ classDiagram
     %% Curso y Dificultad
     Curso --> Dificultad : "tiene"
 
-    %% Notas:
-    %% - FlashCard hereda de Pregunta para mantener la lógica de pregunta intercalada.
-    %% - Puedes añadir más relaciones si necesitas comentarios, calificaciones, etc.
+  
 
 
 ```
