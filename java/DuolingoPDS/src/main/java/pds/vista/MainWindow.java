@@ -126,13 +126,13 @@ public class MainWindow extends JFrame {
     }
 
     private void crearCurso() {
+    	//COMPROBAR SI ES CREADOR
         contentPanel.removeAll();
-        JLabel inicioLabel = new JLabel("¡Crea tu propio gimnasio Pokémon!", SwingConstants.CENTER);
-        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(inicioLabel, BorderLayout.CENTER);
+        contentPanel.add(new EditorCursoPanel(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
+
 
     private void mostrarInicio() {
         contentPanel.removeAll();
