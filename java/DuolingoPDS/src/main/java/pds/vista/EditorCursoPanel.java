@@ -2,10 +2,8 @@ package pds.vista;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
+@SuppressWarnings("serial")
 public class EditorCursoPanel extends JPanel {
 
     private JTextField txtNombre;
@@ -14,9 +12,6 @@ public class EditorCursoPanel extends JPanel {
     private JButton btnSiguiente;
 
     private JPanel panelDatosCurso;
-    
-
-   
 
     public EditorCursoPanel() {
         setLayout(new BorderLayout());
@@ -89,9 +84,6 @@ public class EditorCursoPanel extends JPanel {
         revalidate();
         repaint();
     }
-
-    
-
     
     private JLabel crearLabel(String texto) {
         JLabel label = new JLabel(texto);
