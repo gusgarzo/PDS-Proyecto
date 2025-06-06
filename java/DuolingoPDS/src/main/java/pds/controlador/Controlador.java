@@ -94,6 +94,15 @@ public enum Controlador {
     public void setUsuario(Usuario usu) {
     	usuarioActual = usu;    }
 
+
+    public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
+        if (usuarioActual instanceof CreadorCurso) {
+            return ((CreadorCurso) usuarioActual).crearCurso(nombre, descripcion, dificultad);
+        } else {
+            throw new IllegalStateException("El usuario actual no es un creador de cursos.");
+        }
+    }
+
     
     
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {

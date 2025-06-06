@@ -1,6 +1,9 @@
 package pds.vista;
 
 import javax.swing.*;
+
+import pds.dominio.Curso;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +16,14 @@ public class EditorBloquesPanel extends JPanel {
     private JButton guardar;
     private List<String> bloques; // de momento solo nombres
 
-    public EditorBloquesPanel(String nombreCurso, String dificultad, String descripcion) {
+    public EditorBloquesPanel(Curso curso) {
         this.bloques = new ArrayList<>();
 
         setLayout(new BorderLayout());
         setBackground(new Color(30, 36, 45));
 
         // Título
-        JLabel titulo = new JLabel("Bloques de contenido para: " + nombreCurso, SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Bloques de contenido para: " + curso.getNombre(), SwingConstants.CENTER);
         titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         titulo.setForeground(Color.WHITE);
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
@@ -246,11 +249,5 @@ public class EditorBloquesPanel extends JPanel {
         panel.add(Box.createVerticalStrut(15));
         panel.add(panelGuardar);
         return panel;
-    }
-
-
-
-    public List<String> getBloques() {
-        return bloques;
     }
 }
