@@ -61,7 +61,13 @@ public enum Controlador {
     }
 
     public boolean loginUsuario(String correo, String contrasena) {
-        Usuario usuario = null;//repositorioUsuarios.buscarUsuarioPorCorreoYContrasena(correo, contrasena);
+        Usuario usuario = null;
+
+        // Simulación: si se usa este correo, se crea un creador
+        if (correo.equals("2") && contrasena.equals("2")) {
+            usuario = new CreadorCurso();
+        }
+
         if (usuario != null) {
             this.usuarioActual = usuario;
             return true;
@@ -97,13 +103,25 @@ public enum Controlador {
 
     public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
         if (usuarioActual instanceof CreadorCurso) {
-            return ((CreadorCurso) usuarioActual).crearCurso(nombre, descripcion, dificultad);
+            return ((CreadorCurso) usuarioActual).crearCurso(nombre, dificultad, descripcion);
         } else {
             throw new IllegalStateException("El usuario actual no es un creador de cursos.");
         }
     }
 
+    public void agregarBloqueACurso(Curso curso, String nombre) {
+        if (curso == null || nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("Nombre y tema del bloque no pueden estar vacíos.");
+        }
+
+        curso.crearYAgregarBloque(nombre);
+    }
+
     
+    public boolean esCreadorActual() {
+        return usuarioActual instanceof CreadorCurso;
+    }
+
     
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {
         if (!(usuarioActual instanceof CreadorCurso creador)) {

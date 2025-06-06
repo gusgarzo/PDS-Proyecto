@@ -13,7 +13,7 @@ import jakarta.persistence.*;
     public Usuario() {}
     
 
-    public Usuario( String nombre, String apellidos, String telefono, String correo, String contrasena) {
+    public Usuario(String nombre, String apellidos, String telefono, String correo, String contrasena) {
 		
 		this.nombre = nombre;
 		this.apellidos = apellidos;

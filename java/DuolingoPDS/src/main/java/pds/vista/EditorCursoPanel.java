@@ -80,24 +80,10 @@ public class EditorCursoPanel extends JPanel {
         if (!validarCampos(nombre, descripcion)) return;
 
         Dificultad dificultad = parsearDificultad(dificultadTexto);
-        if (dificultad == null) {
-            JOptionPane.showMessageDialog(this, "Dificultad no reconocida.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
-        try {
-            Curso curso = Controlador.INSTANCE.crearCurso(nombre, descripcion, dificultad);
-            cambiarAEditorBloques(curso);
-        } catch (IllegalStateException ex) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Solo los usuarios creadores pueden crear cursos.\nPor favor, inicia sesión como creador.",
-                "Permiso denegado",
-                JOptionPane.WARNING_MESSAGE
-            );
-        }
+        Curso curso = Controlador.INSTANCE.crearCurso(nombre, descripcion, dificultad);
+        cambiarAEditorBloques(curso);
     }
-
     
     private boolean validarCampos(String nombre, String descripcion) {
         if (nombre.isEmpty() || descripcion.isEmpty()) {
@@ -114,7 +100,6 @@ public class EditorCursoPanel extends JPanel {
             case "fácil":
                 return Dificultad.FACIL;
             case "medio":
-            case "media":
                 return Dificultad.NORMAL;
             case "difícil":
                 return Dificultad.DIFICIL;

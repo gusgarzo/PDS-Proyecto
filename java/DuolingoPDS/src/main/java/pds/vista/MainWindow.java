@@ -126,13 +126,21 @@ public class MainWindow extends JFrame {
     }
 
     private void crearCurso() {
-    	//COMPROBAR SI ES CREADOR
+        if (!Controlador.INSTANCE.esCreadorActual()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Solo los usuarios creadores pueden acceder a la creación de cursos.",
+                "Permiso denegado",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
         contentPanel.removeAll();
         contentPanel.add(new EditorCursoPanel(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
-
 
     private void mostrarInicio() {
         contentPanel.removeAll();

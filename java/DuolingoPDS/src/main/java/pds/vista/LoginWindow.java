@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import pds.controlador.Controlador;
 import pds.dominio.Alumno;
 import pds.dominio.Usuario;
+import pds.dominio.CreadorCurso;
 
 public class LoginWindow extends JFrame {
     private JPanel contentPane;
@@ -178,7 +179,7 @@ public class LoginWindow extends JFrame {
                 boolean loginExitoso = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
                 loginExitoso = true;
                 if (loginExitoso) {
-                    Alumno u = new Alumno(
+                	CreadorCurso u = new CreadorCurso(
                     	    "Ash",          // nombre
                     	    "Ketchum",      // apellidos
                     	    "123456789",    // telefono
