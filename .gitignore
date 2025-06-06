@@ -1,0 +1,12 @@
+java/DuolingoPDS/basedatos.db
+java/DuolingoPDS/target/classes/META-INF/MANIFEST.MF
+java/DuolingoPDS/target/classes/pds/dao/AdaptadorAlumnoJPA.class
+java/DuolingoPDS/target/classes/pds/dao/AdaptadorCursoJPA.class
+java/DuolingoPDS/target/classes/pds/dao/AdaptadorEstadisticasJPA.class
+java/DuolingoPDS/target/classes/pds/dao/AdaptadorCreadorCursosJPA.class
+java/DuolingoPDS/target/classes/pds/dao/AdaptadorUsuarioJPA.class
+java/DuolingoPDS/target/classes/pds/dao/FactoriaDAO.class
+java/DuolingoPDS/target/classes/pds/dao/IAdaptadorAlumnoDAO.class
+java/DuolingoPDS/target/classes/pds/dao/IAdaptadorCreadorCursosDAO.class
+*.class
+/java/DuolingoPDS/target
