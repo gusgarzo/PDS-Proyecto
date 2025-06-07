@@ -18,8 +18,7 @@ public class Curso {
     
     private List <BloqueContenido> bloques;
 
-       public Curso(Long id, String nombre, CreadorCurso creador,
-			List<BloqueContenido> bloques, Dificultad dificultad) {
+    public Curso(Long id, String nombre, CreadorCurso creador, List<BloqueContenido> bloques, Dificultad dificultad) {
 		this.id = id;
 		this.nombre = nombre;
 		this.creador = creador;
@@ -72,9 +71,10 @@ public class Curso {
     }
     
     public BloqueContenido crearYAgregarBloque(String nombre, String tema) {
-        BloqueContenido nuevoBloque = new BloqueContenido(nombre, tema, this);
+        BloqueContenido nuevoBloque = new BloqueContenido(nombre);
         bloques.add(nuevoBloque);
         return nuevoBloque;
     }
+    
 
 }

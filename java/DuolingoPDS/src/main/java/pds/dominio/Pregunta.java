@@ -5,6 +5,7 @@ public abstract class Pregunta {
 	private Integer id;
 	
 	private String enunciado;
+	private boolean completada;
 	
 	public Pregunta(String enunciado) {
         this.enunciado = enunciado;

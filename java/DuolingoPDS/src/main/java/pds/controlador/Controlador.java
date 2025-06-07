@@ -99,7 +99,7 @@ public enum Controlador {
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {
         if (!(usuarioActual instanceof CreadorCurso creador)) {
             throw new IllegalStateException("Solo los creadores pueden crear cursos");
-        }
+        } 
 
         Curso nuevoCurso = new Curso();
 

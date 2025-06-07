@@ -6,14 +6,11 @@ import java.util.List;
 public class BloqueContenido {
 
     private String nombre;
-    private String tema;
-    private Curso curso;
+  
     private List<Pregunta> preguntas;
 
-    public BloqueContenido(String nombre, String tema, Curso curso) {
+    public BloqueContenido(String nombre) {
         this.nombre = nombre;
-        this.tema = tema;
-        this.curso = curso;
         this.preguntas = new ArrayList<>();
     }
 
@@ -25,21 +22,7 @@ public class BloqueContenido {
         this.nombre = nombre;
     }
 
-    public String getTema() {
-        return tema;
-    }
-
-    public void setTema(String tema) {
-        this.tema = tema;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
+  
 
     public List<Pregunta> getPreguntas() {
         return preguntas;
@@ -61,6 +44,6 @@ public class BloqueContenido {
 
     @Override
     public String toString() {
-        return nombre + " - " + tema;
+        return nombre ;
     }
 }
