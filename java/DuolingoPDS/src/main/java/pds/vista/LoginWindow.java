@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
 import pds.dominio.Alumno;
 import pds.dominio.Usuario;
 import pds.dominio.CreadorCurso;
@@ -187,6 +188,7 @@ public class LoginWindow extends JFrame {
                     	    "pikachu123"    // contrasena
                     	);//Controlador.INSTANCE.getUsuarioActual();
                     Controlador.INSTANCE.setUsuario(u);
+                    ControladorCurso.INSTANCE.setUsuarioActual(u);
                     JOptionPane.showMessageDialog(LoginWindow.this, "¡Bienvenido, " + u.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
                     MainWindow main = new MainWindow();
                     main.setVisible(true);

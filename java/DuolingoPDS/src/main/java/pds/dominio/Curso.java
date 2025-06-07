@@ -75,8 +75,26 @@ public class Curso {
     
     public BloqueContenido crearYAgregarBloque(String nombre) {
         BloqueContenido nuevoBloque = new BloqueContenido(nombre);
-        bloques.add(nuevoBloque);
+        agregarBloque(nuevoBloque);
         return nuevoBloque;
     }
+    
+    public void agregarPreguntaABloque(String nombreBloque, Pregunta pregunta) {
+        BloqueContenido bloque = getBloquePorNombre(nombreBloque);
+        if (bloque != null) {
+            bloque.agregarPregunta(pregunta);
+        } else {
+            throw new IllegalArgumentException("Bloque no encontrado: " + nombreBloque);
+        }
+    }
 
+    public BloqueContenido getBloquePorNombre(String nombre) {
+        for (BloqueContenido bloque : bloques) {
+            if (bloque.getNombre().equals(nombre)) {
+                return bloque;
+            }
+        }
+        return null;
+    }
+    
 }

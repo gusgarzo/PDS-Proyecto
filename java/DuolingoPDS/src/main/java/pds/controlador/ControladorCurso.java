@@ -14,7 +14,7 @@ public enum ControladorCurso {
         return usuarioActual;
     }
     
-	void setUsuarioActual(Usuario usuario) {
+	public void setUsuarioActual(Usuario usuario) {
 		usuarioActual=usuario;
 	}
 
@@ -38,7 +38,7 @@ public enum ControladorCurso {
         }
     }
 
-    public void agregarBloqueACurso(Curso curso, String nombre) {
+    public void agregarBloqueCurso(Curso curso, String nombre) {
         if (curso == null || nombre == null || nombre.isBlank()) {
             throw new IllegalArgumentException("Nombre y tema del bloque no pueden estar vacíos.");
         }
@@ -46,5 +46,12 @@ public enum ControladorCurso {
         curso.crearYAgregarBloque(nombre);
     }
 
+    public void agregarPreguntaBloque(Curso curso, String nombreBloque, Pregunta pregunta) {
+        if (curso == null || nombreBloque == null || pregunta == null) {
+            throw new IllegalArgumentException("Datos inválidos para agregar pregunta");
+        }
+
+        curso.agregarPreguntaABloque(nombreBloque, pregunta);
+    }
 
 }

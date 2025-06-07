@@ -18,6 +18,4 @@ public class PokeLingo {
 		LoginWindow login = new LoginWindow();	
 		login.setVisible(true);
 	}
-	
-
 }

@@ -96,7 +96,8 @@ public enum Controlador {
         return usuarioActual instanceof CreadorCurso;
     }
     public void setUsuario(Usuario usu) {
-    	usuarioActual = usu;    }
+    	usuarioActual = usu;    
+    }
     
 
     

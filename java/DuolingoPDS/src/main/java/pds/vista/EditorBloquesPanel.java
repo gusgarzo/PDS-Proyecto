@@ -5,6 +5,7 @@ import javax.swing.*;
 import pds.controlador.Controlador;
 import pds.controlador.ControladorCurso;
 import pds.dominio.Curso;
+import pds.dominio.Pregunta;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -108,7 +109,9 @@ public class EditorBloquesPanel extends JPanel {
                     }
                 }
             });
-
+            
+            ControladorCurso.INSTANCE.agregarBloqueCurso(curso, nombre);
+            
             panelBloque.add(lbl);
             panelBloque.add(subPanel);
             panelListaBloques.add(panelBloque);
@@ -190,7 +193,7 @@ public class EditorBloquesPanel extends JPanel {
             String tipo = (String) tipoPregunta.getSelectedItem();
             String enunciado = enunciadoField.getText().trim();
             String respuesta = campoRespuesta.getText().trim();
-            String resumen = "";
+            Pregunta pregunta = null;
 
             if (tipo.equals("Test")) {
                 List<String> opciones = testPanel.getOpciones();
@@ -198,22 +201,39 @@ public class EditorBloquesPanel extends JPanel {
                     JOptionPane.showMessageDialog(panel, "Completa el enunciado, las opciones y la respuesta correcta.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                resumen = "Test: " + enunciado + " | Opciones: " + opciones + " | Respuesta: " + respuesta;
-            } else if (tipo.equals("Huecos") || tipo.equals("FlashCard")) {
+                pregunta = ControladorCurso.INSTANCE.creaPreguntaTest(enunciado, opciones, respuesta);
+            } else if (tipo.equals("Huecos")) {
                 if (enunciado.isEmpty() || respuesta.isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Completa el enunciado y la respuesta correcta.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "Completa el enunciado y la respuesta.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                resumen = tipo + ": " + enunciado + " | Respuesta: " + respuesta;
+                pregunta = ControladorCurso.INSTANCE.creaPreguntaHuecos(enunciado, respuesta);
+            } else if (tipo.equals("FlashCard")) {
+                if (enunciado.isEmpty() || respuesta.isEmpty()) {
+                    JOptionPane.showMessageDialog(panel, "Completa el enunciado y la respuesta.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                pregunta = ControladorCurso.INSTANCE.creaPreguntaFC(enunciado, respuesta);
             }
 
-            if (!resumen.isEmpty()) {
-                preguntas.addElement(resumen);
-                enunciadoField.setText("");
-                campoRespuesta.setText("");
-                testPanel.clearOpciones();
+            if (pregunta != null) {
+                try {
+                    ControladorCurso.INSTANCE.agregarPreguntaBloque(curso, nombreBloque, pregunta);
+
+                    // Mostrar resumen visual
+                    String resumen = tipo + ": " + enunciado + " | Respuesta: " + respuesta;
+                    preguntas.addElement(resumen);
+
+                    // Limpiar
+                    enunciadoField.setText("");
+                    campoRespuesta.setText("");
+                    testPanel.clearOpciones();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
+
 
         // Panel guardar
         JPanel panelGuardar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
@@ -225,9 +245,8 @@ public class EditorBloquesPanel extends JPanel {
 
         // Acción al pulsar "Guardar bloque"
         guardarBloque.addActionListener(e -> {
-            // Lógica de guardado del bloque
-            ControladorCurso.INSTANCE.agregarBloqueACurso(curso, nombreBloque);
-
+            // Lógica de guardado de Bloque o poner en el boton de GuardarCurso directmanete para la persistencia
+        	//TO DO
             // Minimizar el panel
             panel.setVisible(false);
             revalidate();
