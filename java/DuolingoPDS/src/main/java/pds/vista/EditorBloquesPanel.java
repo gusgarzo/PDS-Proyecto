@@ -1,6 +1,11 @@
 package pds.vista;
 
 import javax.swing.*;
+
+import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
+import pds.dominio.Curso;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +18,14 @@ public class EditorBloquesPanel extends JPanel {
     private JButton guardar;
     private List<String> bloques; // de momento solo nombres
 
-    public EditorBloquesPanel(String nombreCurso, String dificultad, String descripcion) {
+    public EditorBloquesPanel(Curso curso) {
         this.bloques = new ArrayList<>();
 
         setLayout(new BorderLayout());
         setBackground(new Color(30, 36, 45));
 
         // Título
-        JLabel titulo = new JLabel("Bloques de contenido para: " + nombreCurso, SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Bloques de contenido para: " + curso.getNombre(), SwingConstants.CENTER);
         titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         titulo.setForeground(Color.WHITE);
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
@@ -38,7 +43,7 @@ public class EditorBloquesPanel extends JPanel {
         txtNombreBloque = new JTextField(20);
         btnAgregarBloque = new JButton("Añadir bloque");
 
-        btnAgregarBloque.addActionListener(e -> agregarBloque());
+        btnAgregarBloque.addActionListener(e -> agregarBloque(curso));
 
         panelFormulario.add(new JLabel("Nombre del bloque:"));
         panelFormulario.add(txtNombreBloque);
@@ -73,12 +78,10 @@ public class EditorBloquesPanel extends JPanel {
         panelGuardar.add(guardar);
 
         add(panelGuardar, BorderLayout.SOUTH);
-        add(panelGuardar, BorderLayout.SOUTH);
-
         add(panelCentral, BorderLayout.CENTER);
     }
 
-    private void agregarBloque() {
+    private void agregarBloque(Curso curso) {
         String nombre = txtNombreBloque.getText().trim();
         if (!nombre.isEmpty()) {
             bloques.add(nombre);
@@ -93,7 +96,7 @@ public class EditorBloquesPanel extends JPanel {
             lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            JPanel subPanel = crearPanelPreguntasBloque();
+            JPanel subPanel = crearPanelPreguntasBloque(nombre, curso);
             subPanel.setVisible(false);
             
             lbl.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +119,7 @@ public class EditorBloquesPanel extends JPanel {
         }
     }
 
-    private JPanel crearPanelPreguntasBloque() {
+    private JPanel crearPanelPreguntasBloque(String nombreBloque,Curso curso) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createCompoundBorder(
@@ -128,39 +131,31 @@ public class EditorBloquesPanel extends JPanel {
         Font labelFont = new Font("Comic Sans MS", Font.BOLD, 16);
         Color textColor = Color.WHITE;
 
-        // Tipo de pregunta
         JLabel tipoLabel = new JLabel("Tipo de pregunta:");
         tipoLabel.setFont(labelFont);
         tipoLabel.setForeground(textColor);
         JComboBox<String> tipoPregunta = new JComboBox<>(new String[]{"Huecos", "Test", "FlashCard"});
-       
-        
-        // Enunciado (siempre visible)
+
         JLabel enunciadoLabel = new JLabel("Enunciado:");
         enunciadoLabel.setFont(labelFont);
         enunciadoLabel.setForeground(textColor);
         JTextField enunciadoField = new JTextField(30);
 
-        // Panel para opciones de tipo test (oculto por defecto)
         TestQuestionPanel testPanel = new TestQuestionPanel(labelFont, textColor);
         testPanel.setVisible(false);
+
         FlashCardCreatePanel flashCardPanel = new FlashCardCreatePanel(labelFont, textColor);
         flashCardPanel.setVisible(false);
-        // Respuesta correcta (siempre visible, pero cambia según el tipo)
+
         JLabel respuestaLabel = new JLabel("Respuesta correcta:");
         respuestaLabel.setFont(labelFont);
         respuestaLabel.setForeground(textColor);
         JTextField campoRespuesta = new JTextField(30);
 
-        // Listener para mostrar/ocultar panel de opciones y adaptar campo respuesta
         tipoPregunta.addActionListener(e -> {
             String tipo = (String) tipoPregunta.getSelectedItem();
-
-            // Oculta todos los paneles específicos primero
             testPanel.setVisible(false);
             flashCardPanel.setVisible(false);
-
-            // Limpia y ajusta el campo de respuesta
             campoRespuesta.setText("");
             campoRespuesta.setEnabled(true);
 
@@ -168,9 +163,8 @@ public class EditorBloquesPanel extends JPanel {
                 testPanel.setVisible(true);
                 campoRespuesta.setToolTipText("Introduce la letra de la opción correcta (A, B, C, D)");
             } else if ("FlashCard".equals(tipo)) {
-            	
                 flashCardPanel.setVisible(true);
-                campoRespuesta.setToolTipText("Introduce la respuesta de la flashcard (o usa el campo del panel)");
+                campoRespuesta.setToolTipText("Introduce la respuesta de la flashcard");
                 respuestaLabel.setText("Respuesta:");
             } else if ("Huecos".equals(tipo)) {
                 campoRespuesta.setToolTipText("Introduce la respuesta correcta");
@@ -180,8 +174,6 @@ public class EditorBloquesPanel extends JPanel {
             }
         });
 
-
-        // Botón añadir pregunta
         JButton btnAgregar = new JButton("+ Añadir pregunta");
         btnAgregar.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         btnAgregar.setBackground(new Color(144, 238, 144));
@@ -194,7 +186,6 @@ public class EditorBloquesPanel extends JPanel {
         scrollLista.setPreferredSize(new Dimension(400, 100));
         scrollLista.setBorder(BorderFactory.createTitledBorder("Preguntas añadidas"));
 
-        // Acción del botón añadir
         btnAgregar.addActionListener(e -> {
             String tipo = (String) tipoPregunta.getSelectedItem();
             String enunciado = enunciadoField.getText().trim();
@@ -223,13 +214,26 @@ public class EditorBloquesPanel extends JPanel {
                 testPanel.clearOpciones();
             }
         });
-        
+
+        // Panel guardar
         JPanel panelGuardar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        panelGuardar.setOpaque(false); // Para no cambiar el fondo
-        guardar = new JButton("Guardar bloque");
-        panelGuardar.add(guardar);
-       // guardar.addActionListener();
-        // Ensamblar componentes
+        panelGuardar.setOpaque(false);
+        JButton guardarBloque = new JButton("Guardar bloque");
+        guardarBloque.setBackground(new Color(255, 203, 5));
+        guardarBloque.setFont(labelFont);
+        panelGuardar.add(guardarBloque);
+
+        // Acción al pulsar "Guardar bloque"
+        guardarBloque.addActionListener(e -> {
+            // Lógica de guardado del bloque
+            ControladorCurso.INSTANCE.agregarBloqueACurso(curso, nombreBloque);
+
+            // Minimizar el panel
+            panel.setVisible(false);
+            revalidate();
+            repaint();
+        });
+
         panel.add(tipoLabel);
         panel.add(tipoPregunta);
         panel.add(Box.createVerticalStrut(10));
@@ -237,6 +241,7 @@ public class EditorBloquesPanel extends JPanel {
         panel.add(enunciadoField);
         panel.add(Box.createVerticalStrut(10));
         panel.add(testPanel);
+        panel.add(flashCardPanel);
         panel.add(respuestaLabel);
         panel.add(campoRespuesta);
         panel.add(Box.createVerticalStrut(15));
@@ -245,12 +250,8 @@ public class EditorBloquesPanel extends JPanel {
         panel.add(scrollLista);
         panel.add(Box.createVerticalStrut(15));
         panel.add(panelGuardar);
+
         return panel;
     }
 
-
-
-    public List<String> getBloques() {
-        return bloques;
-    }
 }

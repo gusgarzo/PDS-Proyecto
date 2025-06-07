@@ -61,16 +61,20 @@ public enum Controlador {
     }
 
     public boolean loginUsuario(String correo, String contrasena) {
-        Usuario usuario = null;//repositorioUsuarios.buscarUsuarioPorCorreoYContrasena(correo, contrasena);
+        Usuario usuario = null;
+
+        // Simulación: si se usa este correo, se crea un creador
+        if (correo.equals("2") && contrasena.equals("2")) {
+            usuario = new CreadorCurso();
+        }
+
         if (usuario != null) {
             this.usuarioActual = usuario;
+            ControladorCurso.INSTANCE.setUsuarioActual(usuario);
             return true;
         }
         return false;
     }
-
-    
-    
     
     public void cerrarSesion() {
         this.usuarioActual = null;
@@ -93,8 +97,8 @@ public enum Controlador {
     }
     public void setUsuario(Usuario usu) {
     	usuarioActual = usu;    }
-
     
+
     
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {
         if (!(usuarioActual instanceof CreadorCurso creador)) {
