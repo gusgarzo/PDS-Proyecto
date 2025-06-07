@@ -1,6 +1,12 @@
 package pds.controlador;
 
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import pds.dao.FactoriaDAO;
 import pds.dao.IAdaptadorAlumnoDAO;
 import pds.dao.IAdaptadorCreadorCursosDAO;
@@ -76,6 +82,7 @@ public enum Controlador {
         return false;
     }
     
+    
     public void cerrarSesion() {
         this.usuarioActual = null;
     }
@@ -98,6 +105,25 @@ public enum Controlador {
     public void setUsuario(Usuario usu) {
     	usuarioActual = usu;    }
     
+    
+    public Curso importarCurso(File archivo) {
+        /*if (!estaLogueado() || !(usuarioActual instanceof Alumno)) {
+            return null; 
+        }*/
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Curso curso = mapper.readValue(archivo, Curso.class);
+            return curso;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
 
     
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {

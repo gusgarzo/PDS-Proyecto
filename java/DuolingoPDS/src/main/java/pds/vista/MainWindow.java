@@ -118,12 +118,11 @@ public class MainWindow extends JFrame {
 
     private void importarCurso() {
         contentPanel.removeAll();
-        JLabel inicioLabel = new JLabel("Importar curso", SwingConstants.CENTER);
-        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(inicioLabel, BorderLayout.CENTER);
+        contentPanel.add(new ImportarCursoPanel(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
+
 
     private void crearCurso() {
         if (!Controlador.INSTANCE.esCreador()) {

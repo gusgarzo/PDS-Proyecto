@@ -1,36 +1,42 @@
 package pds.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
 import java.util.List;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Curso {
 
- 
     private Long id;
-
     private String nombre;
-    
     private String descripcion;
-    
     private CreadorCurso creador;
-    
-    
     private Dificultad dificultad;
-    
-    private List <BloqueContenido> bloques;
 
-    public Curso(Long id, String nombre, CreadorCurso creador,List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
-		this.id = id;
-		this.nombre = nombre;
-		this.creador = creador;
-		this.bloques = bloques;
-		this.dificultad = dificultad;
-		this.descripcion = descripcion;
-	}
+    @JsonProperty("bloques_contenidos")
+    private List<BloqueContenido> bloques;
 
-	public Long getId() {
+    public Curso() {
+        // Necesario para deserialización JSON
+    }
+
+    public Curso(Long id, String nombre, CreadorCurso creador, List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.creador = creador;
+        this.bloques = bloques;
+        this.dificultad = dificultad;
+        this.descripcion = descripcion;
+    }
+
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -41,6 +47,14 @@ public class Curso {
         this.nombre = nombre;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public CreadorCurso getCreador() {
         return creador;
     }
@@ -49,34 +63,29 @@ public class Curso {
         this.creador = creador;
     }
 
-	public List<BloqueContenido> getBloques() {
-		return bloques;
-	}
+    public Dificultad getDificultad() {
+        return dificultad;
+    }
 
-	public void setBloques(List<BloqueContenido> bloques) {
-		this.bloques = bloques;
-	}
+    public void setDificultad(Dificultad dificultad) {
+        this.dificultad = dificultad;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public List<BloqueContenido> getBloques() {
+        return bloques;
+    }
 
-	public Dificultad getDificultad() {
-		return dificultad;
-	}
+    public void setBloques(List<BloqueContenido> bloques) {
+        this.bloques = bloques;
+    }
 
-	public void setDificultad(Dificultad dificultad) {
-		this.dificultad = dificultad;
-	}
-    
     public void agregarBloque(BloqueContenido bloque) {
         bloques.add(bloque);
     }
-    
+
     public BloqueContenido crearYAgregarBloque(String nombre) {
         BloqueContenido nuevoBloque = new BloqueContenido(nombre);
         bloques.add(nuevoBloque);
         return nuevoBloque;
     }
-
 }
