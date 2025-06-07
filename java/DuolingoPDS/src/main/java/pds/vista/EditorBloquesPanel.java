@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import pds.controlador.Controlador;
 import pds.controlador.ControladorCurso;
+import pds.dominio.BloqueContenido;
 import pds.dominio.Curso;
 import pds.dominio.Pregunta;
 
@@ -245,13 +246,30 @@ public class EditorBloquesPanel extends JPanel {
 
         // Acción al pulsar "Guardar bloque"
         guardarBloque.addActionListener(e -> {
-            // Lógica de guardado de Bloque o poner en el boton de GuardarCurso directmanete para la persistencia
-        	//TO DO
-            // Minimizar el panel
+        	JOptionPane.showMessageDialog(panel, "Edición del bloque \"" + nombreBloque + "\" guardada (en memoria).");
             panel.setVisible(false);
             revalidate();
             repaint();
         });
+        
+        guardar.addActionListener(e -> {
+            System.out.println("=== CURSO: " + curso.getNombre() + " ===");
+            if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
+                System.out.println("No hay bloques en el curso.");
+            } else {
+                for (BloqueContenido bloque : curso.getBloques()) {
+                    System.out.println("-> Bloque: " + bloque.getNombre());
+                    if (bloque.getPreguntas() == null || bloque.getPreguntas().isEmpty()) {
+                        System.out.println("   (Sin preguntas)");
+                    } else {
+                        for (Pregunta p : bloque.getPreguntas()) {
+                            System.out.println("   - " + p);
+                        }
+                    }
+                }
+            }
+        });
+
 
         panel.add(tipoLabel);
         panel.add(tipoPregunta);
