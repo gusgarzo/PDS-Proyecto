@@ -126,7 +126,7 @@ public class MainWindow extends JFrame {
     }
 
     private void crearCurso() {
-        if (!Controlador.INSTANCE.esCreadorActual()) {
+        if (!Controlador.INSTANCE.esCreador()) {
             JOptionPane.showMessageDialog(
                 this,
                 "Solo los usuarios creadores pueden acceder a la creación de cursos.",

@@ -3,6 +3,7 @@ package pds.vista;
 import javax.swing.*;
 
 import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
 import pds.dominio.Curso;
 
 import java.awt.*;
@@ -225,7 +226,7 @@ public class EditorBloquesPanel extends JPanel {
         // Acción al pulsar "Guardar bloque"
         guardarBloque.addActionListener(e -> {
             // Lógica de guardado del bloque
-            Controlador.INSTANCE.agregarBloqueACurso(curso, nombreBloque);
+            ControladorCurso.INSTANCE.agregarBloqueACurso(curso, nombreBloque);
 
             // Minimizar el panel
             panel.setVisible(false);

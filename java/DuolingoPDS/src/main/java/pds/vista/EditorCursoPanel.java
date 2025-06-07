@@ -3,6 +3,7 @@ package pds.vista;
 import javax.swing.*;
 
 import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
 import pds.dominio.Curso;
 import pds.dominio.Dificultad;
 
@@ -81,7 +82,7 @@ public class EditorCursoPanel extends JPanel {
 
         Dificultad dificultad = parsearDificultad(dificultadTexto);
 
-        Curso curso = Controlador.INSTANCE.crearCurso(nombre, descripcion, dificultad);
+        Curso curso = ControladorCurso.INSTANCE.crearCurso(nombre, descripcion, dificultad);
         cambiarAEditorBloques(curso);
     }
     
