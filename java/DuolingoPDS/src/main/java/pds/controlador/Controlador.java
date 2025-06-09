@@ -1,9 +1,13 @@
 package pds.controlador;
 
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -105,6 +109,14 @@ public enum Controlador {
     public void setUsuario(Usuario usu) {
     	usuarioActual = usu;    }
     
+    /*public List<Curso> getCursosDelCreador() {
+        if (usuarioActual instanceof CreadorCurso) {
+            return repositorioCursos.getCursosDe((CreadorCurso) usuarioActual);
+        }
+        return Collections.emptyList();
+    }*/
+
+
     
     public Curso importarCurso(File archivo) {
         /*if (!estaLogueado() || !(usuarioActual instanceof Alumno)) {
@@ -120,6 +132,21 @@ public enum Controlador {
             return null;
         }
     }
+
+    public boolean CompartirCurso (Curso curso, File archivo) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, curso);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
 
 
 
