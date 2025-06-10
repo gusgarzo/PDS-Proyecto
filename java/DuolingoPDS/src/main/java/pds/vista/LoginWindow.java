@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import pds.controlador.Controlador;
 import pds.dominio.Alumno;
+import pds.dominio.CreadorCurso;
 import pds.dominio.Usuario;
 
 public class LoginWindow extends JFrame {

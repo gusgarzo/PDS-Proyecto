@@ -5,7 +5,6 @@ public abstract class Pregunta {
 	private Integer id;
 	
 	private String enunciado;
-	private boolean completada;
 	
 	public Pregunta(String enunciado) {
         this.enunciado = enunciado;
@@ -20,5 +19,7 @@ public abstract class Pregunta {
     
     public Integer getId() {
         return id;
-    }
+    } 
+    
+    public abstract boolean isCorrecta(String respuesta);
 }

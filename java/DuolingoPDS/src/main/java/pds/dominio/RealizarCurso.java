@@ -1,12 +1,59 @@
 package pds.dominio;
 
+import java.util.List;
+
 public class RealizarCurso {
 	
 	private Integer id;
 	private Curso curso;
 	private BloqueContenido bloque;
-	private EstrategiaPreguntas estrategia;
+	private Estrategia estrategia;
 	private Alumno alumno;
+	
+	public RealizarCurso(Curso curso, BloqueContenido bloque, Estrategia estrategia, Alumno alumno) {
+		this.curso = curso;
+		this.bloque = bloque;
+		this.estrategia = estrategia;
+		this.alumno = alumno;
+	}
+	
+	public boolean avanzarBloque() {
+	    int indiceActual = curso.getBloques().indexOf(bloque);
+	    if (indiceActual < 0 || indiceActual >= curso.getBloques().size() - 1) {
+	        return false; // No hay más bloques
+	    }
+	    bloque = curso.getBloques().get(indiceActual + 1);
+	    return true;
+	}
+	public boolean puedeAvanzarBloque() {
+	    int indiceActual = curso.getBloques().indexOf(bloque);
+	    if ( indiceActual <= curso.getBloques().size() - 1) {
+	        return true; // No hay más bloques
+	    }
+	    return false;
+	}
+	public boolean retrocederBloque() {
+	    int indiceActual = curso.getBloques().indexOf(bloque);
+	    if (indiceActual <= 0 ) {
+	        return false; 
+	    }
+	    bloque = curso.getBloques().get(indiceActual -1);
+	    return true;
+	}
+	public boolean puedeRetrocederBloque() {
+	    int indiceActual = curso.getBloques().indexOf(bloque);
+	    if ( indiceActual > 0) {
+	        return true; 
+	    }
+	    return false;
+	}
+	
+	public int getNumBloques() {
+		return curso.getBloques().size();
+	}
+	public int getIndBloqueActual() {
+		return curso.getBloques().indexOf(bloque);
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -25,10 +72,10 @@ public class RealizarCurso {
 	public void setBloque(BloqueContenido bloque) {
 		this.bloque = bloque;
 	}
-	public EstrategiaPreguntas getEstrategia() {
+	public Estrategia getEstrategia() {
 		return estrategia;
 	}
-	public void setEstrategia(EstrategiaPreguntas estrategia) {
+	public void setEstrategia(Estrategia estrategia) {
 		this.estrategia = estrategia;
 	}
 	public Alumno getAlumno() {
@@ -37,13 +84,10 @@ public class RealizarCurso {
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
-	public RealizarCurso(Curso curso, BloqueContenido bloque, EstrategiaPreguntas estrategia, Alumno alumno) {
-		this.curso = curso;
-		this.bloque = bloque;
-		this.estrategia = estrategia;
-		this.alumno = alumno;
+
+	public List<Pregunta> crearListaPreguntas(){
+		return estrategia.getPreguntas(bloque);
 	}
-	
 	
 	
 	

@@ -18,8 +18,13 @@ public class Curso {
     
     private List <BloqueContenido> bloques;
 
-    public Curso(Long id, String nombre, CreadorCurso creador, List<BloqueContenido> bloques, Dificultad dificultad) {
-		this.id = id;
+
+   
+
+    public Curso( String nombre, CreadorCurso creador,
+			List<BloqueContenido> bloques, Dificultad dificultad) {
+		
+
 		this.nombre = nombre;
 		this.creador = creador;
 		this.bloques = bloques;
@@ -76,5 +81,6 @@ public class Curso {
         return nuevoBloque;
     }
     
+
 
 }

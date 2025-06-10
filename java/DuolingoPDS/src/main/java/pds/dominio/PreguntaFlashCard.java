@@ -15,6 +15,11 @@ public class PreguntaFlashCard extends Pregunta{
 	public void setRespuesta(String respuesta) {
 		this.respuesta = respuesta;
 	}
+
+	@Override
+	public boolean isCorrecta(String respuesta) {
+		return true;
+	}
 	
 
 }

@@ -57,6 +57,20 @@ public class Alumno extends Usuario {
 		this.tiempoTotalMinutos = tiempoTotalMinutos;
 	}
     
+	public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre) {
+	    Estrategia estrategia;
+	    if ("Secuencial".equals(estrategiaNombre)) {
+	        estrategia = new EstrategiaSecuencial();
+	    } else if ("Repetición Espaciada".equals(estrategiaNombre)) {
+	    	estrategia = new EstrategiaRepeticionEspaciada();
+	    } else if ("Aleatoria".equals(estrategiaNombre)) {
+	    	estrategia = new EstrategiaSecuencial();
+	    } else {
+	        throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
+	    }
+		RealizarCurso realizar = new RealizarCurso(curso, curso.getBloques().get(0),estrategia, this);
+		return realizar;
+	}
     
    
 }
