@@ -11,6 +11,8 @@ public class Curso {
 
     private String nombre;
     
+    private String descripcion;
+    
     private CreadorCurso creador;
     
     
@@ -18,13 +20,13 @@ public class Curso {
     
     private List <BloqueContenido> bloques;
 
-       public Curso(Long id, String nombre, CreadorCurso creador,
-			List<BloqueContenido> bloques, Dificultad dificultad) {
+    public Curso(Long id, String nombre, CreadorCurso creador,List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.creador = creador;
 		this.bloques = bloques;
 		this.dificultad = dificultad;
+		this.descripcion = descripcion;
 	}
 
 	public Long getId() {
@@ -71,10 +73,28 @@ public class Curso {
         bloques.add(bloque);
     }
     
-    public BloqueContenido crearYAgregarBloque(String nombre, String tema) {
-        BloqueContenido nuevoBloque = new BloqueContenido(nombre, tema, this);
-        bloques.add(nuevoBloque);
+    public BloqueContenido crearYAgregarBloque(String nombre) {
+        BloqueContenido nuevoBloque = new BloqueContenido(nombre);
+        agregarBloque(nuevoBloque);
         return nuevoBloque;
     }
+    
+    public void agregarPreguntaABloque(String nombreBloque, Pregunta pregunta) {
+        BloqueContenido bloque = getBloquePorNombre(nombreBloque);
+        if (bloque != null) {
+            bloque.agregarPregunta(pregunta);
+        } else {
+            throw new IllegalArgumentException("Bloque no encontrado: " + nombreBloque);
+        }
+    }
 
+    public BloqueContenido getBloquePorNombre(String nombre) {
+        for (BloqueContenido bloque : bloques) {
+            if (bloque.getNombre().equals(nombre)) {
+                return bloque;
+            }
+        }
+        return null;
+    }
+    
 }

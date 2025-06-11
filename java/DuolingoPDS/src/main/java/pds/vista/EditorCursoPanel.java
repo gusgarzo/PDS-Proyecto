@@ -1,6 +1,12 @@
 package pds.vista;
 
 import javax.swing.*;
+
+import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
+import pds.dominio.Curso;
+import pds.dominio.Dificultad;
+
 import java.awt.*;
 
 @SuppressWarnings("serial")
@@ -69,18 +75,43 @@ public class EditorCursoPanel extends JPanel {
 
     private void pasarAEditorBloques() {
         String nombre = txtNombre.getText().trim();
-        String dificultad = (String) comboDificultad.getSelectedItem();
         String descripcion = txtDescripcion.getText().trim();
+        String dificultadTexto = (String) comboDificultad.getSelectedItem();
 
+        if (!validarCampos(nombre, descripcion)) return;
+
+        Dificultad dificultad = parsearDificultad(dificultadTexto);
+
+        Curso curso = ControladorCurso.INSTANCE.crearCurso(nombre, descripcion, dificultad);
+        cambiarAEditorBloques(curso);
+    }
+    
+    private boolean validarCampos(String nombre, String descripcion) {
         if (nombre.isEmpty() || descripcion.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Rellena todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
-        
+        return true;
+    }
+
+    private Dificultad parsearDificultad(String texto) {
+        if (texto == null) return null;
+
+        switch (texto.toLowerCase()) {
+            case "fácil":
+                return Dificultad.FACIL;
+            case "medio":
+                return Dificultad.NORMAL;
+            case "difícil":
+                return Dificultad.DIFICIL;
+            default:
+                return null;
+        }
+    }
+
+    private void cambiarAEditorBloques(Curso curso) {
         remove(panelDatosCurso);
-        EditorBloquesPanel bloque = new EditorBloquesPanel(nombre, dificultad, descripcion);
-        //crearPanelEditorBloques(nombre, dificultad, descripcion);
-        add(bloque, BorderLayout.CENTER);
+        add(new EditorBloquesPanel(curso), BorderLayout.CENTER);
         revalidate();
         repaint();
     }
