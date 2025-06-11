@@ -10,3 +10,5 @@ java/DuolingoPDS/target/classes/pds/dao/IAdaptadorAlumnoDAO.class
 java/DuolingoPDS/target/classes/pds/dao/IAdaptadorCreadorCursosDAO.class
 *.class
 /java/DuolingoPDS/target
+java/DuolingoPDS/target/classes/pds/dominio/Curso.class
+/java/DuolingoPDS/target

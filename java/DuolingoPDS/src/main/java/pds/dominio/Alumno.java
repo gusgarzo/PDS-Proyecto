@@ -7,12 +7,12 @@ import java.util.List;
 public class Alumno extends Usuario {
 
   
-    private List<Curso> cursosEnProgreso;
+    private List<RealizarCurso> cursosEnProgreso;
 
 
     private int cursosCompletados = 0;
 
-
+ 
     private int rachaDias = 0;
 
 
@@ -25,5 +25,52 @@ public class Alumno extends Usuario {
         this.tiempoTotalMinutos = 0;
     }
 
+	public List<RealizarCurso> getCursosEnProgreso() {
+		return cursosEnProgreso;
+	}
+
+	public void setCursosEnProgreso(List<RealizarCurso> cursosEnProgreso) {
+		this.cursosEnProgreso = cursosEnProgreso;
+	}
+
+	public int getCursosCompletados() {
+		return cursosCompletados;
+	}
+
+	public void setCursosCompletados(int cursosCompletados) {
+		this.cursosCompletados = cursosCompletados;
+	}
+
+	public int getRachaDias() {
+		return rachaDias;
+	}
+
+	public void setRachaDias(int rachaDias) {
+		this.rachaDias = rachaDias;
+	}
+
+	public int getTiempoTotalMinutos() {
+		return tiempoTotalMinutos;
+	}
+
+	public void setTiempoTotalMinutos(int tiempoTotalMinutos) {
+		this.tiempoTotalMinutos = tiempoTotalMinutos;
+	}
+    
+	public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre) {
+	    Estrategia estrategia;
+	    if ("Secuencial".equals(estrategiaNombre)) {
+	        estrategia = new EstrategiaSecuencial();
+	    } else if ("Repetición Espaciada".equals(estrategiaNombre)) {
+	    	estrategia = new EstrategiaRepeticionEspaciada();
+	    } else if ("Aleatoria".equals(estrategiaNombre)) {
+	    	estrategia = new EstrategiaSecuencial();
+	    } else {
+	        throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
+	    }
+		RealizarCurso realizar = new RealizarCurso(curso, curso.getBloques().get(0),estrategia, this);
+		return realizar;
+	}
+    
    
 }

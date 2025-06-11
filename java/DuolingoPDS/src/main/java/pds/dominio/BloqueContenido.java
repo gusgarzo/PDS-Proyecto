@@ -6,7 +6,8 @@ import java.util.List;
 public class BloqueContenido {
 
     private String nombre;
-    private String tema;
+
+  
     private List<Pregunta> preguntas;
 
     public BloqueContenido(String nombre) {
@@ -42,6 +43,6 @@ public class BloqueContenido {
 
     @Override
     public String toString() {
-        return nombre + " - " + tema;
+        return nombre ;
     }
 }

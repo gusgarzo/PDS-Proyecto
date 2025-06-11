@@ -10,13 +10,8 @@ public class CreadorCurso extends Usuario {
     
     public CreadorCurso() {}
 
-    public CreadorCurso(String string, String string2, String string3, String string4, String string5) {
-		super(string,string2,string3,string4,string5);
-	}
-
 	public Curso crearCurso(String nombre, Dificultad dificultad, String descripcion) {
         Curso curso = new Curso(
-            generarId(),
             nombre,
             this,
             new ArrayList<>(),
@@ -25,14 +20,17 @@ public class CreadorCurso extends Usuario {
         );
         cursosCreados.add(curso);
         return curso;
+	}
+
+    public CreadorCurso(String nombre, String apellidos, String telefono, String correo, String contrasena) {
+    	super(nombre,  apellidos,  telefono,  correo,  contrasena);
+        this.cursosCreados = new ArrayList<>();
     }
 
     public List<Curso> getCursosCreados() {
         return cursosCreados;
     }
 
-    private Long generarId() {
-        return (long) (cursosCreados.size() + 1);
-    }
+    
 }
 

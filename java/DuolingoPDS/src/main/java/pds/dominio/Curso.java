@@ -19,9 +19,10 @@ public class Curso {
     private Dificultad dificultad;
     
     private List <BloqueContenido> bloques;
+   
 
-    public Curso(Long id, String nombre, CreadorCurso creador,List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
-		this.id = id;
+    public Curso( String nombre, CreadorCurso creador,
+			List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
 		this.nombre = nombre;
 		this.creador = creador;
 		this.bloques = bloques;
@@ -73,6 +74,7 @@ public class Curso {
         bloques.add(bloque);
     }
     
+
     public BloqueContenido crearYAgregarBloque(String nombre) {
         BloqueContenido nuevoBloque = new BloqueContenido(nombre);
         agregarBloque(nuevoBloque);
@@ -87,6 +89,7 @@ public class Curso {
             throw new IllegalArgumentException("Bloque no encontrado: " + nombreBloque);
         }
     }
+
 
     public BloqueContenido getBloquePorNombre(String nombre) {
         for (BloqueContenido bloque : bloques) {

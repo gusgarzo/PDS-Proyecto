@@ -19,5 +19,7 @@ public abstract class Pregunta {
     
     public Integer getId() {
         return id;
-    }
+    } 
+    
+    public abstract boolean isCorrecta(String respuesta);
 }

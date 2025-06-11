@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import pds.controlador.Controlador;
 import pds.controlador.ControladorCurso;
 import pds.dominio.Alumno;
+import pds.dominio.CreadorCurso;
 import pds.dominio.Usuario;
 import pds.dominio.CreadorCurso;
 

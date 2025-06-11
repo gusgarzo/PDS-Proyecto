@@ -93,7 +93,7 @@ public class PanelArrastraImagen extends JDialog {
             }
         });
         contentPane.add(botonElegir);
-
+ 
         // ✅ Botón para cargar desde URL
         JButton botonDesdeURL = new JButton("Desde URL");
         botonDesdeURL.setForeground(Color.WHITE);

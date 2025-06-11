@@ -11,19 +11,25 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
     private JPanel contentPanel;
+    private JPanel panelInicio;
+    private JPanel panelCompartir;
+    private JPanel panelImportar;
+    private EditorCursoPanel editorCursoPanel;
+    private RealizarCursoPanel panelRealizarCurso;
+    private JPanel panelEstadisticas;
     private Usuario usuarioActual = Controlador.INSTANCE.getUsuarioActual();
     public MainWindow() {
         setTitle("PokeLingo");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        
         // HEADER con logo y fondo azul Pokémon
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(79, 173, 255)); // Azul Pokémon
         headerPanel.setPreferredSize(new Dimension(900, 70));
         headerPanel.setLayout(new BorderLayout());
-
+        inicializarPaneles();
         JLabel logoLabel = new JLabel();
         try {
             ImageIcon logoIcon = new ImageIcon(getClass().getResource("/images/PokeLogo.png"));
@@ -70,16 +76,48 @@ public class MainWindow extends JFrame {
         splitPane.setLeftComponent(menuPanel);
 
         // PANEL DE CONTENIDO
-        contentPanel = new JPanel();
-        contentPanel.setLayout(new BorderLayout());
+        contentPanel = new JPanel(new CardLayout());
         contentPanel.setBackground(new Color(30, 36, 45)); // FlatDarkLaf background
         splitPane.setRightComponent(contentPanel);
-
+        
+        contentPanel.add(panelInicio, "INICIO");
+        contentPanel.add(panelCompartir, "COMPARTIR");
+        contentPanel.add(panelImportar, "IMPORTAR");
+        contentPanel.add(editorCursoPanel, "EDITOR_CURSO");
+        contentPanel.add(panelRealizarCurso, "REALIZAR_CURSO");
+        contentPanel.add(panelEstadisticas, "ESTADISTICAS");
         setLayout(new BorderLayout());
         add(headerPanel, BorderLayout.NORTH);
         add(splitPane, BorderLayout.CENTER);
     }
+    private void inicializarPaneles() {
+        // Panel de inicio
+        panelInicio = new JPanel(new BorderLayout());
+        JLabel inicioLabel = new JLabel("Pantalla de inicio de PokeLingo", SwingConstants.CENTER);
+        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        panelInicio.add(inicioLabel, BorderLayout.CENTER);
 
+        // Panel compartir curso
+        panelCompartir = new JPanel(new BorderLayout());
+        JLabel compartirLabel = new JLabel("¡Comparte tu curso con tus amigos Pokémon!", SwingConstants.CENTER);
+        compartirLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        panelCompartir.add(compartirLabel, BorderLayout.CENTER);
+
+        // Panel importar curso
+        panelImportar = new JPanel(new BorderLayout());
+        JLabel importarLabel = new JLabel("Importar curso", SwingConstants.CENTER);
+        importarLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        panelImportar.add(importarLabel, BorderLayout.CENTER);
+
+        // Panel realizar curso
+        panelRealizarCurso = new RealizarCursoPanel();
+
+        // Panel estadísticas (se actualiza dinámicamente)
+        panelEstadisticas = new JPanel(new BorderLayout());
+
+        // Panel editor de curso (ya es una clase separada)
+        editorCursoPanel = new EditorCursoPanel();
+    }
     // Botón Pokémon personalizado
     private JButton crearBotonMenu(String texto, Color color, String iconPath, Runnable accion) {
         JButton button = new JButton(texto);
@@ -105,27 +143,18 @@ public class MainWindow extends JFrame {
         return button;
     }
 
-    // Métodos de acciones (igual que antes)
-    private Object compartirCurso() {
-        contentPanel.removeAll();
-        JLabel label = new JLabel("¡Comparte tu curso con tus amigos Pokémon!", SwingConstants.CENTER);
-        label.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(label, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
-        return null;
+    private void compartirCurso() {
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "COMPARTIR");
     }
 
     private void importarCurso() {
-        contentPanel.removeAll();
-        JLabel inicioLabel = new JLabel("Importar curso", SwingConstants.CENTER);
-        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(inicioLabel, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "IMPORTAR");
     }
 
     private void crearCurso() {
+
         if (!Controlador.INSTANCE.esCreador()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -140,30 +169,33 @@ public class MainWindow extends JFrame {
         contentPanel.add(new EditorCursoPanel(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
+
+        //COMPROBAR SI ES CREADOR
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "EDITOR_CURSO");
+
     }
 
     private void mostrarInicio() {
-        contentPanel.removeAll();
-        JLabel inicioLabel = new JLabel("Pantalla de inicio de PokeLingo", SwingConstants.CENTER);
-        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(inicioLabel, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "INICIO");
     }
 
     private void mostrarRealizarCurso() {
-        contentPanel.removeAll();
-        JLabel cursoLabel = new JLabel("¡Elige un curso y conviértete en Maestro Pokémon!", SwingConstants.CENTER);
-        cursoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        contentPanel.add(cursoLabel, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "REALIZAR_CURSO");
     }
 
     private void mostrarEstadisticas() {
-        Estadisticas estadisticas = new Estadisticas(320, 5, 7); // ejemplo
-        contentPanel.removeAll();
+        actualizarPanelEstadisticas(); // Actualiza los datos antes de mostrar
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "ESTADISTICAS");
+    }
 
+    private void actualizarPanelEstadisticas() {
+        panelEstadisticas.removeAll(); // Limpiar contenido previo
+
+        Estadisticas estadisticas = new Estadisticas(320, 5, 7); // ejemplo
         JPanel statsPanel = new JPanel();
         statsPanel.setOpaque(false);
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
@@ -176,27 +208,15 @@ public class MainWindow extends JFrame {
         if (estadisticas.getCursosCompletados() == 0) {
             JLabel sinDatos = new JLabel("¡Aún no has completado ningún gimnasio!", SwingConstants.CENTER);
             sinDatos.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-            contentPanel.add(sinDatos, BorderLayout.CENTER);
+            panelEstadisticas.add(sinDatos, BorderLayout.CENTER);
         } else {
-            JLabel tiempo = new JLabel("Tiempo total de juego: " + estadisticas.getTiempoTotalMinutos() + " minutos");
-            JLabel cursos = new JLabel("Gimnasios superados: " + estadisticas.getCursosCompletados());
-            JLabel racha = new JLabel("Mejor racha: " + estadisticas.getRachaDias() + " días seguidos");
-
-            for (JLabel label : new JLabel[]{tiempo, cursos, racha}) {
-                label.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-                label.setAlignmentX(Component.CENTER_ALIGNMENT);
-                label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-                statsPanel.add(label);
-            }
+           
+            panelEstadisticas.add(titulo, BorderLayout.NORTH);
+            panelEstadisticas.add(statsPanel, BorderLayout.CENTER);
         }
 
-        statsPanel.add(Box.createVerticalGlue());
-
-        contentPanel.add(titulo, BorderLayout.NORTH);
-        contentPanel.add(statsPanel, BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        panelEstadisticas.revalidate();
+        panelEstadisticas.repaint();
     }
-
   
 }
