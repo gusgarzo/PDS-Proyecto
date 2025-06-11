@@ -149,9 +149,16 @@ public class MainWindow extends JFrame {
     }
 
     private void importarCurso() {
+
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "IMPORTAR");
+
+        contentPanel.removeAll();
+        contentPanel.add(new ImportarCursoPanel(), BorderLayout.CENTER);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
+
 
     private void crearCurso() {
 

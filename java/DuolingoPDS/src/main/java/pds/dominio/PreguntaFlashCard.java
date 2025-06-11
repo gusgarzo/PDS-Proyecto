@@ -1,16 +1,14 @@
 package pds.dominio;
 
-public class PreguntaFlashCard extends Pregunta{
-	String respuesta;
+public class PreguntaFlashCard extends Pregunta {
 
-	public PreguntaFlashCard(String enunciado, String respuesta) {
-		super(enunciado);
-		this.respuesta = respuesta;
-	}
+    private String respuesta;
 
-	public String getRespuesta() {
-		return respuesta;
-	}
+    // ✅ Constructor vacío requerido por Jackson
+    public PreguntaFlashCard() {
+        super();
+    }
+
 
 	public void setRespuesta(String respuesta) {
 		this.respuesta = respuesta;
@@ -22,4 +20,15 @@ public class PreguntaFlashCard extends Pregunta{
 	}
 	
 
+    public PreguntaFlashCard(String enunciado, String respuesta) {
+        super(enunciado);
+        this.respuesta = respuesta;
+    }
+
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+   
 }
