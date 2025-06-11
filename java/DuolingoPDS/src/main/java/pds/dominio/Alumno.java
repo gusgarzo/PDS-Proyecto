@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+@Entity
+@DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
 
   
-    private List<RealizarCurso> cursosEnProgreso;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RealizarCurso> cursosEnProgreso = new ArrayList<>();
 
 
     private int cursosCompletados = 0;
@@ -20,8 +24,13 @@ public class Alumno extends Usuario {
 
     private int tiempoTotalMinutos = 0;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Curso> cursosImportados = new ArrayList<>();
+	
+	
+	@OneToMany
+	private List<Curso> cursosRealizados = new ArrayList<>();
 
-	private ArrayList cursosImportados;
 
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);
@@ -46,7 +55,6 @@ public class Alumno extends Usuario {
 
 
 
-
 	public List<RealizarCurso> getCursosEnProgreso() {
 		return cursosEnProgreso;
 	}
@@ -58,11 +66,21 @@ public class Alumno extends Usuario {
 	public int getCursosCompletados() {
 		return cursosCompletados;
 	}
+	
 
 	public void setCursosCompletados(int cursosCompletados) {
 		this.cursosCompletados = cursosCompletados;
 	}
 
+	public List<Curso> getCursosRealizados() {
+	    return cursosRealizados;
+	}
+
+	public void setCursosRealizados(List<Curso> cursosRealizados) {
+	    this.cursosRealizados = cursosRealizados;
+	}
+
+	
 	public int getRachaDias() {
 		return rachaDias;
 	}

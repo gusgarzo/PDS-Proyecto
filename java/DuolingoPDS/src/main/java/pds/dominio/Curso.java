@@ -4,39 +4,45 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class Curso {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
     private String descripcion;
+
+    @ManyToOne
     private CreadorCurso creador;
+
+    @Enumerated(EnumType.STRING)
     private Dificultad dificultad;
 
-    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "curso_id")  // FK en la tabla de BloqueContenido
     @JsonProperty("bloques_contenidos")
-    private List<BloqueContenido> bloques;
-   
-
-    public Curso( String nombre, CreadorCurso creador,
-			List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
-		this.nombre = nombre;
-		this.creador = creador;
-		this.bloques = bloques;
-		this.dificultad = dificultad;
-		this.descripcion = descripcion;
-	}
-
-    
-
+    private List<BloqueContenido> bloques = new ArrayList<>();
 
     public Curso() {
-        // Necesario para deserialización JSON
+        // Necesario para JPA y Jackson
     }
 
-  
+    public Curso(String nombre, CreadorCurso creador,
+                 List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
+        this.nombre = nombre;
+        this.creador = creador;
+        this.bloques = bloques;
+        this.dificultad = dificultad;
+        this.descripcion = descripcion;
+    }
+
+    // === Getters y setters ===
 
     public Long getId() {
         return id;
@@ -95,7 +101,7 @@ public class Curso {
         agregarBloque(nuevoBloque);
         return nuevoBloque;
     }
-   
+
     public void agregarPreguntaABloque(String nombreBloque, Pregunta pregunta) {
         BloqueContenido bloque = getBloquePorNombre(nombreBloque);
         if (bloque != null) {
@@ -105,7 +111,6 @@ public class Curso {
         }
     }
 
- 
     public BloqueContenido getBloquePorNombre(String nombre) {
         for (BloqueContenido bloque : bloques) {
             if (bloque.getNombre().equals(nombre)) {
@@ -114,6 +119,4 @@ public class Curso {
         }
         return null;
     }
-    
-
 }

@@ -2,12 +2,23 @@ package pds.dominio;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class RealizarCurso {
 	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Curso curso;
 	private BloqueContenido bloque;
 	private Estrategia estrategia;
+	
+	@ManyToOne
 	private Alumno alumno;
 	
 	public RealizarCurso(Curso curso, BloqueContenido bloque, Estrategia estrategia, Alumno alumno) {

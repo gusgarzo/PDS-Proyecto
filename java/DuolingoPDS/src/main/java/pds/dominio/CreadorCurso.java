@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("CREADOR")
 public class CreadorCurso extends Usuario {
+	
+    @OneToMany(mappedBy = "creador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Curso> cursosCreados = new ArrayList<>();
     public CreadorCurso(String nombre, String apellidos, String telefono, String correo, String contrasena) {
     	super(nombre,  apellidos,  telefono,  correo,  contrasena);

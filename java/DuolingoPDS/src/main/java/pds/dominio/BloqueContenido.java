@@ -1,28 +1,34 @@
 package pds.dominio;
 
+import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+@Entity
 public class BloqueContenido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nombre;
 
-  
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "bloque_id") // FK en Pregunta
+    private List<Pregunta> preguntas = new ArrayList<>();
 
-    private List<Pregunta> preguntas;
+    public BloqueContenido() {
+        // Requerido por Jackson y JPA
+    }
 
-   
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public BloqueContenido(String nombreBloque) {
         this.nombre = nombreBloque;
-        this.preguntas = new ArrayList<>();
     }
-    public BloqueContenido() {
-        // Requerido por Jackson
+
+    public Long getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -37,23 +43,16 @@ public class BloqueContenido {
         return preguntas;
     }
 
-    /**
-     * Añade una pregunta al bloque.
-     */
     public void agregarPregunta(Pregunta pregunta) {
         preguntas.add(pregunta);
     }
 
-    /**
-     * Elimina una pregunta del bloque.
-     */
     public void eliminarPregunta(Pregunta pregunta) {
         preguntas.remove(pregunta);
     }
 
     @Override
     public String toString() {
-        return nombre ;
-       
+        return nombre;
     }
 }

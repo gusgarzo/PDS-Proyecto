@@ -11,17 +11,20 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
+import pds.dao.*;
 import pds.dominio.*;
 
 public enum Controlador {
 	INSTANCE;
  
     private Usuario usuarioActual;
-
+	private RepositorioUsuarios repositorioUsuarios;
+	private RepositorioCurso repositorioCursos;
    
     private Controlador() {
+		usuarioActual = null;
+		repositorioUsuarios = new RepositorioUsuarios();
+		repositorioCursos = new RepositorioCurso();
    
     }
 
@@ -31,7 +34,6 @@ public enum Controlador {
 
         Usuario nuevoUsuario = null;
         if (tipoUsuario.equalsIgnoreCase("Alumno")) {
-
         } else if (tipoUsuario.equalsIgnoreCase("Creador de cursos")) {
             nuevoUsuario = new CreadorCurso(nombre, tipoUsuario, tipoUsuario, tipoUsuario, tipoUsuario);
         } else {
@@ -99,16 +101,13 @@ public enum Controlador {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Curso curso = mapper.readValue(archivo, Curso.class);
+            repositorioCursos.guardarCurso(curso);
             return curso;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
-
-
-
-
 
     
     /*public void crearCurso(String nombre, String descripcion, String categoria, boolean esPublico, String rutaImagen) {
@@ -124,6 +123,7 @@ public enum Controlador {
 
     */
     public Curso creaCurso() {
+    	
     	BloqueContenido bloque1 = new BloqueContenido("Conceptos básicos de Pokémon");
 
     	// Pregunta FlashCard

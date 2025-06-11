@@ -26,7 +26,10 @@ public class RegisterWindow extends JFrame {
     private JLabel imageLabel;
     private JButton cancelarButton, aceptarButton;
     private JDateChooser dateChooser;
+    
     private String rutaImagenSeleccionada = null;
+    private JComboBox<String> tipoUsuarioCombo;
+
 
     public RegisterWindow() {
     	  setTitle("Registro de Usuario");
@@ -57,17 +60,66 @@ public class RegisterWindow extends JFrame {
           gbc.gridy = 2;
           inputPanel.add(new JLabel("Teléfono:"), gbc);
 
+       // Email
+          gbc.gridx = 0;
           gbc.gridy = 3;
           inputPanel.add(new JLabel("Email:"), gbc);
 
+          gbc.gridx = 1;
+          emailField = new JTextField(20);
+          inputPanel.add(emailField, gbc);
+
+          // Contraseña
+          gbc.gridx = 0;
           gbc.gridy = 4;
           inputPanel.add(new JLabel("Contraseña:"), gbc);
 
+          gbc.gridx = 1;
+          passwordField = new JPasswordField(10);
+          inputPanel.add(passwordField, gbc);
+
+          // Confirmar contraseña
+          gbc.gridx = 2;
+          inputPanel.add(new JLabel("Confirmar Contraseña:"), gbc);
+
+          gbc.gridx = 3;
+          confirmPasswordField = new JPasswordField(10);
+          inputPanel.add(confirmPasswordField, gbc);
+
+          // Fecha de nacimiento
+          gbc.gridx = 0;
           gbc.gridy = 5;
           inputPanel.add(new JLabel("Fecha (DD/MM/AAAA):"), gbc);
 
+          gbc.gridx = 1;
+          dateChooser = new JDateChooser();
+          dateChooser.setDateFormatString("dd/MM/yyyy");
+          dateChooser.setPreferredSize(new Dimension(140, 25));
+          inputPanel.add(dateChooser, gbc);
+
+          // Saludo
+          gbc.gridx = 0;
           gbc.gridy = 6;
           inputPanel.add(new JLabel("Saludo:"), gbc);
+
+          gbc.gridx = 1;
+          greetingField = new JTextField(15);
+          inputPanel.add(greetingField, gbc);
+
+
+          // Tipo de usuario
+          gbc.gridx = 0;
+          gbc.gridy = 7;
+          inputPanel.add(new JLabel("Tipo de usuario:"), gbc);
+
+          gbc.gridx = 1;
+          tipoUsuarioCombo = new JComboBox<>(new String[]{"Alumno", "Creador de Curso"});
+          inputPanel.add(tipoUsuarioCombo, gbc);
+
+          gbc.gridx = 1;
+          tipoUsuarioCombo = new JComboBox<>(new String[]{"Alumno", "Creador de Curso"});
+          inputPanel.add(tipoUsuarioCombo, gbc);
+
 
           gbc.gridx = 1;
           gbc.gridy = 0;
@@ -162,31 +214,35 @@ public class RegisterWindow extends JFrame {
           cancelarButton.addActionListener(e -> dispose());
 
           aceptarButton.addActionListener(e -> {
-              if (validateFields()) {
-                  Date date = dateChooser.getDate();
-                  LocalDateTime fechaNacimiento = date.toInstant()
-                          .atZone(ZoneId.systemDefault())
-                          .toLocalDateTime();
+        	    if (validateFields()) {
+        	        Date date = dateChooser.getDate();
+        	        LocalDateTime fechaNacimiento = date.toInstant()
+        	                .atZone(ZoneId.systemDefault())
+        	                .toLocalDateTime();
 
-                 /* boolean success = Controlador.INSTANCE.registrarUsuario(
-                          nameField.getText(),
-                          lastNameField.getText(),
-                          emailField.getText(),
-                          phoneField.getText(),
-                          new String(passwordField.getPassword()),
-                          fechaNacimiento,
-                          greetingField.getText(),
-                          rutaImagenSeleccionada
-                  );
-	*/
-                  if (true) {
-                      JOptionPane.showMessageDialog(this, "Registro exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                      dispose();
-                  } else {
-                      JOptionPane.showMessageDialog(this, "Error al registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-                  }
-              }
-          });
+        	        String tipoUsuario = (String) tipoUsuarioCombo.getSelectedItem();
+
+        	        /*boolean success = Controlador.INSTANCE.registrarUsuario(
+        	                nameField.getText(),
+        	                lastNameField.getText(),
+        	                emailField.getText(),
+        	                phoneField.getText(),
+        	                new String(passwordField.getPassword()),
+        	                fechaNacimiento,
+        	                greetingField.getText(),
+        	                rutaImagenSeleccionada,
+        	                tipoUsuario // <-- NUEVO
+        	        );
+
+        	        if (success) {
+        	            JOptionPane.showMessageDialog(this, "Registro exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        	            dispose();
+        	        } else {
+        	            JOptionPane.showMessageDialog(this, "Error al registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        	        }*/
+        	    }
+        	});
+
 
           buttonPanel.add(cancelarButton);
           buttonPanel.add(aceptarButton);
@@ -196,10 +252,24 @@ public class RegisterWindow extends JFrame {
     }
  
     private boolean validateFields() {
-        if (nameField.getText().isEmpty() || lastNameField.getText().isEmpty() ||
-                phoneField.getText().isEmpty() || emailField.getText().isEmpty() ||
-                dateChooser.getDate() == null || passwordField.getPassword().length == 0 ||
-                confirmPasswordField.getPassword().length == 0) {
+        if (nameField.getText().isEmpty() ||
+            lastNameField.getText().isEmpty() ||
+            phoneField.getText().isEmpty() ||
+            emailField.getText().isEmpty() ||
+            greetingField.getText().isEmpty() ||  // <- esto faltaba
+            //dateChooser.getDate() == null ||
+            passwordField.getPassword().length == 0 ||
+            confirmPasswordField.getPassword().length == 0) {
+            
+        	System.out.println("nameField: " + nameField.getText());
+        	System.out.println("lastNameField: " + lastNameField.getText());
+        	System.out.println("phoneField: " + phoneField.getText());
+        	System.out.println("emailField: " + emailField.getText());
+        	System.out.println("greetingField: " + greetingField.getText());
+        	System.out.println("passwordField: " + new String(passwordField.getPassword()));
+        	System.out.println("confirmPasswordField: " + new String(confirmPasswordField.getPassword()));
+        	System.out.println("dateChooser: " + dateChooser.getDate());
+
             JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return false;
         }
