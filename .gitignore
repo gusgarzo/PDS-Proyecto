@@ -12,3 +12,14 @@ java/DuolingoPDS/target/classes/pds/dao/IAdaptadorCreadorCursosDAO.class
 /java/DuolingoPDS/target
 java/DuolingoPDS/target/classes/pds/dominio/Curso.class
 /java/DuolingoPDS/target
+*.class
+java/DuolingoPDS/target/classes/pds/controlador/Controlador.class
+java/DuolingoPDS/target/classes/pds/dominio/Alumno.class
+java/DuolingoPDS/target/classes/pds/dominio/CreadorCurso.class
+java/DuolingoPDS/target/classes/pds/dominio/Curso.class
+java/DuolingoPDS/target/classes/pds/dominio/Estadisticas.class
+java/DuolingoPDS/target/classes/pds/dominio/Usuario.class
+java/DuolingoPDS/target/classes/pds/vista/MainWindow.class
+java/DuolingoPDS/target/classes/pds/vista/RegisterWindow.class
+*.class
+*.class

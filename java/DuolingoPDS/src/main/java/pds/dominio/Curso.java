@@ -36,14 +36,7 @@ public class Curso {
         // Necesario para deserialización JSON
     }
 
-    public Curso(Long id, String nombre, CreadorCurso creador, List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.creador = creador;
-        this.bloques = bloques;
-        this.dificultad = dificultad;
-        this.descripcion = descripcion;
-    }
+  
 
     public Long getId() {
         return id;
@@ -112,7 +105,7 @@ public class Curso {
         }
     }
 
-
+ 
     public BloqueContenido getBloquePorNombre(String nombre) {
         for (BloqueContenido bloque : bloques) {
             if (bloque.getNombre().equals(nombre)) {

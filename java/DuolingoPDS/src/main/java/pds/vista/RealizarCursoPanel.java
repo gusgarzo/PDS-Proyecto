@@ -99,6 +99,7 @@ public class RealizarCursoPanel extends JPanel {
 
         // --- Cursos en progreso (relleno, sustituye por los reales del usuario) ---
         //List<RealizarCurso> cursosEnProgreso = Controlador.INSTANCE.getCursosEnProgreso(usuarioActual);
+        /**
         ButtonGroup grupoEnProgreso = new ButtonGroup();
         for (RealizarCurso rc : cursosEnProgreso) {
             String nombre = rc.getCurso().getNombre() + " (Bloque " + (rc.getIndBloqueActual()+1) + " de " + rc.getNumBloques() + ")";
@@ -114,7 +115,7 @@ public class RealizarCursoPanel extends JPanel {
             cursosEnProgresoPanel.add(radio);
             cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
         }
-
+*/
         // Panel de estrategia de aprendizaje
         JPanel estrategiaPanel = new JPanel();
         estrategiaPanel.setOpaque(true);

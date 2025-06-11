@@ -12,12 +12,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import pds.dao.FactoriaDAO;
-import pds.dao.IAdaptadorAlumnoDAO;
-import pds.dao.IAdaptadorCreadorCursosDAO;
-import pds.dao.IAdaptadorCursoDAO;
-import pds.dao.IAdaptadorEstadisticasDAO;
-import pds.dao.IAdaptadorUsuarioDAO;
+
 import pds.dominio.*;
 
 public enum Controlador {
@@ -25,25 +20,9 @@ public enum Controlador {
  
     private Usuario usuarioActual;
 
-    private FactoriaDAO factoria;
-    private IAdaptadorUsuarioDAO adaptadorUsuario;
-    private IAdaptadorEstadisticasDAO adaptadorEstadisticas;
-    private IAdaptadorAlumnoDAO adaptadorAlumno;
-    private IAdaptadorCreadorCursosDAO adaptadorCreadorCursos;
-    private IAdaptadorCursoDAO adaptadorCursos;
+   
     private Controlador() {
-    	 usuarioActual = null;
-         try {
-             factoria = FactoriaDAO.getInstancia();
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-        adaptadorAlumno = factoria.getAdaptadorAlumnoDAO();
-        adaptadorCreadorCursos = factoria.getAdaptadorCreadorCursosDAO();
-        adaptadorCursos = factoria.getAdaptadorCursoDAO();
-        adaptadorUsuario = factoria.getAdaptadorUsuarioDAO();
-        adaptadorEstadisticas = factoria.getAdaptadorEstadisticasDAO();
-
+   
     }
 
    
@@ -212,10 +191,11 @@ public enum Controlador {
     	Dificultad dificultad = Dificultad.FACIL;
 
     	CreadorCurso cre = new CreadorCurso("", null, null, null, null);
-    	return new Curso("Introducción a Pokémon",cre , bloques, dificultad);
+    	return new Curso("Introducción a Pokémon",cre , bloques, dificultad, "");
     }
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
+    	System.out.println(estrategiaNombre);
         return ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
     }
 }

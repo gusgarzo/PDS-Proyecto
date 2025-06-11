@@ -86,7 +86,7 @@ public class Alumno extends Usuario {
 	    } else if ("Repetición Espaciada".equals(estrategiaNombre)) {
 	    	estrategia = new EstrategiaRepeticionEspaciada();
 	    } else if ("Aleatoria".equals(estrategiaNombre)) {
-	    	estrategia = new EstrategiaSecuencial();
+	    	estrategia = new EstrategiaAleatoria();
 	    } else {
 	        throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
 	    }

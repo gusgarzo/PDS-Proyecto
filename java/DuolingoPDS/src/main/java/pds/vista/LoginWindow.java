@@ -181,7 +181,7 @@ public class LoginWindow extends JFrame {
                 boolean loginExitoso = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
                 loginExitoso = true;
                 if (loginExitoso) {
-                	CreadorCurso u = new CreadorCurso(
+                	Alumno u = new Alumno(
                     	    "Ash",          // nombre
                     	    "Ketchum",      // apellidos
                     	    "123456789",    // telefono

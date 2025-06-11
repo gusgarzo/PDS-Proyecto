@@ -61,6 +61,7 @@ public class PreguntasPanel extends JPanel {
         panelBotones.add(btnResponder);
         panelBotones.add(btnSiguiente);
         add(panelBotones, BorderLayout.SOUTH);
+        cargarPreguntasBloqueActual();
         mostrarPreguntaActual(); 
         actualizarBotones();    
        
