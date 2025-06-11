@@ -1,10 +1,14 @@
 package pds.dominio;
 
-public class PreguntaFlashCard extends Pregunta {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+public class PreguntaFlashCard extends Pregunta {
+	
     private String respuesta;
 
-    // ✅ Constructor vacío requerido por Jackson
+    
     public PreguntaFlashCard() {
         super();
     }

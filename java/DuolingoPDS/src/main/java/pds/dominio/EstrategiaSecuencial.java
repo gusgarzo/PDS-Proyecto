@@ -2,7 +2,13 @@ package pds.dominio;
 
 import java.util.List;
 
-public class EstrategiaSecuencial implements Estrategia{
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
+@DiscriminatorValue("secuencial")
+public class EstrategiaSecuencial extends Estrategia{
 
 	@Override
 	public List<Pregunta> getPreguntas(BloqueContenido bloque) {		

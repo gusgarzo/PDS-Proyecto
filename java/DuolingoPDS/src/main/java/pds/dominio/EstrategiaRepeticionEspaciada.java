@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EstrategiaRepeticionEspaciada implements Estrategia {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
+@DiscriminatorValue("repeticion")
+public class EstrategiaRepeticionEspaciada extends Estrategia {
 
     @Override
     public List<Pregunta> getPreguntas(BloqueContenido bloque) {

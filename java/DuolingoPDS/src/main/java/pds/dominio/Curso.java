@@ -9,6 +9,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
+@Table(name = "cursos")
 public class Curso {
 
     @Id
@@ -19,14 +20,16 @@ public class Curso {
     private String descripcion;
 
     @ManyToOne
+	@JoinColumn(name = "autor_id")
     private CreadorCurso creador;
 
     @Enumerated(EnumType.STRING)
     private Dificultad dificultad;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "curso_id")  // FK en la tabla de BloqueContenido
+   
     @JsonProperty("bloques_contenidos")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "curso_id")
     private List<BloqueContenido> bloques = new ArrayList<>();
 
     public Curso() {

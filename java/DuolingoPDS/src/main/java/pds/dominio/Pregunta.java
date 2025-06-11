@@ -12,9 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.PROPERTY,
@@ -25,17 +23,20 @@ import jakarta.persistence.InheritanceType;
     @JsonSubTypes.Type(value = PreguntaHuecos.class, name = "huecos"),
     @JsonSubTypes.Type(value = PreguntaFlashCard.class, name = "flashcard")
 })
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pregunta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String enunciado;
-
-    // ✅ Constructor vacío necesario para Jackson
+    
+  
     public Pregunta() {}
 
-    // Constructor normal
+   
     public Pregunta(String enunciado) {
         this.enunciado = enunciado;
     }

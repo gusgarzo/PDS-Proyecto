@@ -3,23 +3,36 @@ package pds.dominio;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class RealizarCurso {
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private Curso curso;
-	private BloqueContenido bloque;
-	private Estrategia estrategia;
-	
-	@ManyToOne
-	private Alumno alumno;
+	 	@Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Integer id;
+	 	
+	 	@ManyToOne  
+	    @JoinColumn(name = "curso_id")
+	    private Curso curso;
+
+	    @ManyToOne  
+	    @JoinColumn(name = "bloque_id")
+	    private BloqueContenido bloque;
+
+	    @ManyToOne
+	    @JoinColumn(name = "estrategia_id")
+	    private Estrategia estrategia;
+
+	    @ManyToOne
+	    @JoinColumn(name = "alumno_id")
+	    private Alumno alumno;
 	
 	public RealizarCurso(Curso curso, BloqueContenido bloque, Estrategia estrategia, Alumno alumno) {
 		this.curso = curso;

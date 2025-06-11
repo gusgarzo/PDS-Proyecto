@@ -2,12 +2,17 @@ package pds.dominio;
 
 import java.util.List;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
 public class PreguntaTipoTest extends Pregunta {
 
     private List<String> respuestas;
     private String respuestaCorrecta;
 
-    // ✅ Constructor vacío requerido por Jackson
+
     public PreguntaTipoTest() {
         super();
     }

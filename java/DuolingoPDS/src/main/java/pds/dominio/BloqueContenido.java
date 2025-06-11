@@ -2,21 +2,20 @@ package pds.dominio;
 
 import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class BloqueContenido {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
     private String nombre;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "bloque_id") // FK en Pregunta
+    @JoinColumn(name = "bloque_id") 
     private List<Pregunta> preguntas = new ArrayList<>();
 
     public BloqueContenido() {
@@ -27,7 +26,7 @@ public class BloqueContenido {
         this.nombre = nombreBloque;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

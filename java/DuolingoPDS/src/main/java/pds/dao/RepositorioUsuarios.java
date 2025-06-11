@@ -105,28 +105,6 @@ public class RepositorioUsuarios {
             em.close();
         }
     }
-
-    public void añadirCursoRealizado(Alumno alumno, Curso curso) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Alumno a = em.merge(alumno);
-            a.getCursosRealizados().add(curso);  // asegúrate de tener este método
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-
-    public void añadirCursoCreado(CreadorCurso creador, Curso curso) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            CreadorCurso c = em.merge(creador);
-            c.getCursosCreados().add(curso); // asegúrate de tener este método
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
+    
+  
 }

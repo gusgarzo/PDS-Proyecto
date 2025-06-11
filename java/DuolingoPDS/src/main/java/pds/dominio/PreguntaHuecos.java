@@ -1,5 +1,9 @@
 package pds.dominio;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
 public class PreguntaHuecos extends Pregunta {
 
     private String respuestaCorrecta;

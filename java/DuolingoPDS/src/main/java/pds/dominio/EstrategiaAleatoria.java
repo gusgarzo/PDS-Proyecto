@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EstrategiaAleatoria implements Estrategia{
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+@Entity
+@DiscriminatorValue("aleatoria")
+public class EstrategiaAleatoria extends Estrategia{
 
 	@Override
 	public List<Pregunta> getPreguntas(BloqueContenido bloque) {

@@ -77,8 +77,7 @@ public class RealizarCursoPanel extends JPanel {
         centroPanel.add(scrollEnProgreso);
         add(centroPanel, BorderLayout.CENTER);
 
-        // --- Cursos de ejemplo (relleno, sustituye por los de la base de datos cuando estén disponibles) ---
-        Curso cur = Controlador.INSTANCE.creaCurso();
+       
         List<Curso> cursos = new ArrayList<>();
         cursos.add(cur);
 
