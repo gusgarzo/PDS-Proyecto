@@ -252,7 +252,7 @@ public class EditorBloquesPanel extends JPanel {
             repaint();
         });
         
-        guardar.addActionListener(e -> {
+        /*guardar.addActionListener(e -> {
             System.out.println("=== CURSO: " + curso.getNombre() + " ===");
             if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
                 System.out.println("No hay bloques en el curso.");
@@ -268,8 +268,29 @@ public class EditorBloquesPanel extends JPanel {
                     }
                 }
             }
-        });
+        });*/
+        
+        guardar.addActionListener(e -> {
+            if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "❌ El curso debe tener al menos un bloque.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            for (BloqueContenido bloque : curso.getBloques()) {
+                if (bloque.getPreguntas() == null || bloque.getPreguntas().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "❌ El bloque \"" + bloque.getNombre() + "\" no tiene preguntas.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            try {
+                ControladorCurso.INSTANCE.guardarCurso(curso);
+                JOptionPane.showMessageDialog(this, "✅ Curso guardado correctamente en la base de datos.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "❌ Error al guardar el curso: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         panel.add(tipoLabel);
         panel.add(tipoPregunta);

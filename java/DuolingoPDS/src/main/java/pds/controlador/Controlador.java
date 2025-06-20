@@ -118,4 +118,14 @@ public enum Controlador {
     	System.out.println(estrategiaNombre);
         return ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
     }
+    
+    public List<Curso> obtenerTodosLosCursos() {
+        return RepositorioCurso.getInstancia().obtenerTodos();
+    }
+
+    public void registrarCursoRealizado(Curso curso) {
+        if (!(usuarioActual instanceof Alumno)) return;
+        repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
+    }
+
 }

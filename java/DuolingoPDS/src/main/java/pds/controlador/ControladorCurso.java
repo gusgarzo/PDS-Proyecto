@@ -2,6 +2,7 @@ package pds.controlador;
 
 import java.util.List;
 
+import pds.dao.RepositorioCurso;
 import pds.dominio.*;
 
 
@@ -53,5 +54,15 @@ public enum ControladorCurso {
 
         curso.agregarPreguntaABloque(nombreBloque, pregunta);
     }
+    
+    public void guardarCurso(Curso curso) {
+        RepositorioCurso.getInstancia().guardarCurso(curso);
+    }
+    
+    public List<Curso> obtenerMisCursos() {
+        if (!(usuarioActual instanceof CreadorCurso)) return List.of();
+        return RepositorioCurso.getInstancia().obtenerPorCreador(usuarioActual.getNombre());
+    }
+
 
 }

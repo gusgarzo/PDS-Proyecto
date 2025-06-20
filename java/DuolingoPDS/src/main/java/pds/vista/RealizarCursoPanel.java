@@ -76,10 +76,8 @@ public class RealizarCursoPanel extends JPanel {
         centroPanel.add(scrollCursos);
         centroPanel.add(scrollEnProgreso);
         add(centroPanel, BorderLayout.CENTER);
-
-       
-        List<Curso> cursos = new ArrayList<>();
-        cursos.add(cur);
+  
+        List<Curso> cursos = Controlador.INSTANCE.obtenerTodosLosCursos();
 
         ButtonGroup grupoCursos = new ButtonGroup();
         for (Curso curso : cursos) {

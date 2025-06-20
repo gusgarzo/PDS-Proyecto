@@ -104,10 +104,12 @@ public class MainWindow extends JFrame {
         panelCompartir.add(compartirLabel, BorderLayout.CENTER);
 
         // Panel importar curso
-        panelImportar = new JPanel(new BorderLayout());
-        JLabel importarLabel = new JLabel("Importar curso", SwingConstants.CENTER);
-        importarLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        panelImportar.add(importarLabel, BorderLayout.CENTER);
+        //panelImportar = new JPanel(new BorderLayout());
+        //JLabel importarLabel = new JLabel("Importar curso", SwingConstants.CENTER);
+        //importarLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        //panelImportar.add(importarLabel, BorderLayout.CENTER);
+        
+        panelImportar = new ImportarCursoPanel(); // <- usa el panel funcional
 
         // Panel realizar curso
         panelRealizarCurso = new RealizarCursoPanel();
@@ -148,7 +150,7 @@ public class MainWindow extends JFrame {
         cl.show(contentPanel, "COMPARTIR");
     }
 
-    private void importarCurso() {
+    /*private void importarCurso() {
 
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "IMPORTAR");
@@ -157,12 +159,18 @@ public class MainWindow extends JFrame {
         contentPanel.add(new ImportarCursoPanel(), BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
+    }*/
+    
+    private void importarCurso() {
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "IMPORTAR");
     }
+
 
 
     private void crearCurso() {
 
-        if (!Controlador.INSTANCE.esCreador()) {
+        if (!Controlador.INSTANCE.estaLogueado() || !Controlador.INSTANCE.esCreador()) {
             JOptionPane.showMessageDialog(
                 this,
                 "Solo los usuarios creadores pueden acceder a la creación de cursos.",

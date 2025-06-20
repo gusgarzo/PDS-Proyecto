@@ -82,8 +82,13 @@ public class EditorCursoPanel extends JPanel {
 
         Dificultad dificultad = parsearDificultad(dificultadTexto);
 
-        Curso curso = ControladorCurso.INSTANCE.crearCurso(nombre, descripcion, dificultad);
-        cambiarAEditorBloques(curso);
+        try {
+            Curso curso = ControladorCurso.INSTANCE.crearCurso(nombre, descripcion, dificultad);
+            cambiarAEditorBloques(curso);
+        } catch (IllegalStateException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
     
     private boolean validarCampos(String nombre, String descripcion) {
