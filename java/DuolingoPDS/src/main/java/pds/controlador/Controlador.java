@@ -50,7 +50,6 @@ public enum Controlador {
     public Usuario loginUsuario(String nombre, String contrasena) {
         Usuario usuario = repositorioUsuarios.autenticar(nombre, contrasena);
 
-
         if (usuario != null) {
             this.usuarioActual = usuario;
             ControladorCurso.INSTANCE.setUsuarioActual(usuario);
@@ -103,7 +102,7 @@ public enum Controlador {
 
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
-       /* if (usuarioActual instanceof Alumno alumno) {
+    		if (usuario instanceof Alumno) {
 	        // Comprobar si ya ha realizado el curso
 	        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosPor((Alumno) usuario);
 	        for (Curso realizado : yaRealizados) {
@@ -111,13 +110,14 @@ public enum Controlador {
 	                // Ya lo ha hecho
 	                return null;
 	            }
-            }*/
+            }
 
             // Si no lo ha empezado, se crea una nueva instancia
             RealizarCurso nuevo = ((Alumno) usuario).iniciarCurso(curso, estrategiaNombre);
             repoRealizarCurso.registrarCursoRealizado((Alumno) usuario, curso); // o guardar RealizarCurso si se persistiera
             return nuevo;
-    //    }
+    		}
+		return null;
     }
     
     public List<Curso> obtenerTodosLosCursos() {

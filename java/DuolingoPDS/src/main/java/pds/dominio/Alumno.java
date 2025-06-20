@@ -41,9 +41,6 @@ public class Alumno extends Usuario {
     private List<Curso> cursosRealizados = new ArrayList<>();
 
 	
-    public Alumno() {
-        // Obligatorio para Hibernate
-    }
 
 	public Alumno() { }
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {

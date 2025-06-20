@@ -181,7 +181,6 @@ public class LoginWindow extends JFrame {
                 Usuario usu = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
                 
                 if (usu != null) {
-                	
                     JOptionPane.showMessageDialog(LoginWindow.this, "¡Bienvenido, " + usu.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
                     MainWindow main = new MainWindow();
                     main.setVisible(true);

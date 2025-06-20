@@ -4,10 +4,12 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 
 import pds.controlador.Controlador;
+import pds.dominio.Curso;
 import pds.dominio.Estadisticas;
 import pds.dominio.Usuario;
 
 import java.awt.*;
+import java.io.File;
 
 public class MainWindow extends JFrame {
     private JPanel contentPanel;
@@ -101,11 +103,7 @@ public class MainWindow extends JFrame {
        
         panelCompartir = new CompartirCursoPanel();
 
-        // Panel importar curso
-        //panelImportar = new JPanel(new BorderLayout());
-        //JLabel importarLabel = new JLabel("Importar curso", SwingConstants.CENTER);
-        //importarLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        //panelImportar.add(importarLabel, BorderLayout.CENTER);
+
         
         panelImportar = new ImportarCursoPanel(); // <- usa el panel funcional
 
@@ -143,13 +141,8 @@ public class MainWindow extends JFrame {
         return button;
     }
 
+
     private void compartirCurso() {
-        CardLayout cl = (CardLayout) contentPanel.getLayout();
-        cl.show(contentPanel, "COMPARTIR");
-    }
-/*
-    private void compartirCurso() {
-	    contentPanel.removeAll();
 	
 	    if (!Controlador.INSTANCE.esCreador()) {
 	        JLabel error = new JLabel("Solo los creadores pueden compartir cursos.", SwingConstants.CENTER);
@@ -183,7 +176,7 @@ public class MainWindow extends JFrame {
 	            int seleccion = fileChooser.showSaveDialog(this);
 	            if (seleccion == JFileChooser.APPROVE_OPTION) {
 	                File archivo = fileChooser.getSelectedFile();
-	                boolean exito = Controlador.INSTANCE.CompartirCurso(cursoSeleccionado, archivo);
+	                boolean exito = Controlador.INSTANCE.compartirCurso(cursoSeleccionado, archivo);
 	
 	                JOptionPane.showMessageDialog(
 	                    this,
@@ -217,16 +210,25 @@ public class MainWindow extends JFrame {
 	    contentPanel.repaint();
 	}
 
-   */ 
+  
     private void importarCurso() {
+        if (!Controlador.INSTANCE.estaLogueado() || Controlador.INSTANCE.esCreador()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Solo los usuarios Alumno pueden acceder a Importar Curso.",
+                "Permiso denegado",
+                JOptionPane.WARNING_MESSAGE
+                
+            );
+        }else {
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "IMPORTAR");
+        }
     }
 
 
 
     private void crearCurso() {
-
         if (!Controlador.INSTANCE.estaLogueado() || !Controlador.INSTANCE.esCreador()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -237,16 +239,16 @@ public class MainWindow extends JFrame {
             return;
         }
 
-        contentPanel.removeAll();
-        contentPanel.add(new EditorCursoPanel(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        // Creamos un nuevo panel y lo sustituimos por el anterior
+        EditorCursoPanel nuevoEditor = new EditorCursoPanel();
+        contentPanel.remove(editorCursoPanel); // Quita el anterior del CardLayout
+        editorCursoPanel = nuevoEditor; // Lo sustituimos
+        contentPanel.add(editorCursoPanel, "EDITOR_CURSO");
 
-        //COMPROBAR SI ES CREADOR
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "EDITOR_CURSO");
-
     }
+
 
     private void mostrarInicio() {
         CardLayout cl = (CardLayout) contentPanel.getLayout();
@@ -254,9 +256,19 @@ public class MainWindow extends JFrame {
     }
 
     private void mostrarRealizarCurso() {
-    	panelRealizarCurso.recargarCursosDisponibles(); // ✅ correcto
-        CardLayout cl = (CardLayout) contentPanel.getLayout();
-        cl.show(contentPanel, "REALIZAR_CURSO");
+        if (!Controlador.INSTANCE.estaLogueado() || Controlador.INSTANCE.esCreador()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Solo los usuarios Alumno pueden acceder a la Realizar curso.",
+                "Permiso denegado",
+                JOptionPane.WARNING_MESSAGE
+                
+            );
+        }else {
+	    	panelRealizarCurso.recargarCursosDisponibles(); // ✅ correcto
+	        CardLayout cl = (CardLayout) contentPanel.getLayout();
+	        cl.show(contentPanel, "REALIZAR_CURSO");
+        }
     }
 
     private void mostrarEstadisticas() {
