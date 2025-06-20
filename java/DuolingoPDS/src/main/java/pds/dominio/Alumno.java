@@ -32,6 +32,7 @@ public class Alumno extends Usuario {
 	private List<Curso> cursosRealizados = new ArrayList<>();
 
 
+	public Alumno() { }
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);
         this.cursosCompletados = 0;

@@ -1,110 +1,110 @@
-package pds.dao;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import pds.dominio.Usuario;
-import pds.dominio.Alumno;
-import pds.dominio.CreadorCurso;
-import pds.dominio.Curso;
-
-import java.util.List;
-
-public class RepositorioUsuarios {
-
-    private final EntityManagerFactory emf;
-
-    public RepositorioUsuarios() {
-        emf = Persistence.createEntityManagerFactory("PokeLingo");
-    }
-
-    private EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
-    // Guarda cualquier tipo de usuario: Alumno o CreadorCurso
-    public void registrarUsuario(Usuario usuario) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(usuario);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-
-    public Usuario buscarPorNombre(String nombreUsuario) {
-        EntityManager em = getEntityManager();
-        try {
-            List<Usuario> resultado = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombre", Usuario.class)
-                .setParameter("nombre", nombreUsuario)
-                .getResultList();
-            return resultado.isEmpty() ? null : resultado.get(0);
-        } finally {
-            em.close();
-        }
-    }
-
-    public Usuario autenticar(String nombreUsuario, String contrasena) {
-        EntityManager em = getEntityManager();
-        try {
-            List<Usuario> resultado = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombre AND u.contrasena = :clave", Usuario.class)
-                .setParameter("nombre", nombreUsuario)
-                .setParameter("clave", contrasena)
-                .getResultList();
-            return resultado.isEmpty() ? null : resultado.get(0);
-        } finally {
-            em.close();
-        }
-    }
-
-    // Solo los alumnos
-    public List<Alumno> listarAlumnos() {
-        EntityManager em = getEntityManager();
-        try {
-            return em.createQuery("SELECT a FROM Alumno a", Alumno.class).getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    // Solo los creadores
-    public List<CreadorCurso> listarCreadores() {
-        EntityManager em = getEntityManager();
-        try {
-            return em.createQuery("SELECT c FROM CreadorCurso c", CreadorCurso.class).getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public void actualizarUsuario(Usuario usuario) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(usuario);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-
-    public void eliminarPorId(int id) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Usuario usuario = em.find(Usuario.class, id);
-            if (usuario != null) {
-                em.remove(usuario);
-            }
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-    
-  
-}
+	package pds.dao;
+	
+	import jakarta.persistence.EntityManager;
+	import jakarta.persistence.EntityManagerFactory;
+	import jakarta.persistence.Persistence;
+	import pds.dominio.Usuario;
+	import pds.dominio.Alumno;
+	import pds.dominio.CreadorCurso;
+	import pds.dominio.Curso;
+	
+	import java.util.List;
+	
+	public class RepositorioUsuarios {
+	
+	    private final EntityManagerFactory emf;
+	
+	    public RepositorioUsuarios() {
+	        emf = Persistence.createEntityManagerFactory("PokeLingo");
+	    }
+	
+	    private EntityManager getEntityManager() {
+	        return emf.createEntityManager();
+	    }
+	
+	    // Guarda cualquier tipo de usuario: Alumno o CreadorCurso
+	    public void registrarUsuario(Usuario usuario) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            em.getTransaction().begin();
+	            em.persist(usuario);
+	            em.getTransaction().commit();
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    public Usuario buscarPorNombre(String nombreUsuario) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            List<Usuario> resultado = em.createQuery(
+	                "SELECT u FROM Usuario u WHERE u.nombre = :nombre", Usuario.class)
+	                .setParameter("nombre", nombreUsuario)
+	                .getResultList();
+	            return resultado.isEmpty() ? null : resultado.get(0);
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    public Usuario autenticar(String nombreUsuario, String contrasena) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            List<Usuario> resultado = em.createQuery(
+	                "SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.contrasena = :clave", Usuario.class)
+	                .setParameter("nombre", nombreUsuario)
+	                .setParameter("clave", contrasena)
+	                .getResultList();
+	            return resultado.isEmpty() ? null : resultado.get(0);
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    // Solo los alumnos
+	    public List<Alumno> listarAlumnos() {
+	        EntityManager em = getEntityManager();
+	        try {
+	            return em.createQuery("SELECT a FROM Alumno a", Alumno.class).getResultList();
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    // Solo los creadores
+	    public List<CreadorCurso> listarCreadores() {
+	        EntityManager em = getEntityManager();
+	        try {
+	            return em.createQuery("SELECT c FROM CreadorCurso c", CreadorCurso.class).getResultList();
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    public void actualizarUsuario(Usuario usuario) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            em.getTransaction().begin();
+	            em.merge(usuario);
+	            em.getTransaction().commit();
+	        } finally {
+	            em.close();
+	        }
+	    }
+	
+	    public void eliminarPorId(int id) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            em.getTransaction().begin();
+	            Usuario usuario = em.find(Usuario.class, id);
+	            if (usuario != null) {
+	                em.remove(usuario);
+	            }
+	            em.getTransaction().commit();
+	        } finally {
+	            em.close();
+	        }
+	    }
+	    
+	  
+	}
