@@ -114,5 +114,20 @@ public enum Controlador {
         if (!(usuarioActual instanceof Alumno)) return;
         repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
     }
+    
+    public List<Curso> getCursosDelCreador(){
+    	return repositorioCursos.obtenerPorCreador(usuarioActual.getNombre());
+    }
+    public Boolean compartirCurso(Curso curso, File archivo) {
 
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, curso);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+            
+        }
+    }
 }
