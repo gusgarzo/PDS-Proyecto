@@ -44,32 +44,19 @@ public enum Controlador {
             return false;
         }
 
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setApellidos(apellidos);
-        nuevoUsuario.setTelefono(telefono);
-        nuevoUsuario.setCorreo(correo);
-        nuevoUsuario.setContrasena(contrasena);
-
-        //repositorioUsuarios.registrarUsuario(nuevoUsuario);
-        this.usuarioActual = nuevoUsuario;
-
         return true;
     }
 
-    public boolean loginUsuario(String correo, String contrasena) {
-        Usuario usuario = null;
+    public Usuario loginUsuario(String nombre, String contrasena) {
+        Usuario usuario = repositorioUsuarios.autenticar(nombre, contrasena);
 
-        // Simulación: si se usa este correo, se crea un creador
-        if (correo.equals("2") && contrasena.equals("2")) {
-            usuario = new CreadorCurso();
-        }
 
         if (usuario != null) {
             this.usuarioActual = usuario;
             ControladorCurso.INSTANCE.setUsuarioActual(usuario);
-            return true;
+            return usuario;
         }
-        return false;
+        return null;
     }
     
     
@@ -141,5 +128,20 @@ public enum Controlador {
         if (!(usuarioActual instanceof Alumno)) return;
         repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
     }
+    
+    public List<Curso> getCursosDelCreador(){
+    	return repositorioCursos.obtenerPorCreador(usuarioActual.getNombre());
+    }
+    public Boolean compartirCurso(Curso curso, File archivo) {
 
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, curso);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+            
+        }
+    }
 }

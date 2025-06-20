@@ -45,6 +45,7 @@ public class Alumno extends Usuario {
         // Obligatorio para Hibernate
     }
 
+	public Alumno() { }
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);
         this.cursosCompletados = 0;

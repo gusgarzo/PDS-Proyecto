@@ -101,7 +101,7 @@ public class RegisterWindow extends JFrame {
         inputPanel.add(new JLabel("Tipo de usuario:"), gbc);
 
         gbc.gridx = 1;
-        tipoUsuarioCombo = new JComboBox<>(new String[]{"Alumno", "Creador de Curso"});
+        tipoUsuarioCombo = new JComboBox<>(new String[]{"Alumno", "Creador de Cursos"});
         inputPanel.add(tipoUsuarioCombo, gbc);
 
         mainPanel.add(inputPanel, BorderLayout.CENTER);

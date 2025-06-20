@@ -98,10 +98,8 @@ public class MainWindow extends JFrame {
         panelInicio.add(inicioLabel, BorderLayout.CENTER);
 
         // Panel compartir curso
-        panelCompartir = new JPanel(new BorderLayout());
-        JLabel compartirLabel = new JLabel("¡Comparte tu curso con tus amigos Pokémon!", SwingConstants.CENTER);
-        compartirLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        panelCompartir.add(compartirLabel, BorderLayout.CENTER);
+       
+        panelCompartir = new CompartirCursoPanel();
 
         // Panel importar curso
         //panelImportar = new JPanel(new BorderLayout());
@@ -149,18 +147,77 @@ public class MainWindow extends JFrame {
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "COMPARTIR");
     }
+/*
+    private void compartirCurso() {
+	    contentPanel.removeAll();
+	
+	    if (!Controlador.INSTANCE.esCreador()) {
+	        JLabel error = new JLabel("Solo los creadores pueden compartir cursos.", SwingConstants.CENTER);
+	        error.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+	        contentPanel.add(error, BorderLayout.CENTER);
+	        contentPanel.revalidate();
+	        contentPanel.repaint();
+	        return;
+	    }
+	
+	    java.util.List<Curso> cursos = Controlador.INSTANCE.getCursosDelCreador();
+	    if (cursos.isEmpty()) {
+	        JLabel sinCursos = new JLabel("No tienes cursos para compartir todavía.", SwingConstants.CENTER);
+	        sinCursos.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+	        contentPanel.add(sinCursos, BorderLayout.CENTER);
+	        contentPanel.revalidate();
+	        contentPanel.repaint();
+	        return;
+	    }
+	
+	    JComboBox<Curso> comboCursos = new JComboBox<>(cursos.toArray(new Curso[0]));
+	    JButton btnCompartir = new JButton("Compartir curso");
+	
+	    btnCompartir.addActionListener(e -> {
+	        Curso cursoSeleccionado = (Curso) comboCursos.getSelectedItem();
+	        if (cursoSeleccionado != null) {
+	            JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.setDialogTitle("Guardar curso como JSON");
+	            fileChooser.setSelectedFile(new File(cursoSeleccionado.getNombre().replaceAll("\\s+", "_") + ".json"));
+	
+	            int seleccion = fileChooser.showSaveDialog(this);
+	            if (seleccion == JFileChooser.APPROVE_OPTION) {
+	                File archivo = fileChooser.getSelectedFile();
+	                boolean exito = Controlador.INSTANCE.CompartirCurso(cursoSeleccionado, archivo);
+	
+	                JOptionPane.showMessageDialog(
+	                    this,
+	                    exito ? "¡Curso compartido correctamente!" : "Error al compartir el curso.",
+	                    "Resultado",
+	                    exito ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+	                );
+	            }
+	        }
+	    });
+	
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+	    panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+	    panel.setOpaque(false);
+	
+	    JLabel texto = new JLabel("¡Comparte tu curso con tus amigos Pokémon!");
+	    texto.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+	    texto.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    comboCursos.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    btnCompartir.setAlignmentX(Component.CENTER_ALIGNMENT);
+	
+	    panel.add(texto);
+	    panel.add(Box.createVerticalStrut(20));
+	    panel.add(comboCursos);
+	    panel.add(Box.createVerticalStrut(10));
+	    panel.add(btnCompartir);
+	
+	    contentPanel.add(panel, BorderLayout.CENTER);
+	    contentPanel.revalidate();
+	    contentPanel.repaint();
+	}
 
-    /*private void importarCurso() {
-
-        CardLayout cl = (CardLayout) contentPanel.getLayout();
-        cl.show(contentPanel, "IMPORTAR");
-
-        contentPanel.removeAll();
-        contentPanel.add(new ImportarCursoPanel(), BorderLayout.CENTER);
-        contentPanel.revalidate();
-        contentPanel.repaint();
-    }*/
-    
+   */ 
     private void importarCurso() {
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "IMPORTAR");

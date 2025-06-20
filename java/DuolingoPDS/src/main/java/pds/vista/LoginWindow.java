@@ -178,19 +178,11 @@ public class LoginWindow extends JFrame {
                     return;
                 }
 
-                boolean loginExitoso = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
-                loginExitoso = true;
-                if (loginExitoso) {
-                	Alumno u = new Alumno(
-                    	    "Ash",          // nombre
-                    	    "Ketchum",      // apellidos
-                    	    "123456789",    // telefono
-                    	    "ash@poke.com", // correo
-                    	    "pikachu123"    // contrasena
-                    	);//Controlador.INSTANCE.getUsuarioActual();
-                    Controlador.INSTANCE.setUsuario(u);
-                    ControladorCurso.INSTANCE.setUsuarioActual(u);
-                    JOptionPane.showMessageDialog(LoginWindow.this, "¡Bienvenido, " + u.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
+                Usuario usu = Controlador.INSTANCE.loginUsuario(usuario, contrasena);
+                
+                if (usu != null) {
+                	
+                    JOptionPane.showMessageDialog(LoginWindow.this, "¡Bienvenido, " + usu.getNombre() + "!", "Login correcto", JOptionPane.INFORMATION_MESSAGE);
                     MainWindow main = new MainWindow();
                     main.setVisible(true);
                     dispose();
