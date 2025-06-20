@@ -8,7 +8,6 @@ import pds.dominio.Usuario;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RealizarCursoPanel extends JPanel {
@@ -20,7 +19,6 @@ public class RealizarCursoPanel extends JPanel {
     private RealizarCurso cursoEnProgresoSeleccionado;
 
     public RealizarCursoPanel() {
-        // Colores Pokémon y de interfaz
         Color azulPokemon = new Color(0x0075BE);
         Color amarilloPokemon = new Color(0xFFCC00);
         Color fondoClaro = new Color(0xF7F7F7);
@@ -30,20 +28,16 @@ public class RealizarCursoPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(fondoClaro);
 
-        // Título educativo
         JLabel titulo = new JLabel("Selecciona un curso para aprender sobre Pokémon", SwingConstants.CENTER);
         titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
         titulo.setForeground(azulPokemon);
         titulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         add(titulo, BorderLayout.NORTH);
 
-        // Panel principal para las dos secciones
-        JPanel centroPanel = new JPanel();
-        centroPanel.setLayout(new GridLayout(1, 2, 30, 0));
+        JPanel centroPanel = new JPanel(new GridLayout(1, 2, 30, 0));
         centroPanel.setBackground(fondoClaro);
         centroPanel.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 30));
 
-        // Panel de cursos disponibles
         cursosPanel = new JPanel();
         cursosPanel.setLayout(new BoxLayout(cursosPanel, BoxLayout.Y_AXIS));
         cursosPanel.setBackground(Color.WHITE);
@@ -58,7 +52,6 @@ public class RealizarCursoPanel extends JPanel {
         scrollCursos.setBorder(border);
         scrollCursos.getViewport().setBackground(Color.WHITE);
 
-        // Panel de cursos en progreso
         cursosEnProgresoPanel = new JPanel();
         cursosEnProgresoPanel.setLayout(new BoxLayout(cursosEnProgresoPanel, BoxLayout.Y_AXIS));
         cursosEnProgresoPanel.setBackground(Color.WHITE);
@@ -76,48 +69,14 @@ public class RealizarCursoPanel extends JPanel {
         centroPanel.add(scrollCursos);
         centroPanel.add(scrollEnProgreso);
         add(centroPanel, BorderLayout.CENTER);
-  
-        List<Curso> cursos = Controlador.INSTANCE.obtenerTodosLosCursos();
 
-        ButtonGroup grupoCursos = new ButtonGroup();
-        for (Curso curso : cursos) {
-            JRadioButton radio = new JRadioButton(curso.getNombre());
-            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
-            radio.setBackground(Color.WHITE);
-            radio.setForeground(textoOscuro);
-            radio.addActionListener(e -> {
-                cursoSeleccionado = curso;
-                cursoEnProgresoSeleccionado = null;
-            });
-            grupoCursos.add(radio);
-            cursosPanel.add(radio);
-            cursosPanel.add(Box.createVerticalStrut(8));
-        }
+        // ⚠️ Cargar los cursos al arrancar
+        recargarCursosDisponibles();
 
-        // --- Cursos en progreso (relleno, sustituye por los reales del usuario) ---
-        //List<RealizarCurso> cursosEnProgreso = Controlador.INSTANCE.getCursosEnProgreso(usuarioActual);
-        /**
-        ButtonGroup grupoEnProgreso = new ButtonGroup();
-        for (RealizarCurso rc : cursosEnProgreso) {
-            String nombre = rc.getCurso().getNombre() + " (Bloque " + (rc.getIndBloqueActual()+1) + " de " + rc.getNumBloques() + ")";
-            JRadioButton radio = new JRadioButton(nombre);
-            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
-            radio.setBackground(Color.WHITE);
-            radio.setForeground(textoOscuro);
-            radio.addActionListener(e -> {
-                cursoEnProgresoSeleccionado = rc;
-                cursoSeleccionado = null;
-            });
-            grupoEnProgreso.add(radio);
-            cursosEnProgresoPanel.add(radio);
-            cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
-        }
-*/
-        // Panel de estrategia de aprendizaje
-        JPanel estrategiaPanel = new JPanel();
+        // --- PANEL DE ESTRATEGIA ---
+        JPanel estrategiaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         estrategiaPanel.setOpaque(true);
         estrategiaPanel.setBackground(fondoClaro);
-        estrategiaPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         TitledBorder estrategiaBorder = BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(amarilloPokemon, 2),
@@ -159,25 +118,47 @@ public class RealizarCursoPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un curso para continuar.", "Curso no seleccionado", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        // 1. Obtener estrategia seleccionada
+
         RealizarCurso cursoAct = Controlador.INSTANCE.iniciarCurso(
-                cursoSeleccionado,
-                (String) estrategiaCombo.getSelectedItem(),
-                usuarioActual
+            cursoSeleccionado,
+            (String) estrategiaCombo.getSelectedItem(),
+            usuarioActual
         );
         lanzarInterfazPreguntas(cursoAct);
     }
 
     private void lanzarInterfazPreguntas(RealizarCurso realizacionCurso) {
-        // Crear y configurar nuevo JDialog
         JDialog dialog = new JDialog();
         dialog.setTitle("Curso de Pokémon - " + realizacionCurso.getCurso().getNombre());
         dialog.setSize(800, 600);
         dialog.setLocationRelativeTo(this);
 
-        // Crear panel personalizado para las preguntas
         PreguntasPanel preguntasPanel = new PreguntasPanel(realizacionCurso);
         dialog.add(preguntasPanel);
         dialog.setVisible(true);
+    }
+
+    public void recargarCursosDisponibles() {
+        cursosPanel.removeAll();
+
+        List<Curso> cursos = Controlador.INSTANCE.obtenerTodosLosCursos();
+        ButtonGroup grupoCursos = new ButtonGroup();
+
+        for (Curso curso : cursos) {
+            JRadioButton radio = new JRadioButton(curso.getNombre());
+            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+            radio.setBackground(Color.WHITE);
+            radio.setForeground(new Color(0x222222));
+            radio.addActionListener(e -> {
+                cursoSeleccionado = curso;
+                cursoEnProgresoSeleccionado = null;
+            });
+            grupoCursos.add(radio);
+            cursosPanel.add(radio);
+            cursosPanel.add(Box.createVerticalStrut(8));
+        }
+
+        cursosPanel.revalidate();
+        cursosPanel.repaint();
     }
 }

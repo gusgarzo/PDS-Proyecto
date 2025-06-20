@@ -40,6 +40,8 @@ public class RealizarCurso {
 		this.estrategia = estrategia;
 		this.alumno = alumno;
 	}
+	public RealizarCurso() {
+	}
 	
 	public boolean avanzarBloque() {
 	    int indiceActual = curso.getBloques().indexOf(bloque);
@@ -64,6 +66,8 @@ public class RealizarCurso {
 	    bloque = curso.getBloques().get(indiceActual -1);
 	    return true;
 	}
+	
+
 	public boolean puedeRetrocederBloque() {
 	    int indiceActual = curso.getBloques().indexOf(bloque);
 	    if ( indiceActual > 0) {

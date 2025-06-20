@@ -25,12 +25,25 @@ public class Alumno extends Usuario {
     private int tiempoTotalMinutos = 0;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "Alumno_CursosImportados",
+        joinColumns = @JoinColumn(name = "Alumno_id"),
+        inverseJoinColumns = @JoinColumn(name = "Curso_id")
+    )
     private List<Curso> cursosImportados = new ArrayList<>();
-	
-	
-	@OneToMany
-	private List<Curso> cursosRealizados = new ArrayList<>();
 
+    @OneToMany
+    @JoinTable(
+        name = "Alumno_CursosRealizados",
+        joinColumns = @JoinColumn(name = "Alumno_id"),
+        inverseJoinColumns = @JoinColumn(name = "Curso_id")
+    )
+    private List<Curso> cursosRealizados = new ArrayList<>();
+
+	
+    public Alumno() {
+        // Obligatorio para Hibernate
+    }
 
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);

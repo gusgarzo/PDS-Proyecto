@@ -13,6 +13,7 @@ public class ImportarCursoPanel extends JPanel {
     private JButton btnSeleccionarArchivo;
     private JTextArea areaResultado;
 
+
     public ImportarCursoPanel() {
         setLayout(new BorderLayout());
         setBackground(new Color(30, 36, 45));
@@ -70,6 +71,7 @@ public class ImportarCursoPanel extends JPanel {
                     "- Nombre: " + cursoImportado.getNombre() + "\n" +
                     "- Dificultad: " + cursoImportado.getDificultad() + "\n" +
                     "- Nº de bloques: " + cursoImportado.getBloques().size());
+
             } else {
                 areaResultado.setText("❌ Error al importar el curso. Asegúrate de estar logueado como alumno y de que el archivo sea válido.");
             }

@@ -106,6 +106,7 @@ public enum Controlador {
         try {
             Curso curso = mapper.readValue(archivo, Curso.class);
             repositorioCursos.guardarCurso(curso);
+            
             return curso;
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,8 +116,21 @@ public enum Controlador {
 
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
-    	System.out.println(estrategiaNombre);
-        return ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
+       /* if (usuarioActual instanceof Alumno alumno) {
+	        // Comprobar si ya ha realizado el curso
+	        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosPor((Alumno) usuario);
+	        for (Curso realizado : yaRealizados) {
+	            if (realizado.equals(curso)) {
+	                // Ya lo ha hecho
+	                return null;
+	            }
+            }*/
+
+            // Si no lo ha empezado, se crea una nueva instancia
+            RealizarCurso nuevo = ((Alumno) usuario).iniciarCurso(curso, estrategiaNombre);
+            repoRealizarCurso.registrarCursoRealizado((Alumno) usuario, curso); // o guardar RealizarCurso si se persistiera
+            return nuevo;
+    //    }
     }
     
     public List<Curso> obtenerTodosLosCursos() {

@@ -197,6 +197,7 @@ public class MainWindow extends JFrame {
     }
 
     private void mostrarRealizarCurso() {
+    	panelRealizarCurso.recargarCursosDisponibles(); // ✅ correcto
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "REALIZAR_CURSO");
     }
