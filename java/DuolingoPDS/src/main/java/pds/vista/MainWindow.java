@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import pds.controlador.Controlador;
 import pds.controlador.ControladorCurso;
+import pds.dominio.Alumno;
 import pds.dominio.Curso;
 import pds.dominio.Estadisticas;
 import pds.dominio.Usuario;
@@ -230,7 +231,7 @@ public class MainWindow extends JFrame {
         cl.show(contentPanel, "ESTADISTICAS");
     }
 
-    private void actualizarPanelEstadisticas() {
+    /*private void actualizarPanelEstadisticas() {
         panelEstadisticas.removeAll(); // Limpiar contenido previo
 
         Estadisticas estadisticas = new Estadisticas(320, 5, 7); // ejemplo
@@ -255,6 +256,37 @@ public class MainWindow extends JFrame {
 
         panelEstadisticas.revalidate();
         panelEstadisticas.repaint();
+    }*/
+    
+    private void actualizarPanelEstadisticas() {
+        panelEstadisticas.removeAll(); // Limpiar contenido previo
+
+        if (!Controlador.INSTANCE.esAlumno()) {
+            JLabel sinAcceso = new JLabel("Solo los alumnos tienen estadísticas.", SwingConstants.CENTER);
+            sinAcceso.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+            panelEstadisticas.add(sinAcceso, BorderLayout.CENTER);
+        } else {
+            Estadisticas estadisticas = Controlador.INSTANCE.getEstadisticasAlumno();
+
+            if (estadisticas == null || (
+                    estadisticas.getCursosCompletados() == 0 &&
+                    estadisticas.getTiempoTotalMinutos() == 0 &&
+                    estadisticas.getRachaDias() == 0)) {
+
+                JLabel sinDatos = new JLabel("¡Aún no has comenzado tu aventura Pokémon!", SwingConstants.CENTER);
+                sinDatos.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+                panelEstadisticas.add(sinDatos, BorderLayout.CENTER);
+            } else {
+                VentanaEstadisticas vista = new VentanaEstadisticas(estadisticas);
+                panelEstadisticas.add(vista, BorderLayout.CENTER);
+            }
+        }
+
+        panelEstadisticas.revalidate();
+        panelEstadisticas.repaint();
     }
+
+
+
   
 }

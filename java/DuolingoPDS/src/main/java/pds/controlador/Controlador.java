@@ -151,4 +151,17 @@ public enum Controlador {
         }
     }
 
+
+    public Estadisticas obtenerEstadisticas() {
+        if (!(usuarioActual instanceof Alumno)) {
+            throw new IllegalStateException("Solo los alumnos tienen estadísticas.");
+        }
+        Alumno alumno = (Alumno) usuarioActual;
+        return new Estadisticas(
+            alumno.getTiempoTotalMinutos(),
+            alumno.getCursosCompletados(),
+            alumno.getRachaDias()
+        );
+    }
+
 }
