@@ -2,6 +2,7 @@ package pds.controlador;
 
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
 import pds.dao.RepositorioCurso;
 import pds.dominio.*;
 
@@ -31,13 +32,46 @@ public enum ControladorCurso {
 		return new PreguntaFlashCard(enunciado,respuesta);
 	}
 
-    public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
+    /*public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
         if (usuarioActual instanceof CreadorCurso) {
             return ((CreadorCurso) usuarioActual).crearCurso(nombre, dificultad, descripcion);
         } else {
             throw new IllegalStateException("El usuario actual no es un creador de cursos.");
         }
-    }
+    }*/
+	
+	public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
+	    if (!(usuarioActual instanceof CreadorCurso)) {
+	        throw new IllegalStateException("El usuario actual no es un creador de cursos.");
+	    }
+
+	    CreadorCurso creador = (CreadorCurso) usuarioActual;
+
+	    // Recuperamos el CreadorCurso gestionado por JPA
+	    EntityManager em = RepositorioCurso.getInstancia().getEntityManager();
+	    Curso curso = null;
+	    try {
+	        em.getTransaction().begin();
+
+	        CreadorCurso creadorGestionado = em.createQuery(
+	            "SELECT c FROM CreadorCurso c WHERE c.correo = :correo", CreadorCurso.class)
+	            .setParameter("correo", creador.getCorreo())
+	            .getSingleResult();
+
+	        curso = creadorGestionado.crearCurso(nombre, dificultad, descripcion);
+	        em.persist(curso);
+
+	        em.getTransaction().commit();
+	    } catch (Exception ex) {
+	        em.getTransaction().rollback();
+	        ex.printStackTrace();
+	    } finally {
+	        em.close();
+	    }
+
+	    return curso;
+	}
+
 
     public void agregarBloqueCurso(Curso curso, String nombre) {
         if (curso == null || nombre == null || nombre.isBlank()) {

@@ -24,7 +24,7 @@ public class RepositorioCurso {
         return instancia;
     }
 
-    private EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
@@ -32,7 +32,7 @@ public class RepositorioCurso {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(curso);
+            em.merge(curso);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -92,4 +92,5 @@ public class RepositorioCurso {
             em.close();
         }
     }
+
 }

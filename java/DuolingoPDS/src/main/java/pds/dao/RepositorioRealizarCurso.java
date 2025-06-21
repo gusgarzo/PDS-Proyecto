@@ -63,4 +63,17 @@ public class RepositorioRealizarCurso {
             em.close();
         }
     }
+    
+    public List<Curso> obtenerCursosRealizadosDelAlumno(String correoAlumno) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery(
+                "SELECT rc.curso FROM RealizarCurso rc WHERE rc.alumno.correo = :correo", Curso.class)
+                .setParameter("correo", correoAlumno)
+                .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

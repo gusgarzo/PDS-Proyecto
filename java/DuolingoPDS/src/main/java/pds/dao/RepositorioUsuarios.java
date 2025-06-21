@@ -2,7 +2,8 @@
 	
 	import jakarta.persistence.EntityManager;
 	import jakarta.persistence.EntityManagerFactory;
-	import jakarta.persistence.Persistence;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Persistence;
 	import pds.dominio.Usuario;
 	import pds.dominio.Alumno;
 	import pds.dominio.CreadorCurso;
@@ -106,5 +107,31 @@
 	        }
 	    }
 	    
+	    
+	    public CreadorCurso obtenerCreadorPorCorreo(String correo) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            return em.createQuery("SELECT c FROM CreadorCurso c WHERE c.correo = :correo", CreadorCurso.class)
+	                     .setParameter("correo", correo)
+	                     .getSingleResult();
+	        } catch (Exception e) {
+	            return null;
+	        } finally {
+	            em.close();
+	        }
+	    }
+	    
+	    public Alumno obtenerAlumnoPorCorreo(String correo) {
+	        EntityManager em = getEntityManager();
+	        try {
+	            return em.createQuery("SELECT a FROM Alumno a WHERE a.correo = :correo", Alumno.class)
+	                     .setParameter("correo", correo)
+	                     .getSingleResult();
+	        } catch (NoResultException e) {
+	            return null;
+	        } finally {
+	            em.close();
+	        }
+	    }
 	  
 	}

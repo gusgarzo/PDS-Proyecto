@@ -101,7 +101,7 @@ public enum Controlador {
     }
 
     
-    public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
+    /*public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
     		if (usuario instanceof Alumno) {
 	        // Comprobar si ya ha realizado el curso
 	        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosPor((Alumno) usuario);
@@ -118,7 +118,30 @@ public enum Controlador {
             return nuevo;
     		}
 		return null;
+    }*/
+    
+    public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
+        if (!(usuario instanceof Alumno)) return null;
+
+        // Obtener alumno gestionado
+        Alumno alumnoGestionado = repositorioUsuarios.obtenerAlumnoPorCorreo(usuario.getCorreo());
+        if (alumnoGestionado == null) return null;
+
+        // Obtener cursos realizados 
+        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosDelAlumno(alumnoGestionado.getCorreo());
+        for (Curso realizado : yaRealizados) {
+            if (realizado.equals(curso)) {
+                return null;
+            }
+        }
+
+        // Iniciar nuevo curso
+        RealizarCurso nuevo = alumnoGestionado.iniciarCurso(curso, estrategiaNombre);
+        repoRealizarCurso.registrarCursoRealizado(alumnoGestionado, curso);
+
+        return nuevo;
     }
+
     
     public List<Curso> obtenerTodosLosCursos() {
         return RepositorioCurso.getInstancia().obtenerTodos();
