@@ -96,10 +96,41 @@ public class MainWindow extends JFrame {
     }
     private void inicializarPaneles() {
         // Panel de inicio
-        panelInicio = new JPanel(new BorderLayout());
-        JLabel inicioLabel = new JLabel("Pantalla de inicio de PokeLingo", SwingConstants.CENTER);
-        inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        panelInicio.add(inicioLabel, BorderLayout.CENTER);
+    	panelInicio = new JPanel();
+    	panelInicio.setLayout(new BoxLayout(panelInicio, BoxLayout.Y_AXIS));
+    	panelInicio.setBackground(new Color(30, 36, 45)); // fondo oscuro
+    	panelInicio.setBorder(BorderFactory.createEmptyBorder(60, 20, 20, 20));
+
+    	// Imagen Pokémon
+    	JLabel imagen = new JLabel();
+    	try {
+    	    ImageIcon icon = new ImageIcon(getClass().getResource("/images/inicio.png")); // el que quieras
+    	    Image img = icon.getImage().getScaledInstance(350, 300, Image.SCALE_SMOOTH);
+    	    imagen.setIcon(new ImageIcon(img));
+    	} catch (Exception e) {
+    	    imagen.setText("🔥");
+    	}
+    	imagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    	// Frase central
+    	JLabel frase = new JLabel("¡Aprende junto a tu equipo pokemon, " + usuarioActual.getNombre() + "!");
+    	frase.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
+    	frase.setForeground(new Color(255, 215, 0)); // amarillo Pokémon
+    	frase.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    	// Frase pequeña
+    	JLabel mini = new JLabel("Hoy es un buen día para aprender algo nuevo.");
+    	mini.setFont(new Font("Comic Sans MS", Font.ITALIC, 16));
+    	mini.setForeground(Color.LIGHT_GRAY);
+    	mini.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    	// Añadir
+    	panelInicio.add(imagen);
+    	panelInicio.add(Box.createVerticalStrut(20));
+    	panelInicio.add(frase);
+    	panelInicio.add(Box.createVerticalStrut(10));
+    	panelInicio.add(mini);
+
 
         panelCompartir = new CompartirCursoPanel();
         

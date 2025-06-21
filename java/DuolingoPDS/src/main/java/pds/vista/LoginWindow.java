@@ -52,7 +52,7 @@ public class LoginWindow extends JFrame {
         JLabel imageLabel = new JLabel();
         try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/images/pokemonWall.png"));
-            Image img = icon.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH);
+            Image img = icon.getImage().getScaledInstance(150, 110, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(img));
             imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         } catch (Exception ex) {
