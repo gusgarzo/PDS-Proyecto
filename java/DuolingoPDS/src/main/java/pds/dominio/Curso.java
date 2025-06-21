@@ -122,4 +122,10 @@ public class Curso {
         }
         return null;
     }
+    
+    @Override
+    public String toString() {
+        return nombre + " (" + dificultad + ")";
+    }
+
 }

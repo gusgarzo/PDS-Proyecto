@@ -91,15 +91,16 @@ public class RepositorioCurso {
         }
     }
 
-    public List<Curso> obtenerPorCreador(String nombreUsuario) {
+    public List<Curso> obtenerPorCreador(String correoCreador) {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT c FROM Curso c WHERE c.creador.nombre = :usuario", Curso.class)
-                    .setParameter("usuario", nombreUsuario)
-                    .getResultList();
+            return em.createQuery("SELECT c FROM Curso c WHERE c.creador.correo = :correo", Curso.class)
+                     .setParameter("correo", correoCreador)
+                     .getResultList();
         } finally {
             em.close();
         }
     }
+
 
 }

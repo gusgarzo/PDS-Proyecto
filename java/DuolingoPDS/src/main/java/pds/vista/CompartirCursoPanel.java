@@ -1,13 +1,11 @@
 package pds.vista;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 import java.io.File;
 import java.util.List;
 import javax.swing.*;
-
 import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
 import pds.dominio.Curso;
 
 public class CompartirCursoPanel extends JPanel {
@@ -19,76 +17,79 @@ public class CompartirCursoPanel extends JPanel {
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setOpaque(false);
         add(contentPanel, BorderLayout.CENTER);
-        compartirCurso();
+        construirInterfaz();
     }
 
-    private void compartirCurso() {
+    private void construirInterfaz() {
         contentPanel.removeAll();
 
-        // Verificar si el usuario es creador
-        if (!Controlador.INSTANCE.esCreador()) {
-            mostrarMensaje("Solo los creadores pueden compartir cursos.");
-            return;
-        }
-
-        // Obtener cursos del creador
-        List<Curso> cursos = Controlador.INSTANCE.getCursosDelCreador();
-        if (cursos.isEmpty()) {
+        List<Curso> cursos = ControladorCurso.INSTANCE.obtenerMisCursos();
+        if (cursos == null || cursos.isEmpty()) {
             mostrarMensaje("No tienes cursos para compartir todavía.");
             return;
         }
 
-        // Crear componentes de UI
-        JComboBox<Curso> comboCursos = new JComboBox<>(cursos.toArray(new Curso[0]));
-        JButton btnCompartir = new JButton("Compartir curso");
+        JLabel texto = new JLabel("Selecciona un curso para exportar:");
+        texto.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        texto.setHorizontalAlignment(SwingConstants.CENTER);
 
-        btnCompartir.addActionListener(e -> {
-            Curso cursoSeleccionado = (Curso) comboCursos.getSelectedItem();
-            if (cursoSeleccionado != null) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Guardar curso como JSON");
-                fileChooser.setSelectedFile(new File(
-                    cursoSeleccionado.getNombre().replaceAll("\\s+", "_") + ".json"));
+        DefaultListModel<Curso> listModel = new DefaultListModel<>();
+        for (Curso c : cursos) listModel.addElement(c);
 
-                int seleccion = fileChooser.showSaveDialog(this);
-                if (seleccion == JFileChooser.APPROVE_OPTION) {
-                    File archivo = fileChooser.getSelectedFile();
-                    boolean exito = Controlador.INSTANCE.compartirCurso(cursoSeleccionado, archivo);
+        JList<Curso> listaCursos = new JList<>(listModel);
+        listaCursos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listaCursos.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+        listaCursos.setVisibleRowCount(8);
+        JScrollPane scroll = new JScrollPane(listaCursos);
 
-                    JOptionPane.showMessageDialog(
-                        this,
-                        exito ? "¡Curso compartido correctamente!" : "Error al compartir el curso.",
-                        "Resultado",
-                        exito ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                    );
-                }
+        JButton btnExportar = new JButton("Exportar a JSON");
+        btnExportar.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        btnExportar.addActionListener(e -> {
+            Curso seleccionado = listaCursos.getSelectedValue();
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debes seleccionar un curso para exportar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar curso como JSON");
+            fileChooser.setSelectedFile(new File(seleccionado.getNombre().replaceAll("\\s+", "_") + ".json"));
+
+            int seleccion = fileChooser.showSaveDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                File archivo = fileChooser.getSelectedFile();
+                boolean exito = Controlador.INSTANCE.compartirCurso(seleccionado, archivo);
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    exito ? "¡Curso exportado correctamente!" : "Error al exportar el curso.",
+                    "Resultado",
+                    exito ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                );
             }
         });
 
-        // Panel para los controles
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setOpaque(false);
+        // Panel de controles inferior
+        JPanel panelInferior = new JPanel();
+        panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.Y_AXIS));
+        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 30, 20, 30));
+        panelInferior.setOpaque(false);
+        panelInferior.add(Box.createVerticalStrut(10));
+        panelInferior.add(btnExportar);
 
-        JLabel texto = new JLabel("¡Comparte tu curso con tus amigos Pokémon!");
-        texto.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-        texto.setAlignmentX(Component.CENTER_ALIGNMENT);
-        comboCursos.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnCompartir.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Añadir al panel principal
+        contentPanel.add(texto, BorderLayout.NORTH);
+        contentPanel.add(scroll, BorderLayout.CENTER);
+        contentPanel.add(panelInferior, BorderLayout.SOUTH);
 
-        panel.add(texto);
-        panel.add(Box.createVerticalStrut(20));
-        panel.add(comboCursos);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(btnCompartir);
-
-        contentPanel.add(panel, BorderLayout.CENTER);
         contentPanel.revalidate();
         contentPanel.repaint();
     }
 
     private void mostrarMensaje(String mensaje) {
+        contentPanel.removeAll();
         JLabel label = new JLabel(mensaje, SwingConstants.CENTER);
         label.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
         contentPanel.add(label, BorderLayout.CENTER);

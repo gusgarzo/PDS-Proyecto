@@ -90,30 +90,30 @@ public enum Controlador {
     	usuarioActual = usu;    
     }
     
-public Curso importarCurso(File archivo) {
-    if (!(usuarioActual instanceof Alumno)) {
-        return null;
-    }
-
-    Alumno alumno = (Alumno) usuarioActual;
-    ObjectMapper mapper = new ObjectMapper();
-
-    try {
-        Curso curso = mapper.readValue(archivo, Curso.class);
-
-        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
-
-        alumno.agregarCursoImportado(curso);
-
-        repositorioUsuarios.actualizarUsuario(alumno);
-
-        return curso;
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
-    }
-}
+	public Curso importarCurso(File archivo) {
+	    if (!(usuarioActual instanceof Alumno)) {
+	        return null;
+	    }
+	
+	    Alumno alumno = (Alumno) usuarioActual;
+	    ObjectMapper mapper = new ObjectMapper();
+	
+	    try {
+	        Curso curso = mapper.readValue(archivo, Curso.class);
+	
+	        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
+	
+	        alumno.agregarCursoImportado(curso);
+	
+	        repositorioUsuarios.actualizarUsuario(alumno);
+	
+	        return curso;
+	
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
 
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
@@ -136,15 +136,19 @@ public Curso importarCurso(File archivo) {
     }
 
 
-	public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {
+        if (cursoSeleccionado == null || archivo == null) {
+            return false;
+        }
 
-
-	public List<Curso> getCursosDelCreador() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, cursoSeleccionado);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 
 import pds.controlador.Controlador;
+import pds.controlador.ControladorCurso;
 import pds.dominio.Curso;
 import pds.dominio.Estadisticas;
 import pds.dominio.Usuario;
@@ -99,13 +100,9 @@ public class MainWindow extends JFrame {
         inicioLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
         panelInicio.add(inicioLabel, BorderLayout.CENTER);
 
-        // Panel compartir curso
-       
         panelCompartir = new CompartirCursoPanel();
-
-
         
-        panelImportar = new ImportarCursoPanel(); // <- usa el panel funcional
+        panelImportar = new ImportarCursoPanel();
 
         // Panel realizar curso
         panelRealizarCurso = new RealizarCursoPanel();
@@ -141,74 +138,30 @@ public class MainWindow extends JFrame {
         return button;
     }
 
-
     private void compartirCurso() {
-	
-	    if (!Controlador.INSTANCE.esCreador()) {
-	        JLabel error = new JLabel("Solo los creadores pueden compartir cursos.", SwingConstants.CENTER);
-	        error.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-	        contentPanel.add(error, BorderLayout.CENTER);
-	        contentPanel.revalidate();
-	        contentPanel.repaint();
-	        return;
-	    }
-	
-	    java.util.List<Curso> cursos = Controlador.INSTANCE.getCursosDelCreador();
-	    if (cursos.isEmpty()) {
-	        JLabel sinCursos = new JLabel("No tienes cursos para compartir todavía.", SwingConstants.CENTER);
-	        sinCursos.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-	        contentPanel.add(sinCursos, BorderLayout.CENTER);
-	        contentPanel.revalidate();
-	        contentPanel.repaint();
-	        return;
-	    }
-	
-	    JComboBox<Curso> comboCursos = new JComboBox<>(cursos.toArray(new Curso[0]));
-	    JButton btnCompartir = new JButton("Compartir curso");
-	
-	    btnCompartir.addActionListener(e -> {
-	        Curso cursoSeleccionado = (Curso) comboCursos.getSelectedItem();
-	        if (cursoSeleccionado != null) {
-	            JFileChooser fileChooser = new JFileChooser();
-	            fileChooser.setDialogTitle("Guardar curso como JSON");
-	            fileChooser.setSelectedFile(new File(cursoSeleccionado.getNombre().replaceAll("\\s+", "_") + ".json"));
-	
-	            int seleccion = fileChooser.showSaveDialog(this);
-	            if (seleccion == JFileChooser.APPROVE_OPTION) {
-	                File archivo = fileChooser.getSelectedFile();
-	                boolean exito = Controlador.INSTANCE.compartirCurso(cursoSeleccionado, archivo);
-	
-	                JOptionPane.showMessageDialog(
-	                    this,
-	                    exito ? "¡Curso compartido correctamente!" : "Error al compartir el curso.",
-	                    "Resultado",
-	                    exito ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-	                );
-	            }
-	        }
-	    });
-	
-	    JPanel panel = new JPanel();
-	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	    panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-	    panel.setOpaque(false);
-	
-	    JLabel texto = new JLabel("¡Comparte tu curso con tus amigos Pokémon!");
-	    texto.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
-	    texto.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    comboCursos.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    btnCompartir.setAlignmentX(Component.CENTER_ALIGNMENT);
-	
-	    panel.add(texto);
-	    panel.add(Box.createVerticalStrut(20));
-	    panel.add(comboCursos);
-	    panel.add(Box.createVerticalStrut(10));
-	    panel.add(btnCompartir);
-	
-	    contentPanel.add(panel, BorderLayout.CENTER);
-	    contentPanel.revalidate();
-	    contentPanel.repaint();
-	}
+        if (!Controlador.INSTANCE.esCreador()) {
+            JPanel panelError = new JPanel(new BorderLayout());
+            JLabel error = new JLabel("Solo los creadores pueden compartir cursos.", SwingConstants.CENTER);
+            error.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+            panelError.add(error, BorderLayout.CENTER);
+            contentPanel.add(panelError, "NO_CREADOR");
+            CardLayout cl = (CardLayout) contentPanel.getLayout();
+            cl.show(contentPanel, "NO_CREADOR");
+            return;
+        }
+
+        // Eliminar el anterior si existe
+        if (panelCompartir != null) {
+            contentPanel.remove(panelCompartir);
+        }
+
+        // Crear uno nuevo con cursos actualizados
+        panelCompartir = new CompartirCursoPanel();
+        contentPanel.add(panelCompartir, "COMPARTIR");
+
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "COMPARTIR");
+    }
 
   
     private void importarCurso() {
@@ -272,10 +225,10 @@ public class MainWindow extends JFrame {
     }
 
     private void mostrarEstadisticas() {
-       // Estadisticas stats = Controlador.INSTANCE.getEstadisticas();
-        //new VentanaEstadisticas(stats).setVisible(true);
+        actualizarPanelEstadisticas(); // Actualiza los datos antes de mostrar
+        CardLayout cl = (CardLayout) contentPanel.getLayout();
+        cl.show(contentPanel, "ESTADISTICAS");
     }
-
 
     private void actualizarPanelEstadisticas() {
         panelEstadisticas.removeAll(); // Limpiar contenido previo

@@ -95,7 +95,7 @@ public enum ControladorCurso {
     
     public List<Curso> obtenerMisCursos() {
         if (!(usuarioActual instanceof CreadorCurso)) return List.of();
-        return RepositorioCurso.getInstancia().obtenerPorCreador(usuarioActual.getNombre());
+        return RepositorioCurso.getInstancia().obtenerPorCreador(usuarioActual.getCorreo());
     }
 
 
