@@ -16,6 +16,9 @@ public abstract class Usuario {
     private String telefono;
     private String correo;
     private String contrasena;
+    
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Estadisticas estadisticas;
 
     public Usuario() {}
 
