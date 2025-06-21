@@ -71,7 +71,7 @@ public class MainWindow extends JFrame {
         menuPanel.add(Box.createVerticalStrut(10));
         menuPanel.add(crearBotonMenu("Compartir curso", Color.WHITE, "/images/jigglypuff.png", this::compartirCurso));
         menuPanel.add(Box.createVerticalStrut(10));
-        menuPanel.add(crearBotonMenu("Salir", new Color(220, 53, 69), "/images/meowth.png", () -> System.exit(0)));
+        menuPanel.add(crearBotonMenu("Cerrar sesión", new Color(220, 53, 69), "/images/meowth.png", this::cerrarSesionYVolverAlLogin));
 
         // SPLITPANE
         JSplitPane splitPane = new JSplitPane();
@@ -138,6 +138,9 @@ public class MainWindow extends JFrame {
         button.addActionListener(e -> accion.run());
         return button;
     }
+    
+    
+    
 
     private void compartirCurso() {
         if (!Controlador.INSTANCE.esCreador()) {
@@ -226,10 +229,24 @@ public class MainWindow extends JFrame {
     }
 
     private void mostrarEstadisticas() {
-        actualizarPanelEstadisticas(); // Actualiza los datos antes de mostrar
+        Estadisticas estad = Controlador.INSTANCE.obtenerEstadisticas();
+        VentanaEstadisticas nuevaVista = new VentanaEstadisticas(estad);
+
+        // Reemplazar el panel antiguo (si existe)
+        Component[] componentes = contentPanel.getComponents();
+        for (Component comp : componentes) {
+            if (comp instanceof VentanaEstadisticas) {
+                contentPanel.remove(comp);
+                break;
+            }
+        }
+
+        // Añadir y mostrar la nueva vista actualizada
+        contentPanel.add(nuevaVista, "ESTADISTICAS");
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "ESTADISTICAS");
     }
+
 
     /*private void actualizarPanelEstadisticas() {
         panelEstadisticas.removeAll(); // Limpiar contenido previo
@@ -266,12 +283,12 @@ public class MainWindow extends JFrame {
             sinAcceso.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
             panelEstadisticas.add(sinAcceso, BorderLayout.CENTER);
         } else {
-            Estadisticas estadisticas = Controlador.INSTANCE.getEstadisticasAlumno();
+            Estadisticas estadisticas = Controlador.INSTANCE.obtenerEstadisticas();
 
             if (estadisticas == null || (
-                    estadisticas.getCursosCompletados() == 0 &&
-                    estadisticas.getTiempoTotalMinutos() == 0 &&
-                    estadisticas.getRachaDias() == 0)) {
+            	    estadisticas.getCursosCompletados() == 0 &&
+            	    estadisticas.getTiempoTotalMinutos() == 0 &&
+            	    estadisticas.getmejorRachaPreguntasCorrectas() == 0)) {
 
                 JLabel sinDatos = new JLabel("¡Aún no has comenzado tu aventura Pokémon!", SwingConstants.CENTER);
                 sinDatos.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
@@ -286,7 +303,19 @@ public class MainWindow extends JFrame {
         panelEstadisticas.repaint();
     }
 
+    private void cerrarSesionYVolverAlLogin() {
+        Controlador.INSTANCE.cerrarSesion(); // ⏹️ Esto ya finaliza tiempo y actualiza
 
+        JOptionPane.showMessageDialog(
+            this,
+            "Sesión cerrada correctamente.",
+            "Logout",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+
+        this.dispose(); // Cierra esta ventana
+        SwingUtilities.invokeLater(() -> new LoginWindow().setVisible(true));
+    }
 
   
 }

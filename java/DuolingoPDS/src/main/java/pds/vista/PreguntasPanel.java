@@ -11,6 +11,8 @@ import java.awt.event.*;
 import java.util.List;
 
 import javax.swing.*;
+
+import pds.controlador.Controlador;
 import pds.dominio.*;
 
 public class PreguntasPanel extends JPanel {
@@ -84,6 +86,7 @@ public class PreguntasPanel extends JPanel {
         String respuestaUsuario = "";
 
         try {
+        	System.out.println("ENTRA");
             if (pregunta instanceof PreguntaHuecos) {
                 PreguntaHuecosPanel panel = (PreguntaHuecosPanel) cardsPanel.getComponent(1);
                 respuestaUsuario = panel.getRespuesta();
@@ -100,7 +103,7 @@ public class PreguntasPanel extends JPanel {
             }
 
             mostrarResultado(correcta);
-            
+        	Controlador.INSTANCE.obtenerEstadisticas().registrarRespuesta(correcta);
             if (correcta) {
                 manejarSiguiente(); // Avanzar automáticamente
             }
@@ -121,11 +124,14 @@ public class PreguntasPanel extends JPanel {
                 cargarPreguntasBloqueActual();
             } else {
                 // Cierra el diálogo padre
+                Controlador.INSTANCE.obtenerEstadisticas().incrementarCursosCompletados();;
+                
                 Window parentWindow = SwingUtilities.getWindowAncestor(this);
                 JOptionPane.showMessageDialog(parentWindow, 
                     "¡Has completado todo el curso!", 
                     "Curso finalizado", 
                     JOptionPane.INFORMATION_MESSAGE
+                    
                 );
                 if (parentWindow != null) {
                     parentWindow.dispose(); // Cierra el diálogo

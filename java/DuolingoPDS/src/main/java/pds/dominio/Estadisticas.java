@@ -9,58 +9,115 @@ public class Estadisticas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int tiempoTotalMinutos;
+    private long tiempoUso;        // tiempo total en milisegundos
+    private long tiempoInicio;     // cuándo empezó la sesión
     private int cursosCompletados;
-    private int rachaDias;
+    private int rachaActualPreguntasCorrectas;
+    private int mejorRachaPreguntasCorrectas;
 
-    // Relación con el usuario (opcional, ver abajo)
     @OneToOne
-    @JoinColumn(name = "usuario_id", unique = true)
-    private Usuario usuario;
+    @JoinColumn(name = "alumno_id", unique = true)
+    private Alumno alumno;
 
     public Estadisticas() {
-        // Constructor por defecto requerido por JPA
+        this.tiempoUso = 0;
+        this.cursosCompletados = 0;
+        this.rachaActualPreguntasCorrectas = 0;
+        this.mejorRachaPreguntasCorrectas = 0;
+        this.tiempoInicio = -1;
     }
 
-    public Estadisticas(int tiempoTotalMinutos, int cursosCompletados, int rachaDias) {
-        this.tiempoTotalMinutos = tiempoTotalMinutos;
-        this.cursosCompletados = cursosCompletados;
-        this.rachaDias = rachaDias;
-    }
-
+    // Getters
     public Long getId() {
         return id;
     }
 
     public int getTiempoTotalMinutos() {
-        return tiempoTotalMinutos;
+        return (int) (tiempoUso / (1000 * 60));
     }
 
     public int getCursosCompletados() {
         return cursosCompletados;
     }
 
-    public int getRachaDias() {
-        return rachaDias;
+    public int getrachaActualPreguntasCorrectas() {
+        return rachaActualPreguntasCorrectas;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getmejorRachaPreguntasCorrectas() {
+        return mejorRachaPreguntasCorrectas;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setTiempoTotalMinutos(int minutos) {
-        this.tiempoTotalMinutos = minutos;
+    // Setters
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
     public void setCursosCompletados(int cursos) {
         this.cursosCompletados = cursos;
     }
 
-    public void setRachaDias(int dias) {
-        this.rachaDias = dias;
+    public void setrachaActualPreguntasCorrectas(int preguntas) {
+        this.rachaActualPreguntasCorrectas = preguntas;
     }
+
+    public void setmejorRachaPreguntasCorrectas(int mejorRachaPreguntasCorrectas) {
+        this.mejorRachaPreguntasCorrectas = mejorRachaPreguntasCorrectas;
+    }
+
+    public void setTiempoUso(long tiempoUso) {
+        this.tiempoUso = tiempoUso;
+    }
+
+    public long getTiempoInicio() {
+        return tiempoInicio;
+    }
+
+    public void setTiempoInicio(long tiempoInicio) {
+        this.tiempoInicio = tiempoInicio;
+    }
+
+    // Lógica de sesión
+    public void iniciarTiempo() {
+        tiempoInicio = System.currentTimeMillis(); 
+    }
+
+    public void finalizarTiempo() {
+        if (tiempoInicio != -1) {
+            long tiempoSesion = System.currentTimeMillis() - tiempoInicio;
+            tiempoUso += tiempoSesion;
+            tiempoInicio = -1;
+        }
+    }
+    
+    public long getTiempoTotalConSesionActual() {
+        long tiempoTotal = tiempoUso;
+        if (tiempoInicio != -1) {
+            long tiempoSesionActual = System.currentTimeMillis() - tiempoInicio;
+            tiempoTotal += tiempoSesionActual;
+        }
+        return tiempoTotal;
+    }
+
+    
+    public void registrarRespuesta(boolean correcta) {
+        if (correcta) {
+            rachaActualPreguntasCorrectas++;
+            if (rachaActualPreguntasCorrectas > mejorRachaPreguntasCorrectas) {
+                mejorRachaPreguntasCorrectas = rachaActualPreguntasCorrectas;
+            }
+        } else {
+            rachaActualPreguntasCorrectas = 0;
+        }
+    }
+
+    // Incrementos
+    public void incrementarCursosCompletados() {
+        this.cursosCompletados++;
+    }
+
 }

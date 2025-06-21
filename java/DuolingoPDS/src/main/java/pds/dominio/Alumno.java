@@ -16,14 +16,6 @@ public class Alumno extends Usuario {
     private List<RealizarCurso> cursosEnProgreso = new ArrayList<>();
 
 
-    private int cursosCompletados = 0;
-
- 
-    private int rachaDias = 0;
-
-
-    private int tiempoTotalMinutos = 0;
-
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Alumno_CursosImportados",
@@ -41,19 +33,18 @@ public class Alumno extends Usuario {
     private List<Curso> cursosRealizados = new ArrayList<>();
 
 	
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Estadisticas estadisticas;
 
 	public Alumno() { }
     public Alumno(String nombre, String apellidos, String telefono, String correo, String contrasena) {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);
-        this.cursosCompletados = 0;
-        this.rachaDias = 0;
-        this.tiempoTotalMinutos = 0;
         //Para evitar problemas con JPA inicializamos las listas de cursos
         this.cursosEnProgreso = new ArrayList<>();
         this.cursosImportados = new ArrayList<>();
+        this.estadisticas = new Estadisticas();
+        this.estadisticas.setAlumno(this); 
     }
-    
-
 
 
 	public List<Curso> getCursosImportados() {
@@ -65,7 +56,6 @@ public class Alumno extends Usuario {
 	}
 
 
-
 	public List<RealizarCurso> getCursosEnProgreso() {
 		return cursosEnProgreso;
 	}
@@ -74,14 +64,6 @@ public class Alumno extends Usuario {
 		this.cursosEnProgreso = cursosEnProgreso;
 	}
 
-	public int getCursosCompletados() {
-		return cursosCompletados;
-	}
-	
-
-	public void setCursosCompletados(int cursosCompletados) {
-		this.cursosCompletados = cursosCompletados;
-	}
 
 	public List<Curso> getCursosRealizados() {
 	    return cursosRealizados;
@@ -90,24 +72,14 @@ public class Alumno extends Usuario {
 	public void setCursosRealizados(List<Curso> cursosRealizados) {
 	    this.cursosRealizados = cursosRealizados;
 	}
-
 	
-	public int getRachaDias() {
-		return rachaDias;
-	}
-
-	public void setRachaDias(int rachaDias) {
-		this.rachaDias = rachaDias;
-	}
-
-	public int getTiempoTotalMinutos() {
-		return tiempoTotalMinutos;
-	}
-
-	public void setTiempoTotalMinutos(int tiempoTotalMinutos) {
-		this.tiempoTotalMinutos = tiempoTotalMinutos;
-	}
     
+	public Estadisticas getEstadisticas() {
+		return estadisticas;
+	}
+	public void setEstadisticas(Estadisticas estadisticas) {
+		this.estadisticas = estadisticas;
+	}
 	public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre) {
 	    Estrategia estrategia;
 	    if ("Secuencial".equals(estrategiaNombre)) {

@@ -35,9 +35,14 @@ public enum Controlador {
 
         Usuario nuevoUsuario = null;
         if (tipoUsuario.equalsIgnoreCase("Alumno")) {
-        	nuevoUsuario = new Alumno(nombre, apellidos, telefono, correo, contrasena);
-        	repositorioUsuarios.registrarUsuario(nuevoUsuario);
-        } else if (tipoUsuario.equalsIgnoreCase("Creador de cursos")) {
+            Alumno alumno = new Alumno(nombre, apellidos, telefono, correo, contrasena);
+            Estadisticas estadisticas = new Estadisticas();
+            estadisticas.setAlumno(alumno);     // ← Este método debe llamarse setUsuario o setAlumno según tu diseño final
+            alumno.setEstadisticas(estadisticas);
+            nuevoUsuario = alumno;
+            repositorioUsuarios.registrarUsuario(alumno);
+        }
+        else if (tipoUsuario.equalsIgnoreCase("Creador de cursos")) {
             nuevoUsuario = new CreadorCurso(nombre, apellidos, telefono, correo, contrasena);
             repositorioUsuarios.registrarUsuario(nuevoUsuario);
         } else {
@@ -59,17 +64,42 @@ public enum Controlador {
     public Usuario loginUsuario(String nombre, String contrasena) {
         Usuario usuario = repositorioUsuarios.autenticar(nombre, contrasena);
 
-
         if (usuario != null) {
             this.usuarioActual = usuario;
             ControladorCurso.INSTANCE.setUsuarioActual(usuario);
+
+            if (usuario instanceof Alumno) {
+                Estadisticas estad = ((Alumno) usuario).getEstadisticas();
+                if (estad == null) {
+                    estad = new Estadisticas();
+                    estad.setAlumno((Alumno) usuario);
+                    ((Alumno) usuario).setEstadisticas(estad);
+
+                    // Guardamos el alumno y, por cascade, se guarda también la estadística
+                    repositorioUsuarios.actualizarUsuario(usuario);
+                }
+
+                estad.iniciarTiempo(); // ⏱ Inicia el cronómetro
+
+            }
         }
-		return usuario;
+        return usuario;
     }
-    
-    public void cerrarSesion() {
-        this.usuarioActual = null;
-    }
+
+	public void cerrarSesion() {
+		if (usuarioActual instanceof Alumno) {
+			Alumno alu = (Alumno) usuarioActual;
+			Estadisticas estadisticas = alu.getEstadisticas();
+			if (estadisticas != null) {
+				estadisticas.finalizarTiempo();
+				repositorioUsuarios.actualizarUsuario(alu);
+			}
+		}
+		usuarioActual = null;
+	}
+	
+	
+
 
     public Usuario getUsuarioActual() {
         return usuarioActual;
@@ -94,19 +124,17 @@ public enum Controlador {
 	    if (!(usuarioActual instanceof Alumno)) {
 	        return null;
 	    }
-	
+
 	    Alumno alumno = (Alumno) usuarioActual;
 	    ObjectMapper mapper = new ObjectMapper();
 	
 	    try {
 	        Curso curso = mapper.readValue(archivo, Curso.class);
-	
 	        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
-	
-	        alumno.agregarCursoImportado(curso);
-	
+	        if (!alumno.getCursosImportados().contains(curso)) {
+	            alumno.agregarCursoImportado(curso);
+	        }
 	        repositorioUsuarios.actualizarUsuario(alumno);
-	
 	        return curso;
 	
 	    } catch (IOException e) {
@@ -156,12 +184,46 @@ public enum Controlador {
         if (!(usuarioActual instanceof Alumno)) {
             throw new IllegalStateException("Solo los alumnos tienen estadísticas.");
         }
+
         Alumno alumno = (Alumno) usuarioActual;
-        return new Estadisticas(
-            alumno.getTiempoTotalMinutos(),
-            alumno.getCursosCompletados(),
-            alumno.getRachaDias()
-        );
+        Estadisticas estad = alumno.getEstadisticas();
+
+        if (estad == null) {
+            estad = new Estadisticas();
+            estad.setAlumno(alumno);
+            alumno.setEstadisticas(estad);
+            repositorioUsuarios.actualizarUsuario(alumno);
+        }
+
+        return estad;
     }
+
+  /*  public void marcarCursoCompletado(Curso curso) {
+        if (!(usuarioActual instanceof Alumno)) return;
+
+        Alumno alumno = (Alumno) usuarioActual;
+        Estadisticas estad = alumno.getEstadisticas();
+
+        if (estad == null) {
+            estad = new Estadisticas();
+            estad.setAlumno(alumno);              // 🔥 ENLACE BIDIRECCIONAL
+            alumno.setEstadisticas(estad);
+        }
+
+        estad.incrementarCursosCompletados();
+        
+        try {
+            repositorioUsuarios.actualizarUsuario(alumno);
+        } catch (Exception e) {
+            System.err.println("Error al actualizar alumno:");
+            e.printStackTrace();
+            Throwable cause = e.getCause();
+            while (cause != null) {
+                System.err.println("Causa: " + cause.getMessage());
+                cause = cause.getCause();
+            }
+        }
+  
+       }*/
 
 }

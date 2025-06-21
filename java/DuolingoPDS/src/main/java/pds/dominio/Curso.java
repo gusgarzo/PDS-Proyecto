@@ -127,5 +127,18 @@ public class Curso {
     public String toString() {
         return nombre + " (" + dificultad + ")";
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Curso)) return false;
+        Curso curso = (Curso) o;
+        return id != null && id.equals(curso.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 + (id == null ? 0 : id.hashCode());
+    }
+
 
 }
