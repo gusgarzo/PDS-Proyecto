@@ -24,7 +24,7 @@ public class Alumno extends Usuario {
 
     private int tiempoTotalMinutos = 0;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Alumno_CursosImportados",
         joinColumns = @JoinColumn(name = "Alumno_id"),

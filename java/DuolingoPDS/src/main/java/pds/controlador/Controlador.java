@@ -44,20 +44,28 @@ public enum Controlador {
             return false;
         }
 
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellidos(apellidos);
+        nuevoUsuario.setTelefono(telefono);
+        nuevoUsuario.setCorreo(correo);
+        nuevoUsuario.setContrasena(contrasena);
+
+        //repositorioUsuarios.registrarUsuario(nuevoUsuario);
+        this.usuarioActual = nuevoUsuario;
+
         return true;
     }
 
     public Usuario loginUsuario(String nombre, String contrasena) {
         Usuario usuario = repositorioUsuarios.autenticar(nombre, contrasena);
 
+
         if (usuario != null) {
             this.usuarioActual = usuario;
             ControladorCurso.INSTANCE.setUsuarioActual(usuario);
-            return usuario;
         }
-        return null;
+		return usuario;
     }
-    
     
     public void cerrarSesion() {
         this.usuarioActual = null;
@@ -82,67 +90,42 @@ public enum Controlador {
     	usuarioActual = usu;    
     }
     
-    
-    public Curso importarCurso(File archivo) {
-        /*if (!estaLogueado() || !(usuarioActual instanceof Alumno)) {
-            return null; 
-        }*/
-
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Curso curso = mapper.readValue(archivo, Curso.class);
-            repositorioCursos.guardarCurso(curso);
-            
-            return curso;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+public Curso importarCurso(File archivo) {
+    if (!(usuarioActual instanceof Alumno)) {
+        return null;
     }
 
-    
-    /*public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
-    		if (usuario instanceof Alumno) {
-	        // Comprobar si ya ha realizado el curso
-	        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosPor((Alumno) usuario);
-	        for (Curso realizado : yaRealizados) {
-	            if (realizado.equals(curso)) {
-	                // Ya lo ha hecho
-	                return null;
-	            }
-            }
+    Alumno alumno = (Alumno) usuarioActual;
+    ObjectMapper mapper = new ObjectMapper();
 
-            // Si no lo ha empezado, se crea una nueva instancia
-            RealizarCurso nuevo = ((Alumno) usuario).iniciarCurso(curso, estrategiaNombre);
-            repoRealizarCurso.registrarCursoRealizado((Alumno) usuario, curso); // o guardar RealizarCurso si se persistiera
-            return nuevo;
-    		}
-		return null;
-    }*/
+    try {
+        Curso curso = mapper.readValue(archivo, Curso.class);
+
+        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
+
+        alumno.agregarCursoImportado(curso);
+
+        repositorioUsuarios.actualizarUsuario(alumno);
+
+        return curso;
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
-        if (!(usuario instanceof Alumno)) return null;
-
-        // Obtener alumno gestionado
-        Alumno alumnoGestionado = repositorioUsuarios.obtenerAlumnoPorCorreo(usuario.getCorreo());
-        if (alumnoGestionado == null) return null;
-
-        // Obtener cursos realizados 
-        List<Curso> yaRealizados = repoRealizarCurso.obtenerCursosRealizadosDelAlumno(alumnoGestionado.getCorreo());
-        for (Curso realizado : yaRealizados) {
-            if (realizado.equals(curso)) {
-                return null;
-            }
-        }
-
-        // Iniciar nuevo curso
-        RealizarCurso nuevo = alumnoGestionado.iniciarCurso(curso, estrategiaNombre);
-        repoRealizarCurso.registrarCursoRealizado(alumnoGestionado, curso);
-
-        return nuevo;
+    	System.out.println(estrategiaNombre);
+        return ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
+    }
+    
+    public List<Curso> getCursosImportadosDelAlumno() {
+        if (!(usuarioActual instanceof Alumno)) return new ArrayList<>();
+        return ((Alumno) usuarioActual).getCursosImportados();
     }
 
-    
     public List<Curso> obtenerTodosLosCursos() {
         return RepositorioCurso.getInstancia().obtenerTodos();
     }
@@ -151,20 +134,17 @@ public enum Controlador {
         if (!(usuarioActual instanceof Alumno)) return;
         repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
     }
-    
-    public List<Curso> getCursosDelCreador(){
-    	return repositorioCursos.obtenerPorCreador(usuarioActual.getNombre());
-    }
-    public Boolean compartirCurso(Curso curso, File archivo) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, curso);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-            
-        }
-    }
+
+	public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public List<Curso> getCursosDelCreador() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

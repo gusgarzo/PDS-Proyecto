@@ -272,10 +272,10 @@ public class MainWindow extends JFrame {
     }
 
     private void mostrarEstadisticas() {
-        actualizarPanelEstadisticas(); // Actualiza los datos antes de mostrar
-        CardLayout cl = (CardLayout) contentPanel.getLayout();
-        cl.show(contentPanel, "ESTADISTICAS");
+       // Estadisticas stats = Controlador.INSTANCE.getEstadisticas();
+        //new VentanaEstadisticas(stats).setVisible(true);
     }
+
 
     private void actualizarPanelEstadisticas() {
         panelEstadisticas.removeAll(); // Limpiar contenido previo

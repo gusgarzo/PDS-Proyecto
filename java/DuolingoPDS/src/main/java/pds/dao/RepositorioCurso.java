@@ -4,6 +4,7 @@ import pds.dominio.Curso;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
@@ -28,16 +29,24 @@ public class RepositorioCurso {
         return emf.createEntityManager();
     }
 
-    public void guardarCurso(Curso curso) {
+    public Curso guardarCurso(Curso curso) {
         EntityManager em = getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
         try {
-            em.getTransaction().begin();
-            em.merge(curso);
-            em.getTransaction().commit();
+            tx.begin();
+            Curso cursoPersistido = em.merge(curso); // merge asegura que si el curso ya tiene ID, lo actualiza
+            tx.commit();
+            return cursoPersistido;
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException(e);
         } finally {
             em.close();
         }
     }
+
+
 
     public void actualizarCurso(Curso curso) {
         EntityManager em = getEntityManager();

@@ -141,7 +141,8 @@ public class RealizarCursoPanel extends JPanel {
     public void recargarCursosDisponibles() {
         cursosPanel.removeAll();
 
-        List<Curso> cursos = Controlador.INSTANCE.obtenerTodosLosCursos();
+        List<Curso> cursos = Controlador.INSTANCE.getCursosImportadosDelAlumno();
+
         ButtonGroup grupoCursos = new ButtonGroup();
 
         for (Curso curso : cursos) {
