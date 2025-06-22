@@ -180,7 +180,7 @@ Permite al alumno seleccionar y realizar un curso.
 **Flujo principal:**
 
 1. El creador accede al apartado de creación de cursos.
-2. Ingresa título, descripción y dificultad (fácil, medio o difícil).
+2. Ingresa título, descripción y dificultad (fácil, normal o difícil).
 3. El creador crea los bloques de contenido con las preguntas correspondientes a estos.
 4. Guarda el curso en el sistema.
    
