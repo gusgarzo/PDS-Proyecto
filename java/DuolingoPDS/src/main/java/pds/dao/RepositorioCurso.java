@@ -59,28 +59,6 @@ public class RepositorioCurso {
         }
     }
 
-    public void eliminarCurso(Curso curso) {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Curso cursoRef = em.find(Curso.class, curso.getId());
-            if (cursoRef != null) {
-                em.remove(cursoRef);
-            }
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-
-    public Curso buscarPorId(int id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Curso.class, id);
-        } finally {
-            em.close();
-        }
-    }
 
     public List<Curso> obtenerTodos() {
         EntityManager em = getEntityManager();
