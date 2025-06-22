@@ -70,4 +70,4 @@ Finalmente, se incorpora la entidad `Estadisticas`, generada por el alumno, que 
 
 ---
 
-**Desarrollado por Gustavo Garzo Chumilla, Rodrigo Barceló Arce y Juan Pedro Jimenez Dato — Universidad de Murcia**
+**Desarrollado por Gustavo Garzo Chumilla (Grupo 3.3), Rodrigo Barceló Arce(Grupo 1.1) y Juan Pedro Jimenez Dato(Grupo 3.3) — Universidad de Murcia**
