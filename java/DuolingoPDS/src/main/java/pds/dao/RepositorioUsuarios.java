@@ -13,12 +13,20 @@ import jakarta.persistence.Persistence;
 	
 	public class RepositorioUsuarios {
 	
+		private static RepositorioUsuarios instancia;
 	    private final EntityManagerFactory emf;
 	
 	    public RepositorioUsuarios() {
 	        emf = Persistence.createEntityManagerFactory("PokeLingo");
 	    }
 	
+	    public static RepositorioUsuarios getInstancia() {
+	        if (instancia == null) {
+	            instancia = new RepositorioUsuarios();
+	        }
+	        return instancia;
+	    }
+	    
 	    private EntityManager getEntityManager() {
 	        return emf.createEntityManager();
 	    }

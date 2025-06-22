@@ -88,11 +88,30 @@ public class MainWindow extends JFrame {
         contentPanel.add(panelCompartir, "COMPARTIR");
         contentPanel.add(panelImportar, "IMPORTAR");
         contentPanel.add(editorCursoPanel, "EDITOR_CURSO");
-        contentPanel.add(panelRealizarCurso, "REALIZAR_CURSO");
-        contentPanel.add(panelEstadisticas, "ESTADISTICAS");
+
+        if (panelRealizarCurso != null) {
+            contentPanel.add(panelRealizarCurso, "REALIZAR_CURSO");
+        }
+
+        if (panelEstadisticas != null) {
+            contentPanel.add(panelEstadisticas, "ESTADISTICAS");
+        }
+
         setLayout(new BorderLayout());
         add(headerPanel, BorderLayout.NORTH);
         add(splitPane, BorderLayout.CENTER);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                Controlador.INSTANCE.cerrarSesion();;
+
+            }
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                Controlador.INSTANCE.cerrarSesion();
+            }
+        });
+        
     }
     private void inicializarPaneles() {
         // Panel de inicio
@@ -136,11 +155,10 @@ public class MainWindow extends JFrame {
         
         panelImportar = new ImportarCursoPanel();
 
-        // Panel realizar curso
-        panelRealizarCurso = new RealizarCursoPanel();
-
-        // Panel estadísticas (se actualiza dinámicamente)
-        panelEstadisticas = new JPanel(new BorderLayout());
+        if (Controlador.INSTANCE.esAlumno()) {
+            panelRealizarCurso = new RealizarCursoPanel();
+            panelEstadisticas = new JPanel(new BorderLayout());
+        }
 
         // Panel editor de curso (ya es una clase separada)
         editorCursoPanel = new EditorCursoPanel();
@@ -253,13 +271,24 @@ public class MainWindow extends JFrame {
                 
             );
         }else {
-	    	panelRealizarCurso.recargarCursosDisponibles(); // ✅ correcto
+	    	panelRealizarCurso.recargarCursosDisponibles(); 
+	    	panelRealizarCurso.cargarCursosComenzados();
 	        CardLayout cl = (CardLayout) contentPanel.getLayout();
 	        cl.show(contentPanel, "REALIZAR_CURSO");
         }
     }
 
     private void mostrarEstadisticas() {
+        if (!Controlador.INSTANCE.esAlumno()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Solo los usuarios Alumno pueden ver estadísticas.",
+                "Permiso denegado",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
         Estadisticas estad = Controlador.INSTANCE.obtenerEstadisticas();
         VentanaEstadisticas nuevaVista = new VentanaEstadisticas(estad);
 
@@ -277,6 +306,7 @@ public class MainWindow extends JFrame {
         CardLayout cl = (CardLayout) contentPanel.getLayout();
         cl.show(contentPanel, "ESTADISTICAS");
     }
+
 
 
     /*private void actualizarPanelEstadisticas() {
