@@ -79,7 +79,6 @@ public class CompartirCursoPanel extends JPanel {
         panelInferior.add(Box.createVerticalStrut(10));
         panelInferior.add(btnExportar);
 
-        // Añadir al panel principal
         contentPanel.add(texto, BorderLayout.NORTH);
         contentPanel.add(scroll, BorderLayout.CENTER);
         contentPanel.add(panelInferior, BorderLayout.SOUTH);

@@ -44,25 +44,7 @@ public class VentanaEstadisticas extends JPanel {
         add(racha);
         add(Box.createVerticalStrut(15));
         add(mejor);
-        /*
-        add(Box.createVerticalStrut(30)); // Espacio antes del mensaje final
 
-        JLabel saludo = new JLabel("Entrenador Rodrigo, sigue así!");
-        saludo.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-        saludo.setForeground(new Color(255, 255, 255));
-        saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Icono del entrenador o Pokémon
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/images/pikachu.png")); // cambia si usas otro
-            Image img = icon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-            saludo.setIcon(new ImageIcon(img));
-        } catch (Exception e) {
-            System.err.println("Icono de avatar no encontrado.");
-        }
-
-        add(saludo);
-*/
         add(Box.createVerticalStrut(40)); // Espacio antes del consejo
 
         String[] consejos = {

@@ -8,7 +8,7 @@ public class PreguntaHuecos extends Pregunta {
 
     private String respuestaCorrecta;
 
-    // ✅ Constructor vacío requerido por Jackson
+    // Constructor vacío requerido por Jackson
     public PreguntaHuecos() {
         super();
     }
@@ -23,7 +23,7 @@ public class PreguntaHuecos extends Pregunta {
         return respuesta.trim().equalsIgnoreCase(respuestaCorrecta.trim());
     }
 
-    // ✅ Getters y setters requeridos por Jackson
+    // Getters y setters requeridos por Jackson
     public String getRespuestaCorrecta() {
         return respuestaCorrecta;
     }

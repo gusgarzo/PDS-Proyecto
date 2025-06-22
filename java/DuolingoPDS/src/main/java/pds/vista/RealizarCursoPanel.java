@@ -73,7 +73,6 @@ public class RealizarCursoPanel extends JPanel {
         centroPanel.add(scrollEnProgreso);
         add(centroPanel, BorderLayout.CENTER);
 
-        // ⚠️ Cargar los cursos al arrancar
         recargarCursosDisponibles();
         cargarCursosComenzados();
         // --- PANEL DE ESTRATEGIA ---

@@ -31,14 +31,6 @@ public enum ControladorCurso {
 	public PreguntaFlashCard creaPreguntaFC(String enunciado, String respuesta) {
 		return new PreguntaFlashCard(enunciado,respuesta);
 	}
-
-    /*public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
-        if (usuarioActual instanceof CreadorCurso) {
-            return ((CreadorCurso) usuarioActual).crearCurso(nombre, dificultad, descripcion);
-        } else {
-            throw new IllegalStateException("El usuario actual no es un creador de cursos.");
-        }
-    }*/
 	
 	public Curso crearCurso(String nombre, String descripcion, Dificultad dificultad) {
 	    if (!(usuarioActual instanceof CreadorCurso)) {
@@ -71,7 +63,6 @@ public enum ControladorCurso {
 
 	    return curso;
 	}
-
 
     public void agregarBloqueCurso(Curso curso, String nombre) {
         if (curso == null || nombre == null || nombre.isBlank()) {

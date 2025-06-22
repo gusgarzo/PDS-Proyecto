@@ -5,10 +5,7 @@ import javax.swing.border.*;
 import pds.dominio.PreguntaHuecos;
 import java.awt.*;
 
-/**
- * Panel personalizado y moderno para mostrar preguntas de huecos con un campo de respuesta.
- * El enunciado se adapta a varias líneas y nunca se sale del panel.
- */
+
 public class PreguntaHuecosPanel extends JPanel {
     private final JLabel lblIcono;
     private final JTextArea txtEnunciado;
@@ -59,10 +56,7 @@ public class PreguntaHuecosPanel extends JPanel {
         add(txtRespuesta);
     }
 
-    /**
-     * Establece la pregunta y limpia el campo de respuesta.
-     * El texto "____" se reemplaza por una línea de guiones bajos.
-     */
+
     public void setPregunta(PreguntaHuecos pregunta) {
         if (pregunta == null) {
             txtEnunciado.setText("");

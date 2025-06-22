@@ -31,13 +31,12 @@ public enum Controlador {
 
    
     public boolean registrarUsuario(String nombre, String apellidos, String telefono, String correo, String contrasena, String tipoUsuario) {
-       // if (adaptadorUsuario.existeUsuario(correo)) return false;
 
         Usuario nuevoUsuario = null;
         if (tipoUsuario.equalsIgnoreCase("Alumno")) {
             Alumno alumno = new Alumno(nombre, apellidos, telefono, correo, contrasena);
             Estadisticas estadisticas = new Estadisticas();
-            estadisticas.setAlumno(alumno);     // ← Este método debe llamarse setUsuario o setAlumno según tu diseño final
+            estadisticas.setAlumno(alumno);
             alumno.setEstadisticas(estadisticas);
             nuevoUsuario = alumno;
             repositorioUsuarios.registrarUsuario(alumno);
@@ -55,7 +54,6 @@ public enum Controlador {
         nuevoUsuario.setCorreo(correo);
         nuevoUsuario.setContrasena(contrasena);
 
-        //repositorioUsuarios.registrarUsuario(nuevoUsuario);
         this.usuarioActual = nuevoUsuario;
 
         return true;
@@ -75,11 +73,10 @@ public enum Controlador {
                     estad.setAlumno((Alumno) usuario);
                     ((Alumno) usuario).setEstadisticas(estad);
 
-                    // Guardamos el alumno y, por cascade, se guarda también la estadística
                     repositorioUsuarios.actualizarUsuario(usuario);
                 }
 
-                estad.iniciarTiempo(); // ⏱ Inicia el cronómetro
+                estad.iniciarTiempo(); 
 
             }
         }
@@ -130,7 +127,7 @@ public enum Controlador {
 	
 	    try {
 	        Curso curso = mapper.readValue(archivo, Curso.class);
-	        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
+	        curso = repositorioCursos.guardarCurso(curso);
 	        alumno.agregarCursoImportado(curso);
 	        repositorioUsuarios.actualizarUsuario(alumno);
 	        return curso;
@@ -157,8 +154,6 @@ public enum Controlador {
     public List<Curso> obtenerTodosLosCursos() {
         return RepositorioCurso.getInstancia().obtenerTodos();
     }
-
-   
 
 
     public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {

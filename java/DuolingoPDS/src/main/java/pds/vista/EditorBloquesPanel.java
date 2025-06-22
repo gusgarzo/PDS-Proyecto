@@ -18,7 +18,7 @@ public class EditorBloquesPanel extends JPanel {
     private JButton btnAgregarBloque;
     private JPanel panelListaBloques;
     private JButton guardar;
-    private List<String> bloques; // de momento solo nombres
+    private List<String> bloques;
 
     public EditorBloquesPanel(Curso curso) {
         this.bloques = new ArrayList<>();
@@ -251,24 +251,6 @@ public class EditorBloquesPanel extends JPanel {
             revalidate();
             repaint();
         });
-        
-        /*guardar.addActionListener(e -> {
-            System.out.println("=== CURSO: " + curso.getNombre() + " ===");
-            if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
-                System.out.println("No hay bloques en el curso.");
-            } else {
-                for (BloqueContenido bloque : curso.getBloques()) {
-                    System.out.println("-> Bloque: " + bloque.getNombre());
-                    if (bloque.getPreguntas() == null || bloque.getPreguntas().isEmpty()) {
-                        System.out.println("   (Sin preguntas)");
-                    } else {
-                        for (Pregunta p : bloque.getPreguntas()) {
-                            System.out.println("   - " + p);
-                        }
-                    }
-                }
-            }
-        });*/
         
         guardar.addActionListener(e -> {
             if (curso.getBloques() == null || curso.getBloques().isEmpty()) {

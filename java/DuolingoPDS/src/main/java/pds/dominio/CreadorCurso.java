@@ -19,7 +19,6 @@ public class CreadorCurso extends Usuario {
     }
 
     public CreadorCurso() {
-		// TODO Auto-generated constructor stub
 	}
   
 	public Curso crearCurso(String nombre, Dificultad dificultad, String descripcion) {
@@ -38,8 +37,6 @@ public class CreadorCurso extends Usuario {
 	@JsonIgnore
 	public List<Curso> getCursosCreados() {
         return cursosCreados;
-    }
-
-    
+    }  
 }
 

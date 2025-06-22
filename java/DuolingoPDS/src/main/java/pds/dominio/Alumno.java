@@ -11,10 +11,6 @@ import java.util.List;
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
 
-  
-	
-
-
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Alumno_CursosImportados",
@@ -36,7 +32,6 @@ public class Alumno extends Usuario {
         this.estadisticas = new Estadisticas();
         this.estadisticas.setAlumno(this); 
     }
-
 
 	public List<Curso> getCursosImportados() {
 	    return cursosImportados;
@@ -68,8 +63,4 @@ public class Alumno extends Usuario {
 		RealizarCurso realizar = new RealizarCurso(curso, curso.getBloques().get(0),estrategia, this);
 		return realizar;
 	}
-
-    
-   
-
 }

@@ -51,7 +51,7 @@ public class RealizarCurso {
 	public boolean avanzarBloque() {
 	    int indiceActual = curso.getBloques().indexOf(bloque);
 	    if (indiceActual < 0 || indiceActual >= curso.getBloques().size() - 1) {
-	        return false; // No hay más bloques
+	        return false; 
 	    }
 	    bloque = curso.getBloques().get(indiceActual + 1);
 	    return true;
@@ -59,7 +59,7 @@ public class RealizarCurso {
 	public boolean puedeAvanzarBloque() {
 	    int indiceActual = curso.getBloques().indexOf(bloque);
 	    if ( indiceActual <= curso.getBloques().size() - 1) {
-	        return true; // No hay más bloques
+	        return true; 
 	    }
 	    return false;
 	}

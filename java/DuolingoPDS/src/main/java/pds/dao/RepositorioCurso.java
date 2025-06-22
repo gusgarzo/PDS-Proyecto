@@ -46,8 +46,6 @@ public class RepositorioCurso {
         }
     }
 
-
-
     public void actualizarCurso(Curso curso) {
         EntityManager em = getEntityManager();
         try {
