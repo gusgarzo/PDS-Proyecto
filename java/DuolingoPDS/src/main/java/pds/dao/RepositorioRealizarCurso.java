@@ -78,4 +78,16 @@ public class RepositorioRealizarCurso {
             em.close();
         }
     }
+    
+  //Para los tests
+    public void eliminarTodos() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM RealizarCurso").executeUpdate();
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
 }

@@ -139,7 +139,7 @@ class ControladorTestUnitarias {
         RealizarCurso realizar = new RealizarCurso(curso, bloque, new EstrategiaSecuencial(), alumno);
 
         realizar.setCompletado(true);
-        assertTrue(realizar.isCompletado());
+        assertTrue(realizar.getCompletado());
     }
 
     @Test

@@ -131,9 +131,7 @@ public enum Controlador {
 	    try {
 	        Curso curso = mapper.readValue(archivo, Curso.class);
 	        curso = repositorioCursos.guardarCurso(curso); // IMPORTANTE: que devuelva el objeto persistido con ID
-	        if (!alumno.getCursosImportados().contains(curso)) {
-	            alumno.agregarCursoImportado(curso);
-	        }
+	        alumno.agregarCursoImportado(curso);
 	        repositorioUsuarios.actualizarUsuario(alumno);
 	        return curso;
 	

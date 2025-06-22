@@ -43,7 +43,8 @@ public class Alumno extends Usuario {
 	}
 	
 	public void agregarCursoImportado(Curso curso) {
-	    cursosImportados.add(curso);
+		if (!cursosImportados.contains(curso))
+			cursosImportados.add(curso);
 	}
 	
     
@@ -55,11 +56,11 @@ public class Alumno extends Usuario {
 	}
 	public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre) {
 	    Estrategia estrategia;
-	    if ("Secuencial".equals(estrategiaNombre)) {
+	    if ("Secuencial".equalsIgnoreCase(estrategiaNombre)) {
 	        estrategia = new EstrategiaSecuencial();
-	    } else if ("Repetición Espaciada".equals(estrategiaNombre)) {
+	    } else if ("Repetición Espaciada".equalsIgnoreCase(estrategiaNombre)) {
 	    	estrategia = new EstrategiaRepeticionEspaciada();
-	    } else if ("Aleatoria".equals(estrategiaNombre)) {
+	    } else if ("Aleatoria".equalsIgnoreCase(estrategiaNombre)) {
 	    	estrategia = new EstrategiaAleatoria();
 	    } else {
 	        throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
