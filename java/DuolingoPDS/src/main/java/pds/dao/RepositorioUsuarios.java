@@ -141,28 +141,5 @@ import jakarta.persistence.Persistence;
 	            em.close();
 	        }
 	    }
-	    public List<Usuario> obtenerTodosLosUsuarios() {
-	        EntityManager em = emf.createEntityManager();
-	        try {
-	            return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-	        } finally {
-	            em.close();
-	        }
-	    }
-	    public void eliminarTodo(){
-    	    EntityManager em = emf.createEntityManager();
-    	    try {
-    	    	em.getTransaction().begin();
-    	    	List<Usuario> usuarios = obtenerTodosLosUsuarios();
-        	    usuarios.stream()
-        	    .map(u -> u.getId())
-        	    .forEach(id -> eliminarPorId(id));
-        	    em.getTransaction().commit();
-    	    } finally {
-    	    	em.close();
-    	    	
-    	    }
-    }
-	    
 	  
 	}
