@@ -2,7 +2,7 @@
 
 ### DESCRIPCIÓN
 
-**PokeLingo** es una aplicación educativa sobre pokemon desarrollada por **Gustavo Garzo Chumilla, Rodrigo Barceló Arce  y Juan Pedro Jimenez Dato**  para el proyecto final de la asignatura PDS 2025 de la **Universidad de Murcia**, bajo la supervisión del profesor **Jesus Sanchez Cuadrado**.
+**PokeLingo** es una aplicación educativa sobre pokemon desarrollada por **Gustavo Garzo Chumilla, Rodrigo Barceló Arce  y Juan Pedro Jimenez Dato**  para el proyecto final de la asignatura PDS 2025 de la **Universidad de Murcia**, bajo la supervisión del profesor **Jesús Sánchez Cuadrado**.
 
 La aplicación está inspirada en Duolingo y Mochi y permite a estudiantes aprender mediante cursos con ejercicios tipo test, huecos, flashcards. Los colaboradores pueden crear e importar cursos usando archivos JSON, fomentando una comunidad colaborativa de aprendizaje.
 
