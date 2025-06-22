@@ -17,12 +17,15 @@ public class RealizarCursoPanel extends JPanel {
     private JPanel cursosEnProgresoPanel;
     private Curso cursoSeleccionado;
     private RealizarCurso cursoEnProgresoSeleccionado;
+    private ButtonGroup grupoSeleccionCursos;
+
 
     public RealizarCursoPanel() {
         Color azulPokemon = new Color(0x0075BE);
         Color amarilloPokemon = new Color(0xFFCC00);
         Color fondoClaro = new Color(0xF7F7F7);
         Color textoOscuro = new Color(0x222222);
+        grupoSeleccionCursos = new ButtonGroup();
 
         usuarioActual = Controlador.INSTANCE.getUsuarioActual();
         setLayout(new BorderLayout());
@@ -72,7 +75,7 @@ public class RealizarCursoPanel extends JPanel {
 
         // ⚠️ Cargar los cursos al arrancar
         recargarCursosDisponibles();
-
+        cargarCursosComenzados();
         // --- PANEL DE ESTRATEGIA ---
         JPanel estrategiaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         estrategiaPanel.setOpaque(true);
@@ -126,16 +129,30 @@ public class RealizarCursoPanel extends JPanel {
         );
         lanzarInterfazPreguntas(cursoAct);
     }
+    
 
     private void lanzarInterfazPreguntas(RealizarCurso realizacionCurso) {
         JDialog dialog = new JDialog();
         dialog.setTitle("Curso de Pokémon - " + realizacionCurso.getCurso().getNombre());
-        dialog.setSize(800, 600);
+        dialog.setSize(1000, 600);
         dialog.setLocationRelativeTo(this);
 
         PreguntasPanel preguntasPanel = new PreguntasPanel(realizacionCurso);
         dialog.add(preguntasPanel);
         dialog.setVisible(true);
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // Llama al controlador para guardar el estado actual del curso
+                Controlador.INSTANCE.guardarEstadoCurso(realizacionCurso);
+            }
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                // Por si acaso el usuario cierra con dispose()
+                Controlador.INSTANCE.guardarEstadoCurso(realizacionCurso);
+            }
+        });
+       
     }
 
     public void recargarCursosDisponibles() {
@@ -143,7 +160,8 @@ public class RealizarCursoPanel extends JPanel {
 
         List<Curso> cursos = Controlador.INSTANCE.getCursosImportadosDelAlumno();
 
-        ButtonGroup grupoCursos = new ButtonGroup();
+        // Elimina este grupo local
+        // ButtonGroup grupoCursos = new ButtonGroup();
 
         for (Curso curso : cursos) {
             JRadioButton radio = new JRadioButton(curso.getNombre());
@@ -154,7 +172,7 @@ public class RealizarCursoPanel extends JPanel {
                 cursoSeleccionado = curso;
                 cursoEnProgresoSeleccionado = null;
             });
-            grupoCursos.add(radio);
+            grupoSeleccionCursos.add(radio); // Usa el grupo global
             cursosPanel.add(radio);
             cursosPanel.add(Box.createVerticalStrut(8));
         }
@@ -162,4 +180,29 @@ public class RealizarCursoPanel extends JPanel {
         cursosPanel.revalidate();
         cursosPanel.repaint();
     }
+
+    public void cargarCursosComenzados() {
+        cursosEnProgresoPanel.removeAll();
+        List<RealizarCurso> cursosRe = Controlador.INSTANCE.getCursosComenzados();
+        
+       
+
+        for (RealizarCurso cursoRealizar : cursosRe) {
+            JRadioButton radio = new JRadioButton(cursoRealizar.getCurso().getNombre()+ "(" +cursoRealizar.getPorcentajeCompletado()+"%)");
+            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+            radio.setBackground(Color.WHITE);
+            radio.setForeground(new Color(0x222222));
+            radio.addActionListener(e -> {
+                cursoSeleccionado = null;
+                cursoEnProgresoSeleccionado = cursoRealizar;
+            });
+            grupoSeleccionCursos.add(radio); // Usa el grupo global
+            cursosEnProgresoPanel.add(radio);
+            cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
+        }
+
+        cursosEnProgresoPanel.revalidate();
+        cursosEnProgresoPanel.repaint();
+    }
+
 }

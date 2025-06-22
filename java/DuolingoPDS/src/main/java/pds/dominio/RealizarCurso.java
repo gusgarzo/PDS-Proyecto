@@ -2,6 +2,7 @@ package pds.dominio;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,7 +27,7 @@ public class RealizarCurso {
 	    @JoinColumn(name = "bloque_id")
 	    private BloqueContenido bloque;
 
-	    @ManyToOne
+	    @ManyToOne(cascade = CascadeType.PERSIST)
 	    @JoinColumn(name = "estrategia_id")
 	    private Estrategia estrategia;
 
@@ -114,7 +115,11 @@ public class RealizarCurso {
 	}
 
 	public List<Pregunta> crearListaPreguntas(){
+	
 		return estrategia.getPreguntas(bloque);
+	}
+	public Float getPorcentajeCompletado() {
+		return (Integer.valueOf(getIndBloqueActual()).floatValue()/Integer.valueOf(getNumBloques()).floatValue() )*100;
 	}
 	
 	

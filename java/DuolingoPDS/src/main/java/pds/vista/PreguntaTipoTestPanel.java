@@ -12,9 +12,13 @@ public class PreguntaTipoTestPanel extends JPanel {
 
     public PreguntaTipoTestPanel() {
         setBackground(new Color(245, 248, 255));
-        setLayout(new GridBagLayout());
-
-        // Panel principal con borde y fondo blanco
+        setLayout(new BorderLayout()); // ✅ Layout más flexible
+        
+        // Panel principal con scroll
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBorder(null);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(Color.WHITE);
@@ -22,9 +26,7 @@ public class PreguntaTipoTestPanel extends JPanel {
             new LineBorder(new Color(0x0075BE), 3, true),
             BorderFactory.createEmptyBorder(40, 60, 40, 60)
         ));
-        mainPanel.setMaximumSize(new Dimension(600, 400));
-        mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        
         // Enunciado
         txtEnunciado = new JTextArea();
         txtEnunciado.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
@@ -36,24 +38,29 @@ public class PreguntaTipoTestPanel extends JPanel {
         txtEnunciado.setFocusable(false);
         txtEnunciado.setAlignmentX(Component.CENTER_ALIGNMENT);
         txtEnunciado.setBorder(null);
-        txtEnunciado.setMaximumSize(new Dimension(480, 80));
         txtEnunciado.setMinimumSize(new Dimension(480, 40));
+        txtEnunciado.setPreferredSize(new Dimension(480, 100)); 
 
         mainPanel.add(txtEnunciado);
         mainPanel.add(Box.createVerticalStrut(35));
 
-        // Panel para opciones, sin scroll
+        // Panel de opciones con scroll interno
+        JPanel opcionesContainer = new JPanel(new BorderLayout());
         opcionesPanel = new JPanel();
         opcionesPanel.setLayout(new BoxLayout(opcionesPanel, BoxLayout.Y_AXIS));
         opcionesPanel.setBackground(Color.WHITE);
-        opcionesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        opcionesPanel.setMaximumSize(new Dimension(480, 200));
-
-        mainPanel.add(opcionesPanel);
-
-        // Centra el mainPanel en el panel principal
-        add(mainPanel, new GridBagConstraints());
+        
+        JScrollPane opcionesScroll = new JScrollPane(opcionesPanel);
+        opcionesScroll.setBorder(null);
+        opcionesScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        opcionesContainer.add(opcionesScroll, BorderLayout.CENTER);
+        
+        mainPanel.add(opcionesContainer);
+        
+        scrollPane.setViewportView(mainPanel);
+        add(scrollPane, BorderLayout.CENTER); // ✅ Scroll principal
     }
+
 
     public void setPregunta(PreguntaTipoTest pregunta) {
         txtEnunciado.setText(pregunta.getEnunciado());
@@ -69,6 +76,9 @@ public class PreguntaTipoTestPanel extends JPanel {
 
         revalidate();
         repaint();
+        SwingUtilities.invokeLater(() -> {
+            txtEnunciado.setCaretPosition(0);
+        });
     }
 
     private JRadioButton crearRadioButton(String texto) {
