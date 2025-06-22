@@ -37,7 +37,8 @@ public class Alumno extends Usuario {
 	}
 	
 	public void agregarCursoImportado(Curso curso) {
-	    cursosImportados.add(curso);
+        if (!cursosImportados.contains(curso)) 
+        	cursosImportados.add(curso);
 	}
 	
     

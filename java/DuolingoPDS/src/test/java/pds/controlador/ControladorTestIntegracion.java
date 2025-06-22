@@ -41,7 +41,7 @@ public class ControladorTestIntegracion {
     public void testLoginYRegistro() {
         boolean registrado = controlador.registrarUsuario("Juan", "Pérez", "123", "juan@correo.com", "clave", "Alumno");
         assertTrue(registrado);
-        Usuario u = controlador.loginUsuario("juan@correo.com", "clave");
+        Usuario u = controlador.loginUsuario("Juan", "clave");
         assertNotNull(u);
         assertTrue(controlador.estaLogueado());
     }
