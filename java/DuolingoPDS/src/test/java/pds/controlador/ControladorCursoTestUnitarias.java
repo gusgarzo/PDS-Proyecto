@@ -4,14 +4,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import pds.dominio.*;
 
 class ControladorCursoTestUnitarias {
 
-    private ControladorCurso controlador;
+    private final ControladorCurso controlador = ControladorCurso.INSTANCE;
 
+    @AfterEach
+    void limpiarEstadoCompartido() {
+        controlador.setUsuarioActual(null);
+    }
+    
     @Test
     void testCrearPreguntaFlashCard() {
         PreguntaFlashCard p = controlador.creaPreguntaFC("¿Hola?", "Hello");

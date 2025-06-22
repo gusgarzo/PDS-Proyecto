@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -14,7 +15,13 @@ import pds.dominio.*;
 
 class ControladorTestUnitarias {
 
-    private Controlador controlador;
+
+    private final Controlador controlador = Controlador.INSTANCE;
+
+    @AfterEach
+    void limpiarEstado() {
+        controlador.setUsuario(null);
+    }
 
     @Test
     void testEsAlumnoYEsCreador() {
