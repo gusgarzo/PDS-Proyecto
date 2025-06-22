@@ -58,13 +58,13 @@ Finalmente, se incorpora la entidad `Estadisticas`, generada por el alumno, que 
 ---
 
 **Información de sobre Modelo de Dominio mas detallada**
-[ModeloDominio](https://github.com/gusgarzo/PDS-Proyecto/blob/main/dise%C3%B1o/modelo.md)
+([Modelo de Dominio](diseño/modelo.md))
 
 ---
 
 ## MANUAL DE USO
 **Leer manual de uso aquí**
-[Manual de uso](https://github.com/gusgarzo/PDS-Proyecto/edit/main/documentacion/manual)
+([Manual de uso](documentacion/manual.md))
 
 ---
 
