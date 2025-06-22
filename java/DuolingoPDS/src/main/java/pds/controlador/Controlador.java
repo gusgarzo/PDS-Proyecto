@@ -20,12 +20,12 @@ public enum Controlador {
     private Usuario usuarioActual;
 	private RepositorioUsuarios repositorioUsuarios;
 	private RepositorioCurso repositorioCursos;
-	private RepositorioRealizarCurso repoRealizarCurso;
+	private RepositorioRealizarCurso repositorioRealizarCurso;
     private Controlador() {
 		usuarioActual = null;
 		repositorioUsuarios = new RepositorioUsuarios();
 		repositorioCursos = new RepositorioCurso();
-		repoRealizarCurso = new RepositorioRealizarCurso();
+		repositorioRealizarCurso = new RepositorioRealizarCurso();
    
     }
 
@@ -118,7 +118,9 @@ public enum Controlador {
     
     public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre, Usuario usuario) {
     	System.out.println(estrategiaNombre);
-        return ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
+        RealizarCurso realCurso =  ((Alumno)usuario).iniciarCurso(curso, estrategiaNombre);
+        repositorioRealizarCurso.guardarRealizarCurso(realCurso);
+        return realCurso;
     }
     
     public List<Curso> getCursosImportadosDelAlumno() {
@@ -130,10 +132,7 @@ public enum Controlador {
         return RepositorioCurso.getInstancia().obtenerTodos();
     }
 
-    public void registrarCursoRealizado(Curso curso) {
-        if (!(usuarioActual instanceof Alumno)) return;
-        repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
-    }
+   
 
 
     public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {
@@ -149,6 +148,14 @@ public enum Controlador {
             e.printStackTrace();
             return false;
         }
+    }
+    public void guardarEstadoCurso(RealizarCurso realCurso) {
+    	repositorioRealizarCurso.actualizarRealizarCurso(realCurso);
+    }
+    public List<RealizarCurso> getCursosComenzados(){
+    	List<RealizarCurso> cursos = repositorioRealizarCurso.recuperarCursosEmpezados((Alumno)usuarioActual);
+    	System.out.println(cursos.size());
+    	return cursos;
     }
 
 }

@@ -42,7 +42,9 @@ public class PreguntaHuecosPanel extends JPanel {
         txtRespuesta = new JTextField(20);
         txtRespuesta.setMaximumSize(new Dimension(350, 36));
         txtRespuesta.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        txtRespuesta.setBackground(new Color(255, 255, 255));
+        txtRespuesta.setBackground(Color.WHITE);  
+        txtRespuesta.setForeground(Color.BLACK);
+
         txtRespuesta.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(100, 149, 237), 1, true),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)

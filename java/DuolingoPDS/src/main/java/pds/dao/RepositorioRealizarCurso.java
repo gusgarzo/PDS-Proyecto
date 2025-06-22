@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import pds.dominio.Alumno;
 import pds.dominio.Curso;
+import pds.dominio.RealizarCurso;
 
 import java.util.List;
 
@@ -20,57 +21,38 @@ public class RepositorioRealizarCurso {
         return emf.createEntityManager();
     }
 
-    public void registrarCursoRealizado(Alumno alumno, Curso curso) {
+    public void guardarRealizarCurso(RealizarCurso cursoReal) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Alumno a = em.merge(alumno);
-            a.getCursosRealizados().add(curso);
+            em.persist(cursoReal);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-    public List<Curso> obtenerCursosRealizadosPor(Alumno alumno) {
-        EntityManager em = getEntityManager();
-        try {
-            Alumno a = em.find(Alumno.class, alumno.getId());
-            return a != null ? a.getCursosRealizados() : List.of();
-        } finally {
-            em.close();
-        }
-    }
+   
+    
 
-    public boolean cursoYaRealizado(Alumno alumno, Curso curso) {
-        EntityManager em = getEntityManager();
-        try {
-            Alumno a = em.find(Alumno.class, alumno.getId());
-            return a != null && a.getCursosRealizados().contains(curso);
-        } finally {
-            em.close();
-        }
-    }
-
-    public void eliminarCursoRealizado(Alumno alumno, Curso curso) {
+    public void actualizarRealizarCurso(RealizarCurso cursoReal) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Alumno a = em.merge(alumno);
-            a.getCursosRealizados().remove(curso);
+            em.merge(cursoReal);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
     
-    public List<Curso> obtenerCursosRealizadosDelAlumno(String correoAlumno) {
+    public List<RealizarCurso> recuperarCursosEmpezados(Alumno alumno) {
         EntityManager em = getEntityManager();
         try {
             return em.createQuery(
-                "SELECT rc.curso FROM RealizarCurso rc WHERE rc.alumno.correo = :correo", Curso.class)
-                .setParameter("correo", correoAlumno)
-                .getResultList();
+                    "SELECT rc FROM RealizarCurso rc WHERE rc.alumno = :alumno", RealizarCurso.class)
+                    .setParameter("alumno", alumno)
+                    .getResultList();
         } finally {
             em.close();
         }
