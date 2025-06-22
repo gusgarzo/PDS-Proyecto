@@ -1,0 +1,49 @@
+{
+  "nombre": "PokeLingo: Pokédex Avanzada",
+  "dificultad": "DIFICIL",
+  "descripcion": "Explora especies, evoluciones raras y habilidades únicas para convertirte en un Maestro Pokémon enciclopédico.",
+  "bloques_contenidos": [
+    {
+      "nombre": "Evoluciones Especiales",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Qué Pokémon evoluciona con una Piedra Trueno?",
+          "respuestas": ["Eevee", "Pikachu", "Magneton"],
+          "respuestaCorrecta": "Pikachu"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Slowpoke evoluciona a Slowking con ___ y un intercambio.",
+          "respuestaCorrecta": "una corona"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Mega Evolución",
+          "respuesta": "Transformación temporal de algunos Pokémon en combate"
+        }
+      ]
+    },
+    {
+      "nombre": "Pokémon Legendarios",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Cuál de estos no es un Pokémon legendario?",
+          "respuestas": ["Articuno", "Charizard", "Zapdos"],
+          "respuestaCorrecta": "Charizard"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Mewtwo fue creado a partir del ADN de ___.",
+          "respuestaCorrecta": "Mew"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Legendario",
+          "respuesta": "Pokémon únicos y extremadamente poderosos"
+        }
+      ]
+    }
+  ]
+}

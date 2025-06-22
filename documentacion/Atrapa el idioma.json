@@ -1,0 +1,91 @@
+{
+  "nombre": "PokeLingo: ¡Atrapa el idioma!",
+  "dificultad": "FACIL",
+  "descripcion": "Aprende vocabulario esencial con temática Pokémon para comenzar tu aventura.",
+  "bloques_contenidos": [
+    {
+      "nombre": "Tipos de Pokémon",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Cuál de estos es un tipo elemental de Pokémon?",
+          "respuestas": ["Fuego", "Rápido", "Oscuro"],
+          "respuestaCorrecta": "Fuego"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Pikachu es de tipo ___.",
+          "respuestaCorrecta": "eléctrico"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Water type",
+          "respuesta": "Tipo agua"
+        }
+      ]
+    },
+    {
+      "nombre": "Movimientos",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Cuál de estos es un ataque de tipo planta?",
+          "respuestas": ["Látigo cepa", "Ascuas", "Impactrueno"],
+          "respuestaCorrecta": "Látigo cepa"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Charmander usa ___.",
+          "respuestaCorrecta": "Ascuas"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Thunderbolt",
+          "respuesta": "Rayo"
+        }
+      ]
+    },
+    {
+      "nombre": "Pokémon iniciales",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Cuál de estos Pokémon es un inicial de tipo planta?",
+          "respuestas": ["Bulbasaur", "Charmander", "Squirtle"],
+          "respuestaCorrecta": "Bulbasaur"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Charmander es de tipo ___.",
+          "respuestaCorrecta": "fuego"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Starter Pokémon",
+          "respuesta": "Pokémon inicial"
+        }
+      ]
+    },
+    {
+      "nombre": "Objetos y Poké Balls",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Qué objeto se usa para atrapar Pokémon?",
+          "respuestas": ["Poké Ball", "Poción", "MT"],
+          "respuestaCorrecta": "Poké Ball"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Uso una ___ para atrapar a Pikachu.",
+          "respuestaCorrecta": "Poké Ball"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Potion",
+          "respuesta": "Poción"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "nombre": "PokeLingo: Conquista de Gimnasios",
+  "dificultad": "NORMAL",
+  "descripcion": "Recorre las regiones y supera a los líderes de gimnasio dominando el conocimiento sobre tipos y estrategias Pokémon.",
+  "bloques_contenidos": [
+    {
+      "nombre": "Líderes de Kanto",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Qué tipo utiliza Misty?",
+          "respuestas": ["Fuego", "Agua", "Planta"],
+          "respuestaCorrecta": "Agua"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: Brock es el líder de tipo ___.",
+          "respuestaCorrecta": "Roca"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Gimnasio",
+          "respuesta": "Lugar donde se lucha contra un líder Pokémon"
+        }
+      ]
+    },
+    {
+      "nombre": "Tipos de Pokémon",
+      "preguntas": [
+        {
+          "tipo": "test",
+          "enunciado": "¿Qué tipo es fuerte contra Planta?",
+          "respuestas": ["Fuego", "Agua", "Bicho"],
+          "respuestaCorrecta": "Fuego"
+        },
+        {
+          "tipo": "huecos",
+          "enunciado": "Completa: El tipo Fantasma es débil contra tipo ___.",
+          "respuestaCorrecta": "Siniestro"
+        },
+        {
+          "tipo": "flashcard",
+          "enunciado": "Tipo Dragón",
+          "respuesta": "Pokémon poderosos con ataques muy fuertes"
+        }
+      ]
+    }
+  ]
+}
