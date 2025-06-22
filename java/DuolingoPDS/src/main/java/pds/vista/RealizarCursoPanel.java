@@ -1,8 +1,6 @@
 package pds.vista;
 
 import pds.controlador.Controlador;
-import pds.controlador.ControladorCurso;
-import pds.dominio.Alumno;
 import pds.dominio.Curso;
 import pds.dominio.RealizarCurso;
 import pds.dominio.Usuario;
@@ -18,7 +16,7 @@ public class RealizarCursoPanel extends JPanel {
     private JPanel cursosPanel;
     private JPanel cursosEnProgresoPanel;
     private Curso cursoSeleccionado;
-    private Curso cursoEnProgresoSeleccionado;
+    private RealizarCurso cursoEnProgresoSeleccionado;
 
     public RealizarCursoPanel() {
         Color azulPokemon = new Color(0x0075BE);
@@ -111,7 +109,7 @@ public class RealizarCursoPanel extends JPanel {
         add(estrategiaPanel, BorderLayout.SOUTH);
     }
 
-    /*private void comenzarCurso() {
+    private void comenzarCurso() {
         if (cursoEnProgresoSeleccionado != null) {
             lanzarInterfazPreguntas(cursoEnProgresoSeleccionado);
             return;
@@ -126,34 +124,8 @@ public class RealizarCursoPanel extends JPanel {
             (String) estrategiaCombo.getSelectedItem(),
             usuarioActual
         );
-        
-        Controlador.INSTANCE.registrarCursoRealizado(cursoSeleccionado);
-        
-        lanzarInterfazPreguntas(cursoAct);
-    }*/
-    
-    private void comenzarCurso() {
-        Curso cursoElegido = null;
-
-        if (cursoEnProgresoSeleccionado != null) {
-            cursoElegido = cursoEnProgresoSeleccionado;
-        } else if (cursoSeleccionado != null) {
-            cursoElegido = cursoSeleccionado;
-            Controlador.INSTANCE.registrarCursoRealizado(cursoSeleccionado);
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona un curso para continuar.", "Curso no seleccionado", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        RealizarCurso cursoAct = Controlador.INSTANCE.iniciarCurso(
-            cursoElegido,
-            (String) estrategiaCombo.getSelectedItem(),
-            usuarioActual
-        );
-
         lanzarInterfazPreguntas(cursoAct);
     }
-
 
     private void lanzarInterfazPreguntas(RealizarCurso realizacionCurso) {
         JDialog dialog = new JDialog();
@@ -168,12 +140,12 @@ public class RealizarCursoPanel extends JPanel {
 
     public void recargarCursosDisponibles() {
         cursosPanel.removeAll();
-        cursosEnProgresoPanel.removeAll();
 
-        List<Curso> cursosImportados = Controlador.INSTANCE.getCursosImportadosDelAlumno();
+        List<Curso> cursos = Controlador.INSTANCE.getCursosImportadosDelAlumno();
+
         ButtonGroup grupoCursos = new ButtonGroup();
 
-        for (Curso curso : cursosImportados) {
+        for (Curso curso : cursos) {
             JRadioButton radio = new JRadioButton(curso.getNombre());
             radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
             radio.setBackground(Color.WHITE);
@@ -189,31 +161,5 @@ public class RealizarCursoPanel extends JPanel {
 
         cursosPanel.revalidate();
         cursosPanel.repaint();
-
-        //Cursos en progreso
-        if (usuarioActual instanceof Alumno) {
-            Alumno alumno = (Alumno) usuarioActual;
-            List<Curso> cursosRealizados = ControladorCurso.INSTANCE.obtenerCursosRealizadosPorAlumno(alumno);
-            ButtonGroup grupoProgreso = new ButtonGroup();
-
-            for (Curso curso : cursosRealizados) {
-                JRadioButton radio = new JRadioButton(curso.getNombre() + " (en progreso)");
-                radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
-                radio.setBackground(Color.WHITE);
-                radio.setForeground(new Color(0x444444));
-                radio.addActionListener(e -> {
-                    cursoEnProgresoSeleccionado = curso;
-                    cursoSeleccionado = null;
-                });
-                grupoProgreso.add(radio);
-                cursosEnProgresoPanel.add(radio);
-                cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
-            }
-
-            cursosEnProgresoPanel.revalidate();
-            cursosEnProgresoPanel.repaint();
-        }
-
     }
-
 }

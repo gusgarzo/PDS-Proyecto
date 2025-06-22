@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.persistence.EntityManager;
 import pds.dao.RepositorioCurso;
-import pds.dao.RepositorioRealizarCurso;
 import pds.dominio.*;
 
 
@@ -99,9 +98,5 @@ public enum ControladorCurso {
         return RepositorioCurso.getInstancia().obtenerPorCreador(usuarioActual.getCorreo());
     }
 
-    public List<Curso> obtenerCursosRealizadosPorAlumno(Alumno alumno) {
-        if (alumno == null) return List.of();
-        return RepositorioRealizarCurso.getInstancia().obtenerCursosRealizadosPor(alumno);
-    }
 
 }

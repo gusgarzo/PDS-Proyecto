@@ -137,6 +137,8 @@ public class Curso {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return 31 + (id == null ? 0 : id.hashCode());
     }
+
+
 }
