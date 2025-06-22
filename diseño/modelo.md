@@ -13,10 +13,16 @@ classDiagram
         -descripcion: String
     }
     class BloqueContenido {
-        -tema: String
+        -nombre: String
     }
     class FlashCard {
         -texto: String
+    }
+    class TipoTest {
+        -respuestaCorrecta: String
+    }
+    class Huecos {
+        -respuestaCorrecta: String
     }
 
     %% --- Preguntas y Tipos ---
@@ -42,13 +48,14 @@ classDiagram
 
     %% --- Realización y Estadísticas ---
     class RealizacionCurso {
-        -fechaInicio: Date
         -progreso: float
-        -vidasRestantes: int
     }
     class Estadisticas {
-        -racha: int
         -tiempoUso: Time
+        -CursosCompletados: int
+        -racha: int
+        -rachaActual: int
+        
     }
 
     %% --- Relaciones principales ---
