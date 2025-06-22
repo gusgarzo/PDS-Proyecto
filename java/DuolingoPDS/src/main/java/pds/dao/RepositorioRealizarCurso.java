@@ -66,5 +66,16 @@ public class RepositorioRealizarCurso {
             em.close();
         }
     }
-
+    
+    public void eliminarRealizarCurso(RealizarCurso realCurso) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            RealizarCurso managed = em.merge(realCurso);
+            em.remove(managed);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
 }

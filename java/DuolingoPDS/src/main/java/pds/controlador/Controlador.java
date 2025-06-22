@@ -205,32 +205,8 @@ public enum Controlador {
         return estad;
     }
 
-  /*  public void marcarCursoCompletado(Curso curso) {
-        if (!(usuarioActual instanceof Alumno)) return;
-
-        Alumno alumno = (Alumno) usuarioActual;
-        Estadisticas estad = alumno.getEstadisticas();
-
-        if (estad == null) {
-            estad = new Estadisticas();
-            estad.setAlumno(alumno);              // 🔥 ENLACE BIDIRECCIONAL
-            alumno.setEstadisticas(estad);
-        }
-
-        estad.incrementarCursosCompletados();
-        
-        try {
-            repositorioUsuarios.actualizarUsuario(alumno);
-        } catch (Exception e) {
-            System.err.println("Error al actualizar alumno:");
-            e.printStackTrace();
-            Throwable cause = e.getCause();
-            while (cause != null) {
-                System.err.println("Causa: " + cause.getMessage());
-                cause = cause.getCause();
-            }
-        }
-  
-       }*/
-
+    public void finalizarCurso(RealizarCurso realCurso) {
+    	realCurso.setCompletado(true);
+    	repositorioRealizarCurso.actualizarRealizarCurso(realCurso);
+    }
 }

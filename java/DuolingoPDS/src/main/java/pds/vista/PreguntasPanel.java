@@ -124,8 +124,8 @@ public class PreguntasPanel extends JPanel {
                 cargarPreguntasBloqueActual();
             } else {
                 // Cierra el diálogo padre
-                Controlador.INSTANCE.obtenerEstadisticas().incrementarCursosCompletados();;
-                
+                Controlador.INSTANCE.obtenerEstadisticas().incrementarCursosCompletados();
+                Controlador.INSTANCE.finalizarCurso(realizarCurso);
                 Window parentWindow = SwingUtilities.getWindowAncestor(this);
                 JOptionPane.showMessageDialog(parentWindow, 
                     "¡Has completado todo el curso!", 
@@ -133,6 +133,7 @@ public class PreguntasPanel extends JPanel {
                     JOptionPane.INFORMATION_MESSAGE
                     
                 );
+
                 if (parentWindow != null) {
                     parentWindow.dispose(); // Cierra el diálogo
                 }

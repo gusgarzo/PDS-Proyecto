@@ -11,8 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "progreso_bloques")
 public class RealizarCurso {
 	
 	 	@Id
@@ -35,11 +37,13 @@ public class RealizarCurso {
 	    @JoinColumn(name = "alumno_id")
 	    private Alumno alumno;
 	
+	    Boolean completado;
 	public RealizarCurso(Curso curso, BloqueContenido bloque, Estrategia estrategia, Alumno alumno) {
 		this.curso = curso;
 		this.bloque = bloque;
 		this.estrategia = estrategia;
 		this.alumno = alumno;
+		this.completado = false;
 	}
 	public RealizarCurso() {
 	}
@@ -121,6 +125,13 @@ public class RealizarCurso {
 	public Float getPorcentajeCompletado() {
 		return (Integer.valueOf(getIndBloqueActual()).floatValue()/Integer.valueOf(getNumBloques()).floatValue() )*100;
 	}
+	public Boolean getCompletado() {
+		return completado;
+	}
+	public void setCompletado(Boolean completado) {
+		this.completado = completado;
+	}
+	
 	
 	
 	

@@ -145,11 +145,13 @@ public class RealizarCursoPanel extends JPanel {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // Llama al controlador para guardar el estado actual del curso
                 Controlador.INSTANCE.guardarEstadoCurso(realizacionCurso);
+                cargarCursosComenzados();
             }
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
                 // Por si acaso el usuario cierra con dispose()
                 Controlador.INSTANCE.guardarEstadoCurso(realizacionCurso);
+                cargarCursosComenzados();
             }
         });
        
@@ -188,17 +190,19 @@ public class RealizarCursoPanel extends JPanel {
        
 
         for (RealizarCurso cursoRealizar : cursosRe) {
-            JRadioButton radio = new JRadioButton(cursoRealizar.getCurso().getNombre()+ "(" +cursoRealizar.getPorcentajeCompletado()+"%)");
-            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
-            radio.setBackground(Color.WHITE);
-            radio.setForeground(new Color(0x222222));
-            radio.addActionListener(e -> {
-                cursoSeleccionado = null;
-                cursoEnProgresoSeleccionado = cursoRealizar;
-            });
-            grupoSeleccionCursos.add(radio); // Usa el grupo global
-            cursosEnProgresoPanel.add(radio);
-            cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
+	        	if(!cursoRealizar.getCompletado()) {
+	            JRadioButton radio = new JRadioButton(cursoRealizar.getCurso().getNombre()+ "(" +cursoRealizar.getPorcentajeCompletado()+"%)");
+	            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+	            radio.setBackground(Color.WHITE);
+	            radio.setForeground(new Color(0x222222));
+	            radio.addActionListener(e -> {
+	                cursoSeleccionado = null;
+	                cursoEnProgresoSeleccionado = cursoRealizar;
+	            });
+	            grupoSeleccionCursos.add(radio); // Usa el grupo global
+	            cursosEnProgresoPanel.add(radio);
+	            cursosEnProgresoPanel.add(Box.createVerticalStrut(8));
+	        }
         }
 
         cursosEnProgresoPanel.revalidate();
