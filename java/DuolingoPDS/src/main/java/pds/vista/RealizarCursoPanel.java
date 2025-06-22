@@ -190,7 +190,7 @@ public class RealizarCursoPanel extends JPanel {
        
 
         for (RealizarCurso cursoRealizar : cursosRe) {
-	        	if(!cursoRealizar.isCompletado()) {
+	        	if(!cursoRealizar.getCompletado()) {
 	            JRadioButton radio = new JRadioButton(cursoRealizar.getCurso().getNombre()+ "(" +cursoRealizar.getPorcentajeCompletado()+"%)");
 	            radio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 	            radio.setBackground(Color.WHITE);
