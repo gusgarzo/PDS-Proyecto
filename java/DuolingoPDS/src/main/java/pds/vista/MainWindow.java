@@ -253,7 +253,8 @@ public class MainWindow extends JFrame {
                 
             );
         }else {
-	    	panelRealizarCurso.recargarCursosDisponibles(); // ✅ correcto
+	    	panelRealizarCurso.recargarCursosDisponibles(); 
+	    	panelRealizarCurso.cargarCursosComenzados();
 	        CardLayout cl = (CardLayout) contentPanel.getLayout();
 	        cl.show(contentPanel, "REALIZAR_CURSO");
         }

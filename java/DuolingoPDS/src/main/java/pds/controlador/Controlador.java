@@ -23,9 +23,9 @@ public enum Controlador {
 	private RepositorioRealizarCurso repositorioRealizarCurso;
     private Controlador() {
 		usuarioActual = null;
-		repositorioUsuarios = new RepositorioUsuarios();
-		repositorioCursos = new RepositorioCurso();
-		repositorioRealizarCurso = new RepositorioRealizarCurso();
+		repositorioUsuarios = RepositorioUsuarios.getInstancia();
+		repositorioCursos = RepositorioCurso.getInstancia();
+		repositorioRealizarCurso = RepositorioRealizarCurso.getInstancia();
    
     }
 

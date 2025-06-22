@@ -10,13 +10,22 @@ import pds.dominio.RealizarCurso;
 import java.util.List;
 
 public class RepositorioRealizarCurso {
-
+	
+	
+	private static RepositorioRealizarCurso instancia;
     private final EntityManagerFactory emf;
 
     public RepositorioRealizarCurso() {
         emf = Persistence.createEntityManagerFactory("PokeLingo");
     }
 
+    public static RepositorioRealizarCurso getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioRealizarCurso();
+        }
+        return instancia;
+    }
+    
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
