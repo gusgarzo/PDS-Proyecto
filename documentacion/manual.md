@@ -86,8 +86,10 @@
 ---
 
 ## Archivos JSON de prueba
-[Atrapa el idioma.json](/Atrapa_el_idioma.json)  
-[Conquista de Gimnasios.json](/Conquista_de_Gimnasios.json)  
-[Pokédex Avanzada.json](/Pok%C3%A9dex%20Avanzada.json)
+
+[Atrapa el idioma.json](../documentacion/Atrapa%20el%20idioma.json)  
+[Conquista de Gimnasios.json](../documentacion/Conquista%20de%20Gimnasios.json)  
+[Pokédex Avanzada.json](../documentacion/Pok%C3%A9dex%20Avanzada.json)
+
 
 **Desarrollado por Gustavo Garzo Chumilla, Rodrigo Barceló Arce y Juan Pedro Jimenez Dato — Universidad de Murcia**
