@@ -5,15 +5,24 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import pds.dominio.Alumno;
 import pds.dominio.Curso;
+import pds.dominio.RealizarCurso;
 
 import java.util.List;
 
 public class RepositorioRealizarCurso {
-
+	
+    private static RepositorioRealizarCurso instancia;
     private final EntityManagerFactory emf;
 
     public RepositorioRealizarCurso() {
         emf = Persistence.createEntityManagerFactory("PokeLingo");
+    }
+    
+    public static RepositorioRealizarCurso getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioRealizarCurso();
+        }
+        return instancia;
     }
 
     private EntityManager getEntityManager() {
@@ -32,7 +41,7 @@ public class RepositorioRealizarCurso {
         }
     }
 
-    public List<Curso> obtenerCursosRealizadosPor(Alumno alumno) {
+    /*public List<Curso> obtenerCursosRealizadosPor(Alumno alumno) {
         EntityManager em = getEntityManager();
         try {
             Alumno a = em.find(Alumno.class, alumno.getId());
@@ -40,7 +49,20 @@ public class RepositorioRealizarCurso {
         } finally {
             em.close();
         }
+    }*/
+    
+    public List<Curso> obtenerCursosRealizadosPor(Alumno alumno) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery(
+                "SELECT c FROM Alumno a JOIN a.cursosRealizados c WHERE a.id = :id", Curso.class)
+                .setParameter("id", alumno.getId())
+                .getResultList();
+        } finally {
+            em.close();
+        }
     }
+
 
     public boolean cursoYaRealizado(Alumno alumno, Curso curso) {
         EntityManager em = getEntityManager();
@@ -75,5 +97,21 @@ public class RepositorioRealizarCurso {
             em.close();
         }
     }
+    
+    public RealizarCurso buscarRealizacionPor(Alumno alumno, Curso curso) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery(
+                "SELECT r FROM RealizarCurso r WHERE r.alumno.id = :alumnoId AND r.curso.id = :cursoId", RealizarCurso.class)
+                .setParameter("alumnoId", alumno.getId())
+                .setParameter("cursoId", curso.getId())
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+        } finally {
+            em.close();
+        }
+    }
+
 
 }

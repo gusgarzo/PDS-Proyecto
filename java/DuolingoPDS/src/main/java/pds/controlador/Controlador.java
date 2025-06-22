@@ -23,10 +23,9 @@ public enum Controlador {
 	private RepositorioRealizarCurso repoRealizarCurso;
     private Controlador() {
 		usuarioActual = null;
-		repositorioUsuarios = new RepositorioUsuarios();
-		repositorioCursos = new RepositorioCurso();
-		repoRealizarCurso = new RepositorioRealizarCurso();
-   
+		repositorioUsuarios = RepositorioUsuarios.getInstancia();
+		repositorioCursos = RepositorioCurso.getInstancia();
+		repoRealizarCurso = RepositorioRealizarCurso.getInstancia();
     }
 
    
@@ -160,9 +159,13 @@ public enum Controlador {
 
     public void registrarCursoRealizado(Curso curso) {
         if (!(usuarioActual instanceof Alumno)) return;
-        repoRealizarCurso.registrarCursoRealizado((Alumno)usuarioActual, curso);
-    }
 
+        Alumno alumno = (Alumno) usuarioActual;
+
+        if (!repoRealizarCurso.cursoYaRealizado(alumno, curso)) {
+            repoRealizarCurso.registrarCursoRealizado(alumno, curso);
+        }
+    }
 
     public boolean compartirCurso(Curso cursoSeleccionado, File archivo) {
         if (cursoSeleccionado == null || archivo == null) {

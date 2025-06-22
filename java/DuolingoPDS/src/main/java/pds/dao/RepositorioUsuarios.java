@@ -2,23 +2,30 @@
 	
 	import jakarta.persistence.EntityManager;
 	import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Persistence;
+	import jakarta.persistence.NoResultException;
+	import jakarta.persistence.Persistence;
 	import pds.dominio.Usuario;
 	import pds.dominio.Alumno;
 	import pds.dominio.CreadorCurso;
-	import pds.dominio.Curso;
 	
 	import java.util.List;
 	
 	public class RepositorioUsuarios {
 	
+		private static RepositorioUsuarios instancia;
 	    private final EntityManagerFactory emf;
 	
 	    public RepositorioUsuarios() {
 	        emf = Persistence.createEntityManagerFactory("PokeLingo");
 	    }
-	
+
+	    public static RepositorioUsuarios getInstancia() {
+	        if (instancia == null) {
+	            instancia = new RepositorioUsuarios();
+	        }
+	        return instancia;
+	    }
+	    
 	    private EntityManager getEntityManager() {
 	        return emf.createEntityManager();
 	    }
