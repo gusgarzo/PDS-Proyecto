@@ -100,6 +100,18 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
         add(headerPanel, BorderLayout.NORTH);
         add(splitPane, BorderLayout.CENTER);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                Controlador.INSTANCE.cerrarSesion();;
+
+            }
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                Controlador.INSTANCE.cerrarSesion();
+            }
+        });
+        
     }
     private void inicializarPaneles() {
         // Panel de inicio
