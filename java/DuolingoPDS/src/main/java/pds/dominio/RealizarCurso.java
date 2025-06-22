@@ -118,14 +118,13 @@ public class RealizarCurso {
 		this.alumno = alumno;
 	}
 
-	public List<Pregunta> crearListaPreguntas(){
-	
+	public List<Pregunta> crearListaPreguntas(){	
 		return estrategia.getPreguntas(bloque);
 	}
 	public Float getPorcentajeCompletado() {
 		return (Integer.valueOf(getIndBloqueActual()).floatValue()/Integer.valueOf(getNumBloques()).floatValue() )*100;
 	}
-	public Boolean getCompletado() {
+	public Boolean isCompletado() {
 		return completado;
 	}
 	public void setCompletado(Boolean completado) {

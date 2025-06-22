@@ -11,10 +11,6 @@ import java.util.List;
 @DiscriminatorValue("ALUMNO")
 public class Alumno extends Usuario {
 
-  
-	
-
-
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Alumno_CursosImportados",
@@ -33,8 +29,6 @@ public class Alumno extends Usuario {
         super(nombre,  apellidos,  telefono,  correo,  contrasena);
         //Para evitar problemas con JPA inicializamos las listas de cursos
         this.cursosImportados = new ArrayList<>();
-        this.estadisticas = new Estadisticas();
-        this.estadisticas.setAlumno(this); 
     }
 
 
@@ -53,22 +47,25 @@ public class Alumno extends Usuario {
 	public void setEstadisticas(Estadisticas estadisticas) {
 		this.estadisticas = estadisticas;
 	}
+	
 	public RealizarCurso iniciarCurso(Curso curso, String estrategiaNombre) {
 	    Estrategia estrategia;
-	    if ("Secuencial".equals(estrategiaNombre)) {
-	        estrategia = new EstrategiaSecuencial();
-	    } else if ("Repetición Espaciada".equals(estrategiaNombre)) {
-	    	estrategia = new EstrategiaRepeticionEspaciada();
-	    } else if ("Aleatoria".equals(estrategiaNombre)) {
-	    	estrategia = new EstrategiaAleatoria();
-	    } else {
-	        throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
+	    switch (estrategiaNombre.toLowerCase()) {
+	        case "secuencial":
+	            estrategia = new EstrategiaSecuencial();
+	            break;
+	        case "repetición espaciada":
+	        case "repeticion espaciada":
+	            estrategia = new EstrategiaRepeticionEspaciada();
+	            break;
+	        case "aleatoria":
+	            estrategia = new EstrategiaAleatoria();
+	            break;
+	        default:
+	            throw new IllegalArgumentException("Estrategia no válida: " + estrategiaNombre);
 	    }
-		RealizarCurso realizar = new RealizarCurso(curso, curso.getBloques().get(0),estrategia, this);
-		return realizar;
+	    return new RealizarCurso(curso, curso.getBloques().get(0), estrategia, this);
 	}
 
-    
-   
 
 }

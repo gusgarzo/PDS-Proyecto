@@ -7,7 +7,6 @@ import jakarta.persistence.Persistence;
 	import pds.dominio.Usuario;
 	import pds.dominio.Alumno;
 	import pds.dominio.CreadorCurso;
-	import pds.dominio.Curso;
 	
 	import java.util.List;
 	
@@ -141,5 +140,23 @@ import jakarta.persistence.Persistence;
 	            em.close();
 	        }
 	    }
-	  
+	 
+	    //Para los tests
+	    public void eliminarTodos() {
+	        EntityManager em = getEntityManager();
+	        try {
+	            em.getTransaction().begin();
+
+	            // Primero eliminar las estadísticas (relación 1:1 con Alumno)
+	            em.createQuery("DELETE FROM Estadisticas").executeUpdate();
+
+	            // Luego eliminar usuarios (Alumnos y Creadores)
+	            em.createQuery("DELETE FROM Usuario").executeUpdate();
+
+	            em.getTransaction().commit();
+	        } finally {
+	            em.close();
+	        }
+	    }
+
 	}

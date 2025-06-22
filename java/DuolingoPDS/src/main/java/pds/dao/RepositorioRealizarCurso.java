@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import pds.dominio.Alumno;
-import pds.dominio.Curso;
 import pds.dominio.RealizarCurso;
 
 import java.util.List;
@@ -73,6 +72,18 @@ public class RepositorioRealizarCurso {
             em.getTransaction().begin();
             RealizarCurso managed = em.merge(realCurso);
             em.remove(managed);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+    
+    //Para los tests
+    public void eliminarTodos() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM RealizarCurso").executeUpdate();
             em.getTransaction().commit();
         } finally {
             em.close();
