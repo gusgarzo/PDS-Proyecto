@@ -9,7 +9,9 @@
   	<properties>
 		<jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 		<hibernate.version>6.2.0.Final</hibernate.version>
-		 <sqlite.version>3.49.1.0</sqlite.version> 
+		 <sqlite.version>3.49.1.0</sqlite.version>  
+    <junit.version>5.11.0</junit.version>
+  
 	</properties>
 
   <dependencies>
@@ -59,8 +61,25 @@
 			<version>2.16.0</version>
 		</dependency>
 
-
-  	</dependencies>  
-  	
-
+		 <dependency>
+	      <groupId>org.junit.jupiter</groupId>
+	      <artifactId>junit-jupiter-api</artifactId>
+	      <version>${junit.version}</version>
+	      <scope>test</scope>
+	    </dependency>
+	    <!-- Soporte para tests parametrizados -->
+	    <dependency>
+	      <groupId>org.junit.jupiter</groupId>
+	      <artifactId>junit-jupiter-params</artifactId>
+	      <version>${junit.version}</version>
+	      <scope>test</scope>
+	    </dependency>
+	     <dependency>
+			  <groupId>org.assertj</groupId>
+			  <artifactId>assertj-core</artifactId>
+			  <version>3.27.2</version>
+			  <scope>test</scope>
+		</dependency>
+	  	</dependencies>  
+  
 </project>		   

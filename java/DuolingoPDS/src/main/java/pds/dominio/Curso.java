@@ -40,7 +40,7 @@ public class Curso {
                  List<BloqueContenido> bloques, Dificultad dificultad, String descripcion) {
         this.nombre = nombre;
         this.creador = creador;
-        this.bloques = bloques;
+        this.bloques = new ArrayList<>(bloques);
         this.dificultad = dificultad;
         this.descripcion = descripcion;
     }
