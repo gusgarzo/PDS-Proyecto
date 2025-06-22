@@ -1,34 +1,71 @@
-# Aplicación de Aprendizaje Interactivo
+#  PokeLingo
 
-## Profesor Responsable
-**Jesús Sánchez Cuadrado**
+### DESCRIPCIÓN
 
-## Integrantes del Grupo
-- **Rodrigo Barceló Arce** (G1.1)
-- **Gustavo Garzo Chumilla** (G3.3)
-- **Juan Pedro Jimenez Dato** (G3.3)
+**PokeLingo** es una aplicación educativa sobre pokemon desarrollada por **Gustavo Garzo Chumilla, Rodrigo Barceló Arce  y Juan Pedro Jimenez Dato**  para el proyecto final de la asignatura PDS 2025 de la **Universidad de Murcia**, bajo la supervisión del profesor **Jesus Sanchez Cuadrado**.
 
-## Descripción
-Esta aplicación está diseñada para facilitar el aprendizaje mediante un sistema interactivo basado en cursos. Su objetivo es ofrecer a los usuarios una experiencia de aprendizaje personalizada, con opciones para elegir estrategias de estudio, realizar ejercicios y exámenes, y seguir su progreso.
+La aplicación está inspirada en Duolingo y Mochi y permite a estudiantes aprender mediante cursos con ejercicios tipo test, huecos, flashcards. Los colaboradores pueden crear e importar cursos usando archivos JSON, fomentando una comunidad colaborativa de aprendizaje.
 
-## Características principales
-- **Realizar cursos**: Los usuarios pueden seleccionar cursos en diferentes temas.
-- **Estrategias de aprendizaje**: Posibilidad de elegir entre varias estrategias adaptadas a las necesidades del usuario.
-- **Progreso guardado**: El sistema permite reanudar el curso en cualquier momento.
-- **Estadísticas de uso**: Visualización del avance y rendimiento del usuario.
-- **Creación y compartición de cursos**: Los usuarios pueden generar y compartir contenido educativo.
+---
 
-## Flujo de uso
-1. **Selección de curso**: El usuario elige el tema de interés.
-2. **Aprendizaje**: Se presentan flashcards para la teoría.
-3. **Ejercicios**: Actividades prácticas para afianzar conocimientos.
-4. **Examen final**: Prueba de conocimientos adquiridos.
-5. **Resultados**: En caso de fallo, se ofrecen pistas o material de refuerzo.
+### Requisitos
 
-## Casos Especiales
-- Si un curso no está disponible, se sugiere otro similar.
-- El usuario puede cambiar la estrategia de aprendizaje en cualquier momento.
-- En caso de fallo en el examen, se permite repasar y volver a intentarlo.
+- Java 8+
+- Maven
+- Git (opcional)
 
-Este repositorio contendrá el código fuente, documentación y recursos necesarios para el desarrollo y mantenimiento del proyecto.
+---
 
+### Casos de Uso
+
+- **Registrarse** 
+- **Iniciar sesión**
+- **Importar curso**
+- **Realizar curso**
+- **Continuar curso**
+- **Ver estadísticas de uso**
+- **Crear curso**
+- **Compartir curso**
+- **Cerrar sesión**
+
+Funcionalidad adicional:
+- **Crear cursos como creador**
+**Información de sobre Casos de Uso mas detallada**
+![CasosDeUso](https://github.com/gusgarzo/PDS-Proyecto/edit/main/requisitos/casos_de_uso.md)
+
+---
+
+### Diseño y Modelo
+
+El modelo de dominio incluye dos roles principales: `Alumno` y `CreadorCurso`, ambos heredan de la clase base `Usuario`. 
+
+- **CreadorCurso** puede crear múltiples `Curso`, los cuales contienen uno o varios `BloqueContenido`.
+- Cada bloque incluye varias `Pregunta`, que es una clase abstracta de la que heredan:
+  - `TipoTest`
+  - `Huecos`
+  - `FlashCard`
+
+Además, las preguntas están asociadas a un nivel de `Dificultad` (Fácil, Media, Difícil), lo que permite adaptar los cursos al nivel del estudiante.
+
+- El `Alumno` puede realizar múltiples `Curso` mediante una relación con `RealizacionCurso`, que guarda el progreso.
+- Durante la realización, el alumno utiliza una `EstrategiaAprendizaje`, que puede ser:
+  - `Secuencial`
+  - `Aleatoria`
+  - `RepeticionEspaciada`
+
+Finalmente, se incorpora la entidad `Estadisticas`, generada por el alumno, que recoge datos como el tiempo de uso, número de cursos completados y rachas de respuestas correctas.
+
+---
+
+**Información de sobre Modelo de Dominio mas detallada**
+[ModeloDominio](https://github.com/gusgarzo/PDS-Proyecto/blob/main/dise%C3%B1o/modelo.md)
+
+---
+
+## MANUAL DE USO
+**Leer manual de uso aquí**
+[Manual de uso](https://github.com/gusgarzo/PDS-Proyecto/edit/main/documentacion/manual)
+
+---
+
+**Desarrollado por Gustavo Garzo Chumilla, Rodrigo Barceló Arce y Juan Pedro Jimenez Dato — Universidad de Murcia**
