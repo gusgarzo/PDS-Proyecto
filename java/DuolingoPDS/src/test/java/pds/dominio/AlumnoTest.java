@@ -1,10 +1,10 @@
-package pds.dao;
+package pds.dominio;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class RepositorioCursoTest {
+class AlumnoTest {
 
 	@Test
 	void test() {
