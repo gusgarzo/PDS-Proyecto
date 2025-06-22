@@ -31,7 +31,7 @@ La aplicación está inspirada en Duolingo y Mochi y permite a estudiantes apren
 Funcionalidad adicional:
 - **Crear cursos como creador**
 **Información de sobre Casos de Uso mas detallada**
-![CasosDeUso](https://github.com/gusgarzo/PDS-Proyecto/edit/main/requisitos/casos_de_uso.md)
+([Casos De Uso](requisitos/casos_de_uso.md))
 
 ---
 
