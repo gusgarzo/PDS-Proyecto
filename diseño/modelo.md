@@ -38,7 +38,7 @@ classDiagram
     %% --- Dificultad y Estrategia ---
     class Dificultad
     Dificultad <|-- Facil
-    Dificultad <|-- Media
+    Dificultad <|-- Normal
     Dificultad <|-- Dificil
 
     class EstrategiaAprendizaje
