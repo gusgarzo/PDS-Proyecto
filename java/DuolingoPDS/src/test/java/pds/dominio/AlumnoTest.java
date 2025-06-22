@@ -17,7 +17,7 @@ public class AlumnoTest {
         alumno = new Alumno("Ash", "Ketchum", "123456789", "ash@poke.com", "pikachu");
         curso = new Curso();
         curso.setId((long) 1); 
-        curso.setNombre("Inglés con Pikachu");
+        curso.setNombre("Aprende con Pikachu");
     }
 
     @Test
