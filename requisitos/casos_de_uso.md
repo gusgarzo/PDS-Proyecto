@@ -9,8 +9,8 @@
 
 | Actor             | Caso de Uso                              |
 | ----------------- | ---------------------------------------- |
-| Alumno            | [Login](#caso-de-uso-login)              |
-|                   | [Registro](#caso-de-uso-registro)        |
+| Alumno            | [Registro](#caso-de-uso-registro)              |
+|                   | [Login](#caso-de-uso-login)        |
 |                   | [Importar curso](#caso-de-uso-importar-curso)                   |
 |                   | [Realizar curso](#caso-de-uso-realizar-curso)                   |
 |                   | [Continuar curso](#caso-de-uso-continuar-curso)                 |
@@ -19,6 +19,33 @@
 |                   | [Registro](#caso-de-uso-registro)        |
 |                   | [Crear curso](#caso-de-uso-crear-curso)  |
 |                   | [Compartir curso](#caso-de-uso-compartir-curso)                 |
+
+---
+## Caso de uso: Registro
+
+**Descripción:**  
+Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de usuario (**Alumno** o **Creador de cursos**) y proporcionando sus datos personales.
+
+**Actor principal:**  
+- Usuario (nuevo Alumno o nuevo Creador de cursos)
+
+**Precondiciones:**  
+- El usuario no debe tener una cuenta registrada previamente con los mismos datos.
+
+**Flujo principal:**
+1. El usuario inicia la aplicación DuolingoPDS.
+2. Se muestra la opción de registro en la ventana de login.
+3. El usuario introduce sus datos personales (nombre, apellidos, teléfono, email).
+4. Selecciona el tipo de cuenta: **Alumno** o **Creador de cursos**.
+5. Elige una contraseña.
+6. El sistema valida los datos y crea la cuenta.
+7. El usuario puede iniciar sesión con su nueva cuenta.
+
+**Flujos alternativos:**
+- **4a. Datos inválidos:** Si se detectan datos inválidos (formato incorrecto, teléfono o email ya registrado), se muestra un mensaje de error y se solicita corrección.
+
+**Postcondiciones:**  
+- El usuario queda registrado y puede acceder a la aplicación.
 
 ---
 
@@ -43,45 +70,17 @@ Permite al usuario acceder a la aplicación DuolingoPDS introduciendo sus creden
 
 **Flujos alternativos:**
 - **3a. Credenciales incorrectas:** Si las credenciales no coinciden, se notifica al usuario y se permite reintentar.
-- **Recuperar contraseña:** Si el usuario la olvidó, selecciona "Recuperar contraseña" y sigue el proceso de recuperación.
 
 **Postcondiciones:**  
 - El usuario queda logueado en la aplicación, con su rol asignado.
 
 ---
 
-## Caso de uso: Registro
-
-**Descripción:**  
-Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de usuario (**Alumno** o **Creador de cursos**) y proporcionando sus datos personales.
-
-**Actor principal:**  
-- Usuario (nuevo Alumno o nuevo Creador de cursos)
-
-**Precondiciones:**  
-- El usuario no debe tener una cuenta registrada previamente con los mismos datos.
-
-**Flujo principal:**
-1. El usuario inicia la aplicación DuolingoPDS.
-2. Se muestra la opción de registro.
-3. El usuario introduce sus datos personales (nombre, apellidos, teléfono, email).
-4. Selecciona el tipo de cuenta: **Alumno** o **Creador de cursos**.
-5. Elige una contraseña.
-6. El sistema valida los datos y crea la cuenta.
-7. El usuario puede iniciar sesión con su nueva cuenta.
-
-**Flujos alternativos:**
-- **4a. Datos inválidos:** Si se detectan datos inválidos (formato incorrecto, teléfono o email ya registrado), se muestra un mensaje de error y se solicita corrección.
-
-**Postcondiciones:**  
-- El usuario queda registrado y puede acceder a la aplicación.
-
----
 
 
 ### Caso de uso: Importar curso
 
-**Descripción:** Permite al alumno importar un curso compartido por un creador desde un archivo.
+**Descripción:** Permite al alumno importar un curso compartido por un creador desde un archivo en formato JSON.
 
 **Actor principal:** Alumno
 
@@ -92,7 +91,7 @@ Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de
 1. El alumno accede a la opción de importar curso.
 2. El alumno selecciona el archivo recibido.
 3. El sistema valida el contenido.
-4. El curso aparece disponible para comenzar.
+4. El curso aparecerá disponible para comenzar.
 
 **Flujos alternativos:**
 
@@ -107,7 +106,7 @@ Permite a un nuevo usuario crear una cuenta en DuolingoPDS, eligiendo el tipo de
 ---
 
 ## Descripción
-Permite al alumno seleccionar y realizar un curso completo desde la teoría hasta el examen final.
+Permite al alumno seleccionar y realizar un curso.
 
 ## Actor principal
 - Alumno
@@ -142,7 +141,7 @@ Permite al alumno seleccionar y realizar un curso completo desde la teoría hast
 
 1. El alumno accede a la lista de cursos en progreso.
 2. Selecciona el curso que desea continuar.
-3. El sistema lo rentoma en justo donde lo dejó.
+3. El sistema lo rentoma en justo en el bloque de contenido que lo dejó.
 
 **Flujos alternativos:**
 
@@ -158,15 +157,14 @@ Permite al alumno seleccionar y realizar un curso completo desde la teoría hast
 
 **Actor principal:** Alumno
 
-**Precondiciones:** El alumno debe haber realizado al menos un curso.
+**Precondiciones:** No aplica.
 
 **Flujo principal:**
 
 1. El alumno accede a su panel de estadísticas.
-2. Visualiza datos de progreso, cursos completados y resultados de exámenes.
+2. Visualiza datos de progreso, cursos completados y tiempo de uso de la App.
 
 **Postcondiciones:** No aplica.
-
 
 
 ---
@@ -182,14 +180,15 @@ Permite al alumno seleccionar y realizar un curso completo desde la teoría hast
 **Flujo principal:**
 
 1. El creador accede al apartado de creación de cursos.
-2. Ingresa título, descripción y contenido (teoría, ejercicios y examen).
-3. Guarda el curso en el sistema.
-
+2. Ingresa título, descripción y dificultad (fácil, medio o difícil).
+3. El creador crea los bloques de contenido con las preguntas correspondientes a estos.
+4. Guarda el curso en el sistema.
+   
 **Flujos alternativos:**
 
 - **3a. Error al guardar:** Si en el paso 3 hay un error al guardar, se muestra un mensaje de error y se solicita reintentar.
 
-**Postcondiciones:** El curso queda disponible para ser compartido o editado.
+**Postcondiciones:** El curso queda disponible para ser compartido.
 
 ---
 
@@ -211,5 +210,5 @@ Permite al alumno seleccionar y realizar un curso completo desde la teoría hast
 
 - **4a. Error al compartir:** Si en el paso 3 ocurre un error al compartir, se muestra un mensaje de error.
 
-**Postcondiciones:** El curso queda accesible para los alumnos.
+**Postcondiciones:** El curso queda accesible para ser importado por los alumnos.
 
