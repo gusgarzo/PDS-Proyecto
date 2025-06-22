@@ -52,10 +52,9 @@ public class Alumno extends Usuario {
 	}
 	
 	public void agregarCursoImportado(Curso curso) {
-	    if (!cursosImportados.contains(curso)) {
-	        cursosImportados.add(curso);
-	    }
+	    cursosImportados.add(curso);
 	}
+
 
 	public List<RealizarCurso> getCursosEnProgreso() {
 		return cursosEnProgreso;
