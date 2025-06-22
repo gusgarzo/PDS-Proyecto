@@ -7,7 +7,6 @@ import jakarta.persistence.Persistence;
 	import pds.dominio.Usuario;
 	import pds.dominio.Alumno;
 	import pds.dominio.CreadorCurso;
-	import pds.dominio.Curso;
 	
 	import java.util.List;
 	
@@ -141,14 +140,14 @@ import jakarta.persistence.Persistence;
 	            em.close();
 	        }
 	    }
+
 	    public List<Usuario> obtenerTodosLosUsuarios() {
 	        EntityManager em = emf.createEntityManager();
 	        try {
 	            return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-	        } finally {
-	            em.close();
-	        }
-	    }
+
+			}
+		}
 	    public void eliminarTodo(){
     	    EntityManager em = emf.createEntityManager();
     	    try {
@@ -165,4 +164,5 @@ import jakarta.persistence.Persistence;
     }
 	    
 	  
+
 	}
