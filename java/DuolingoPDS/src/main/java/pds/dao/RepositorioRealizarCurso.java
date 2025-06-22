@@ -2,6 +2,7 @@ package pds.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import pds.dominio.Alumno;
 import pds.dominio.Curso;
@@ -29,7 +30,7 @@ public class RepositorioRealizarCurso {
         return emf.createEntityManager();
     }
 
-    public void registrarCursoRealizado(Alumno alumno, Curso curso) {
+    /*public void registrarCursoRealizado(Alumno alumno, Curso curso) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -39,7 +40,31 @@ public class RepositorioRealizarCurso {
         } finally {
             em.close();
         }
+    }*/
+    
+    public void registrarCursoRealizado(Alumno alumno, Curso curso) {
+        EntityManager em = getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            Alumno alumnoPersistido = em.find(Alumno.class, alumno.getId());
+            Curso cursoPersistido = em.find(Curso.class, curso.getId());
+
+            // 💡 Verificación importante
+            if (!alumnoPersistido.getCursosImportados().contains(cursoPersistido)) {
+                alumnoPersistido.getCursosImportados().add(cursoPersistido);
+            }
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
+
 
     /*public List<Curso> obtenerCursosRealizadosPor(Alumno alumno) {
         EntityManager em = getEntityManager();
